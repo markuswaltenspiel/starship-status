@@ -1,0 +1,56 @@
+{
+ "model_version": "1.0",
+ "simulations": 6000,
+ "license": {
+  "p_new_profile": 0.25,
+  "p_normal": 0.05,
+  "median_days_new": 14,
+  "median_days_normal": 7,
+  "sigma": 0.8
+ },
+ "pad": {
+  "same_pad_floor_days": 30,
+  "new_pad_median_days": 30,
+  "new_pad_sigma": 0.5
+ },
+ "weights": {
+  "net_near": 0.45,
+  "net_far": 0.25,
+  "near_lead_days": 21
+ },
+ "version_weight": {
+  "V1": 0.5,
+  "V2": 1,
+  "V3": 3
+ },
+ "long_term": {
+  "scenario_weights": {
+   "falcon": 0.35,
+   "production": 0.35,
+   "target": 0.3
+  },
+  "falcon_growth": 1.37,
+  "production_growth": 1.8,
+  "slip_multiplier": 2.75,
+  "hazard_at_14": 0.2,
+  "hazard_exponent": -0.6,
+  "stand_down_days": [
+   147,
+   26,
+   17,
+   178,
+   135,
+   16
+  ],
+  "gap_sigma": 0.35
+ },
+ "comparators": [
+  {
+   "flight": 15,
+   "label": "Einzelschätzung Claude, 31.10.",
+   "date": "2026-11-19",
+   "from": "2026-11-14",
+   "to": "2026-11-26"
+  }
+ ]
+}

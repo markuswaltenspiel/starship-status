@@ -1,0 +1,5 @@
+__pycache__/
+.DS_Store
+dist/
+data/log/runs.jsonl
+data/cache/ll2.json

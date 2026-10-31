@@ -1,0 +1,188 @@
+{
+ "done": [
+  {
+   "label": "Falcon 1 Erstflug",
+   "program": "Falcon",
+   "kind": "neu",
+   "announced": "2004-01-15",
+   "target": "2004-06-30",
+   "actual": "2006-03-24",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Falcon 9 Erstflug",
+   "program": "Falcon",
+   "kind": "neu",
+   "announced": "2005-10-15",
+   "target": "2007-03-31",
+   "actual": "2010-06-04",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Dragon COTS Demo",
+   "program": "Dragon",
+   "kind": "neu",
+   "announced": "2006-08-15",
+   "target": "2009-09-30",
+   "actual": "2012-05-22",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Falcon Heavy Erstflug",
+   "program": "Falcon",
+   "kind": "neu",
+   "announced": "2011-04-05",
+   "target": "2013-01-31",
+   "actual": "2018-02-06",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Booster-Wiederflug",
+   "program": "Falcon",
+   "kind": "iterativ",
+   "announced": "2015-12-21",
+   "target": "2016-06-30",
+   "actual": "2017-03-30",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Crew Dragon bemannt",
+   "program": "Dragon",
+   "kind": "neu",
+   "announced": "2014-09-16",
+   "target": "2017-12-31",
+   "actual": "2020-05-30",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Starship Orbitalversuch",
+   "program": "Starship",
+   "kind": "neu",
+   "announced": "2020-01-15",
+   "target": "2021-07-15",
+   "actual": "2023-04-20",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Booster-Fang am Turm",
+   "program": "Starship",
+   "kind": "neu",
+   "announced": "2021-01-15",
+   "target": "2022-01-15",
+   "actual": "2024-10-13",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Starship V3 Erstflug (Jan.)",
+   "program": "Starship",
+   "kind": "iterativ",
+   "announced": "2026-01-15",
+   "target": "2026-03-15",
+   "actual": "2026-05-22",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Flug 12: Musk „4–6 Wochen“",
+   "program": "Starship",
+   "kind": "kurz",
+   "announced": "2026-04-03",
+   "target": "2026-05-08",
+   "actual": "2026-05-22",
+   "source": "https://www.teslarati.com/elon-musk-starship-next-launch-timeline-v3/"
+  },
+  {
+   "label": "Flug 12: erstes NET",
+   "program": "Starship",
+   "kind": "kurz",
+   "announced": "2026-05-01",
+   "target": "2026-05-15",
+   "actual": "2026-05-22",
+   "source": "https://en.wikipedia.org/wiki/List_of_Starship_launches"
+  },
+  {
+   "label": "Flug 13: erstes NET",
+   "program": "Starship",
+   "kind": "kurz",
+   "announced": "2026-06-25",
+   "target": "2026-07-16",
+   "actual": "2026-07-24",
+   "source": "https://www.teslarati.com/spacex-adjusts-starship-flight-13-test-launch-target-date-once-again/"
+  },
+  {
+   "label": "Flug 14: „Ende Aug./Anfang Sept.“",
+   "program": "Starship",
+   "kind": "kurz",
+   "announced": "2026-07-28",
+   "target": "2026-09-01",
+   "actual": "2026-09-28",
+   "source": "https://www.nasaspaceflight.com/2026/07/ship-40-catch-potential/"
+  },
+  {
+   "label": "Flug 14: NET 22.09.",
+   "program": "Starship",
+   "kind": "kurz",
+   "announced": "2026-09-05",
+   "target": "2026-09-22",
+   "actual": "2026-09-28",
+   "source": "https://www.space.com/space-exploration/launches-spacecraft/spacex-next-starship-launch-now-on-sept-28-for-1st-orbital-flight"
+  }
+ ],
+ "open": [
+  {
+   "label": "Flug 15: Planung 19.10.",
+   "program": "Starship",
+   "kind": "kurz",
+   "announced": "2026-09-24",
+   "target": "2026-10-19",
+   "source": "https://shattered.io/starship-flight-15-dual-catch-november-2026/"
+  },
+  {
+   "label": "Flug 15: Musk „4–6 Wochen“",
+   "program": "Starship",
+   "kind": "kurz",
+   "announced": "2026-10-10",
+   "target": "2026-11-14",
+   "source": "https://shattered.io/starship-flight-15-dual-catch-november-2026/"
+  },
+  {
+   "label": "Erster Starship-Start Florida „Ende 2025“",
+   "program": "Starship",
+   "kind": "neu",
+   "announced": "2024-11-01",
+   "target": "2025-12-31",
+   "source": "https://tech-insider.org/spacex-starship-florida-launch-date-2026/"
+  },
+  {
+   "label": "Starship Mars unbemannt 2022",
+   "program": "Starship",
+   "kind": "neu",
+   "announced": "2017-09-29",
+   "target": "2022-12-31",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Bemannte Mars-Landung 2024",
+   "program": "Starship",
+   "kind": "neu",
+   "announced": "2016-09-27",
+   "target": "2024-12-31",
+   "source": "https://newspaceeconomy.ca/2026/06/02/the-spacex-slip-multiplier-a-reference-class-model-of-announced-vs-actual-timelines/?amp=1"
+  },
+  {
+   "label": "Wöchentliche Starts 1. Hj. 2027",
+   "program": "Starship",
+   "kind": "neu",
+   "announced": "2026-10-20",
+   "target": "2027-03-31",
+   "source": "https://www.eenewseurope.com/en/spacex-weekly-starship-launches-2027/"
+  },
+  {
+   "label": "Zwei Starts pro Woche Ende 2027",
+   "program": "Starship",
+   "kind": "neu",
+   "announced": "2026-10-20",
+   "target": "2027-12-31",
+   "source": "https://www.eenewseurope.com/en/spacex-weekly-starship-launches-2027/"
+  }
+ ]
+}

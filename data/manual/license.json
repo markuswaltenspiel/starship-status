@@ -1,0 +1,152 @@
+[
+ {
+  "n": 1,
+  "license_date": "2023-04-14",
+  "wait_min": null,
+  "wait_max": null,
+  "new_profile": false,
+  "confidence": "unklar",
+  "note": "Lizenz drei Tage vor dem ersten Versuch; keine Angabe, ab wann SpaceX bereit war.",
+  "source": "https://www.rocketlaunchschedule.com/space-news/starship-ready-for-historic-maiden-flight-gains-faa-launch-license/"
+ },
+ {
+  "n": 2,
+  "license_date": "2023-11-15",
+  "wait_min": 14,
+  "wait_max": 40,
+  "new_profile": true,
+  "confidence": "mittel",
+  "note": "SpaceX meldete öffentlich „bereit, warten auf FAA“; Fish & Wildlife schloss die Prüfung erst am 15.11. ab.",
+  "source": "https://en.wikipedia.org/wiki/Starship_flight_test_2"
+ },
+ {
+  "n": 3,
+  "license_date": "2024-03-13",
+  "wait_min": 0,
+  "wait_max": 3,
+  "new_profile": false,
+  "confidence": "mittel",
+  "note": "Untersuchung am 26.02. geschlossen, Lizenz einen Tag vor dem Start. Ziel Mitte März wurde gehalten.",
+  "source": "https://www.cnbc.com/2024/02/26/faa-closes-starship-investigation-spacex-seeks-next-launch-license.html"
+ },
+ {
+  "n": 4,
+  "license_date": "2024-06-04",
+  "wait_min": 0,
+  "wait_max": 3,
+  "new_profile": false,
+  "confidence": "mittel",
+  "note": "Lizenz zwei Tage vor dem Start.",
+  "source": "https://forums.space.com/threads/spacex-lands-faa-license-for-starship-megarocket-launch-on-june-6.66763"
+ },
+ {
+  "n": 5,
+  "license_date": "2024-10-12",
+  "wait_min": 30,
+  "wait_max": 68,
+  "new_profile": true,
+  "confidence": "mittel",
+  "note": "SpaceX: Hardware seit Anfang August bereit, FAA nannte zunächst Ende November. Angabe stammt von SpaceX als betroffener Partei.",
+  "source": "https://techcrunch.com/2024/09/10/spacex-calls-out-superfluous-regulatory-delays-holding-up-starship-flights"
+ },
+ {
+  "n": 6,
+  "license_date": null,
+  "wait_min": 0,
+  "wait_max": 0,
+  "new_profile": false,
+  "confidence": "niedrig",
+  "note": "Gleiches Flugprofil wie Flug 5, keine Hinweise auf Wartezeit.",
+  "source": "https://en.wikipedia.org/wiki/List_of_Starship_launches"
+ },
+ {
+  "n": 7,
+  "license_date": "2024-12-17",
+  "wait_min": 0,
+  "wait_max": 0,
+  "new_profile": true,
+  "confidence": "hoch",
+  "note": "Lizenz einen Monat vor dem Start erteilt.",
+  "source": "https://www.brownsvilletx.gov/m/newsflash/home/detail/2323"
+ },
+ {
+  "n": 8,
+  "license_date": "2025-02-28",
+  "wait_min": 0,
+  "wait_max": 3,
+  "new_profile": false,
+  "confidence": "mittel",
+  "note": "Änderung und Freigabe kurz vor dem ersten Versuch am 03.03.",
+  "source": "https://www.faa.gov/newsroom/statements/general-statements"
+ },
+ {
+  "n": 9,
+  "license_date": "2025-05-22",
+  "wait_min": 0,
+  "wait_max": 5,
+  "new_profile": false,
+  "confidence": "mittel",
+  "note": "Lizenz vorab erteilt, Starterlaubnis hing noch an Untersuchung Flug 8; Start fünf Tage danach.",
+  "source": "https://www.space.com/space-exploration/launches-spacecraft/spacex-gets-updated-starship-launch-license-but-still-awaits-flight-9-approval"
+ },
+ {
+  "n": 10,
+  "license_date": "2025-08-15",
+  "wait_min": 0,
+  "wait_max": 0,
+  "new_profile": false,
+  "confidence": "mittel",
+  "note": "Untersuchung neun Tage vor dem ersten Versuch geschlossen.",
+  "source": "https://www.faa.gov/newsroom/statements/general-statements"
+ },
+ {
+  "n": 11,
+  "license_date": null,
+  "wait_min": 0,
+  "wait_max": 0,
+  "new_profile": false,
+  "confidence": "niedrig",
+  "note": "Keine Hinweise auf Wartezeit gefunden.",
+  "source": "https://en.wikipedia.org/wiki/List_of_Starship_launches"
+ },
+ {
+  "n": 12,
+  "license_date": "2026-05-15",
+  "wait_min": 0,
+  "wait_max": 0,
+  "new_profile": true,
+  "confidence": "mittel",
+  "note": "Änderung sechs Tage vor dem ersten Versuch; Datum aus NSF-Beitrag.",
+  "source": "https://www.threads.com/@nasaspaceflight_ig/post/DYYC-c8jSFD/breaking-the-faa-have-granted-a-revision-to-spacex-s-starship-launch-licence/"
+ },
+ {
+  "n": 13,
+  "license_date": null,
+  "wait_min": 0,
+  "wait_max": 0,
+  "new_profile": false,
+  "confidence": "niedrig",
+  "note": "Untersuchung Flug 12 vorab geschlossen; Datum nicht gefunden.",
+  "source": "https://www.aero-news.net/index.cfm?do=main.textpost&id=DAB4BEFB-29DC-49DA-9D0C-697CBC87B746"
+ },
+ {
+  "n": 14,
+  "license_date": "2026-09-26",
+  "wait_min": 0,
+  "wait_max": 4,
+  "new_profile": true,
+  "confidence": "mittel",
+  "note": "Erster Orbitalflug. WDR am 24.09., Lizenz am 26./27.09., Start am 28.09.; Quellen uneins beim Lizenztag.",
+  "source": "https://aviationweek.com/space/launch-vehicles-propulsion/faa-clears-spacex-starship-14-flight"
+ },
+ {
+  "n": 15,
+  "license_date": null,
+  "wait_min": null,
+  "wait_max": null,
+  "new_profile": true,
+  "confidence": "offen",
+  "note": "Erste Rückkehr über Land und Ship-Fang; Lizenz am 30.10. noch offen, FAA-Planung nennt rund 8.11.",
+  "source": "https://www.techtimes.com/articles/329778/20261030/spacex-finishes-starship-flight-15-static-fire-first-ship-catch-attempt-awaits-faa.htm"
+ }
+]

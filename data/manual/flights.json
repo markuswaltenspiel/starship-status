@@ -1,0 +1,155 @@
+{
+ "source": "https://en.wikipedia.org/wiki/List_of_Starship_launches",
+ "flights": [
+  {
+   "n": 1,
+   "date": "2023-04-20",
+   "booster": "B7",
+   "ship": "S24",
+   "version": "V1",
+   "pad": "Pad 1",
+   "outcome": "failure"
+  },
+  {
+   "n": 2,
+   "date": "2023-11-18",
+   "booster": "B9",
+   "ship": "S25",
+   "version": "V1",
+   "pad": "Pad 1",
+   "outcome": "failure"
+  },
+  {
+   "n": 3,
+   "date": "2024-03-14",
+   "booster": "B10",
+   "ship": "S28",
+   "version": "V1",
+   "pad": "Pad 1",
+   "outcome": "success"
+  },
+  {
+   "n": 4,
+   "date": "2024-06-06",
+   "booster": "B11",
+   "ship": "S29",
+   "version": "V1",
+   "pad": "Pad 1",
+   "outcome": "success"
+  },
+  {
+   "n": 5,
+   "date": "2024-10-13",
+   "booster": "B12",
+   "ship": "S30",
+   "version": "V1",
+   "pad": "Pad 1",
+   "outcome": "success"
+  },
+  {
+   "n": 6,
+   "date": "2024-11-19",
+   "booster": "B13",
+   "ship": "S31",
+   "version": "V1",
+   "pad": "Pad 1",
+   "outcome": "success"
+  },
+  {
+   "n": 7,
+   "date": "2025-01-16",
+   "booster": "B14",
+   "ship": "S33",
+   "version": "V2",
+   "pad": "Pad 1",
+   "outcome": "failure"
+  },
+  {
+   "n": 8,
+   "date": "2025-03-06",
+   "booster": "B15",
+   "ship": "S34",
+   "version": "V2",
+   "pad": "Pad 1",
+   "outcome": "failure"
+  },
+  {
+   "n": 9,
+   "date": "2025-05-27",
+   "booster": "B14",
+   "ship": "S35",
+   "version": "V2",
+   "pad": "Pad 1",
+   "outcome": "failure"
+  },
+  {
+   "n": 10,
+   "date": "2025-08-26",
+   "booster": "B16",
+   "ship": "S37",
+   "version": "V2",
+   "pad": "Pad 1",
+   "outcome": "success"
+  },
+  {
+   "n": 11,
+   "date": "2025-10-13",
+   "booster": "B15",
+   "ship": "S38",
+   "version": "V2",
+   "pad": "Pad 1",
+   "outcome": "success"
+  },
+  {
+   "n": 12,
+   "date": "2026-05-22",
+   "booster": "B19",
+   "ship": "S39",
+   "version": "V3",
+   "pad": "Pad 2",
+   "outcome": "success"
+  },
+  {
+   "n": 13,
+   "date": "2026-07-24",
+   "booster": "B20",
+   "ship": "S40",
+   "version": "V3",
+   "pad": "Pad 2",
+   "outcome": "success"
+  },
+  {
+   "n": 14,
+   "date": "2026-09-28",
+   "booster": "B21",
+   "ship": "S41",
+   "version": "V3",
+   "pad": "Pad 2",
+   "outcome": "success"
+  }
+ ],
+ "gap_excluded": {
+  "2": "Lange Pause nach Fehlschlag und Lizenzklärung",
+  "3": "Unfalluntersuchung Flug 2",
+  "5": "Wartezeit auf Lizenz",
+  "12": "Versionswechsel V2→V3, Pad 2, Verlust B18"
+ },
+ "upcoming": {
+  "15": {
+   "booster": "B22",
+   "ship": "S42",
+   "pad": "Pad 2"
+  },
+  "16": {
+   "booster": "B23",
+   "ship": "S43",
+   "pad": "LC-39A",
+   "pad_probability": 0.6
+  }
+ },
+ "lost_vehicles": [
+  "B17",
+  "B18",
+  "S36"
+ ]
+}

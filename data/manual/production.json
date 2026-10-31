@@ -1,0 +1,222 @@
+{
+ "steps": {
+  "stack_start": "Stacking-Beginn",
+  "o2_stack": "Stacking LOX",
+  "ch4_stack": "Stacking CH₄",
+  "stack_done": "Stacking fertig",
+  "flaps": "Klappen",
+  "engines": "Triebwerke",
+  "heat_shield": "Hitzeschild",
+  "rollout_test": "Rollout Test",
+  "rollout_pad": "Rollout Pad"
+ },
+ "rows": [
+  {
+   "vehicle": "S39",
+   "step": "stack_done",
+   "date": "2025-11-15",
+   "precision": "day",
+   "confidence": "hoch",
+   "source": "https://www.nasaspaceflight.com/2026/02/ship-39-masseys-testing/",
+   "note": "Stacking abgeschlossen"
+  },
+  {
+   "vehicle": "S39",
+   "step": "rollout_test",
+   "date": "2026-02-26",
+   "precision": "day",
+   "confidence": "mittel",
+   "source": "https://www.basenor.com/blogs/news/spacex-starship-v3-cryoproof-complete-what-ship-39-passed",
+   "note": "Rollout nach Massey's"
+  },
+  {
+   "vehicle": "S39",
+   "step": "flaps",
+   "date": "2026-03-08",
+   "precision": "before",
+   "confidence": "mittel",
+   "source": "https://www.nasaspaceflight.com/2026/04/ship-39-booster-19-static-fire/",
+   "note": "Klappen-Belastungstest vor Rückkehr am 08.03."
+  },
+  {
+   "vehicle": "S39",
+   "step": "heat_shield",
+   "date": "2026-04-15",
+   "precision": "approx",
+   "confidence": "niedrig",
+   "source": "https://www.nasaspaceflight.com/2026/04/ship-39-booster-19-static-fire/",
+   "note": "Hintere Klappen im April fast fertig gefliest"
+  },
+  {
+   "vehicle": "B19",
+   "step": "stack_start",
+   "date": "2025-11-25",
+   "precision": "approx",
+   "confidence": "mittel",
+   "source": "https://www.nasaspaceflight.com/2025/11/booster-19-stacking-spacex-forward/",
+   "note": "Stacking beginnt nach Verlust B18"
+  },
+  {
+   "vehicle": "B19",
+   "step": "stack_done",
+   "date": "2025-12-28",
+   "precision": "approx",
+   "confidence": "mittel",
+   "source": "https://www.nasaspaceflight.com/2025/12/flight-12-vehicles-2026/",
+   "note": "Stacking bis Ende Dezember erwartet"
+  },
+  {
+   "vehicle": "B19",
+   "step": "rollout_pad",
+   "date": "2026-03-07",
+   "precision": "day",
+   "confidence": "mittel",
+   "source": "https://www.basenor.com/blogs/news/spacex-starship-flight-12-booster-19-on-pad-2-ship-39-ready",
+   "note": "Rollout zu Pad 2"
+  },
+  {
+   "vehicle": "S41",
+   "step": "rollout_test",
+   "date": "2026-06-28",
+   "precision": "day",
+   "confidence": "hoch",
+   "source": "https://www.nasaspaceflight.com/2026/08/ship-41-engine-testing-flight-14/",
+   "note": "Rollout nach Massey's"
+  },
+  {
+   "vehicle": "B21",
+   "step": "rollout_pad",
+   "date": "2026-09-21",
+   "precision": "before",
+   "confidence": "hoch",
+   "source": "https://spaceflightnow.com/2026/09/21/spacexs-super-heavy-booster-arrives-at-pad-ahead-of-first-orbital-starship-launch/",
+   "note": "Booster am Pad"
+  },
+  {
+   "vehicle": "S42",
+   "step": "flaps",
+   "date": "2026-08-31",
+   "precision": "approx",
+   "confidence": "mittel",
+   "source": "https://www.nasaspaceflight.com/2026/09/flight-15-pairing-masseys/",
+   "note": "Zweite hintere Klappe vor Massey's"
+  },
+  {
+   "vehicle": "S42",
+   "step": "stack_done",
+   "date": "2026-08-10",
+   "precision": "approx",
+   "confidence": "mittel",
+   "source": "https://www.nasaspaceflight.com/2026/08/starbase-lining-future-vehicles/",
+   "note": "Alle Fässer gestapelt, vordere Klappen montiert"
+  },
+  {
+   "vehicle": "S42",
+   "step": "engines",
+   "date": "2026-10-10",
+   "precision": "approx",
+   "confidence": "niedrig",
+   "source": "https://www.nasaspaceflight.com/2026/10/ship-40-returns-ship-42-more-testing/",
+   "note": "Triebwerke zum dritten Cryo ausgebaut und wieder eingebaut"
+  },
+  {
+   "vehicle": "B22",
+   "step": "o2_stack",
+   "date": "2026-08-10",
+   "precision": "approx",
+   "confidence": "niedrig",
+   "source": "https://www.nasaspaceflight.com/2026/08/starbase-lining-future-vehicles/",
+   "note": "Letztes Methan-Fass im August-Bericht"
+  },
+  {
+   "vehicle": "B22",
+   "step": "stack_done",
+   "date": "2026-08-22",
+   "precision": "approx",
+   "confidence": "mittel",
+   "source": "https://www.nasaspaceflight.com/2026/09/flight-15-pairing-masseys/",
+   "note": "Vollständig gestapelt laut NSF"
+  },
+  {
+   "vehicle": "B22",
+   "step": "engines",
+   "date": "2026-09-12",
+   "precision": "after",
+   "confidence": "mittel",
+   "source": "https://www.nasaspaceflight.com/2026/09/flight-15-pairing-masseys/",
+   "note": "Zurück in Mega Bay 1 zum Triebwerkseinbau"
+  },
+  {
+   "vehicle": "S43",
+   "step": "stack_done",
+   "date": "2026-09-15",
+   "precision": "day",
+   "confidence": "hoch",
+   "source": "https://www.nasaspaceflight.com/2026/10/spacex-flight-15-16-milestones/",
+   "note": "Vollständig gestapelt"
+  },
+  {
+   "vehicle": "S43",
+   "step": "engines",
+   "date": "2026-10-27",
+   "precision": "after",
+   "confidence": "hoch",
+   "source": "https://www.nasaspaceflight.com/2026/10/spacex-static-fires-flight-15/",
+   "note": "Zurück in Mega Bay 2 zum Triebwerkseinbau"
+  },
+  {
+   "vehicle": "B23",
+   "step": "stack_done",
+   "date": "2026-09-25",
+   "precision": "day",
+   "confidence": "hoch",
+   "source": "https://www.nasaspaceflight.com/2026/10/spacex-flight-15-16-milestones/",
+   "note": "Vollständig gestapelt"
+  },
+  {
+   "vehicle": "B23",
+   "step": "engines",
+   "date": "2026-10-30",
+   "precision": "after",
+   "confidence": "hoch",
+   "source": "https://www.nasaspaceflight.com/2026/10/spacex-static-fires-flight-15/",
+   "note": "Zurück in Mega Bay 1"
+  },
+  {
+   "vehicle": "S44",
+   "step": "stack_done",
+   "date": "2026-10-20",
+   "precision": "day",
+   "confidence": "hoch",
+   "source": "https://www.nasaspaceflight.com/2026/10/spacex-static-fires-flight-15/",
+   "note": "Letztes Stacking am 20.10."
+  },
+  {
+   "vehicle": "S37",
+   "step": "stack_done",
+   "date": "2025-05-15",
+   "precision": "before",
+   "confidence": "mittel",
+   "source": "https://nasaspaceflight.com/2025/05/starship-flight-9-infrastructure/",
+   "note": "Im Mai 2025 bereits gestapelt"
+  },
+  {
+   "vehicle": "B16",
+   "step": "o2_stack",
+   "date": "2024-10-15",
+   "precision": "day",
+   "confidence": "hoch",
+   "source": "https://www.nasaspaceflight.com/2025/01/following-flight-7-starship-flight-8/",
+   "note": "Erste LOX-Sektionen am 15.10."
+  },
+  {
+   "vehicle": "B16",
+   "step": "stack_done",
+   "date": "2024-12-15",
+   "precision": "approx",
+   "confidence": "mittel",
+   "source": "https://www.nasaspaceflight.com/2025/01/following-flight-7-starship-flight-8/",
+   "note": "Gegen Ende 2024 gestapelt"
+  }
+ ]
+}

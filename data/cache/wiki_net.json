@@ -1,0 +1,930 @@
+{
+ "2": [
+  {
+   "seen": "2023-11-18",
+   "net": "2023-11-18",
+   "precision": "day"
+  }
+ ],
+ "3": [
+  {
+   "seen": "2024-03-06",
+   "net": "2024-03-14",
+   "precision": "day"
+  }
+ ],
+ "4": [
+  {
+   "seen": "2024-05-03",
+   "net": "2024-05-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-05-12",
+   "net": "2024-06-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-05-12",
+   "net": "2024-05-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-05-13",
+   "net": "2024-06-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-05-22",
+   "net": "2024-06-01",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-05-24",
+   "net": "2024-06-05",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-06-01",
+   "net": "2024-06-06",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-06-01",
+   "net": "2024-06-05",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-06-01",
+   "net": "2024-06-06",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-06-01",
+   "net": "2024-06-07",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-06-01",
+   "net": "2024-06-06",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-06-03",
+   "net": "2024-06-07",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-06-03",
+   "net": "2024-06-06",
+   "precision": "day"
+  }
+ ],
+ "5": [
+  {
+   "seen": "2024-06-07",
+   "net": "2024-06-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-06-07",
+   "net": "2024-07-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-06-30",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-03",
+   "net": "2024-07-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-03",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-07",
+   "net": "2024-08-03",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-07-08",
+   "net": "2024-08-04",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-07-09",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-26",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-26",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-27",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-27",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-27",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-27",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-29",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-29",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-29",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-30",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-07-31",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-01",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-01",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-02",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-02",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-02",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-03",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-04",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-05",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-05",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-06",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-06",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-07",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-07",
+   "net": "2024-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-08-11",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-01",
+   "net": "2024-10-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-02",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-03",
+   "net": "2024-10-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-04",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-07",
+   "net": "2024-10-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-07",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-09",
+   "net": "2024-10-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-09",
+   "net": "2024-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-10",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-12",
+   "net": "2024-12-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-12",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-13",
+   "net": "2024-12-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-14",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-21",
+   "net": "2024-12-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-23",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-27",
+   "net": "2024-12-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-27",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-29",
+   "net": "2024-12-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-09-29",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-10-02",
+   "net": "2024-10-12",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-10-03",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-10-05",
+   "net": "2024-10-12",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-10-05",
+   "net": "2024-10-13",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-10-05",
+   "net": "2024-10-12",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-10-05",
+   "net": "2024-10-13",
+   "precision": "day"
+  }
+ ],
+ "6": [
+  {
+   "seen": "2024-09-14",
+   "net": "2025-01-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-10-14",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-10-15",
+   "net": "2024-12-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-10-24",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-11-06",
+   "net": "2024-11-11",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-11-06",
+   "net": "2024-11-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-11-06",
+   "net": "2024-11-18",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-11-11",
+   "net": "2024-11-19",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-11-11",
+   "net": "2024-11-18",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-11-16",
+   "net": "2024-11-19",
+   "precision": "day"
+  }
+ ],
+ "7": [
+  {
+   "seen": "2024-11-20",
+   "net": "2025-01-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-11-25",
+   "net": "2025-01-11",
+   "precision": "day"
+  },
+  {
+   "seen": "2024-12-27",
+   "net": "2025-01-10",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-01-07",
+   "net": "2025-01-11",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-01-07",
+   "net": "2025-01-13",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-01-12",
+   "net": "2025-01-15",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-01-15",
+   "net": "2025-01-16",
+   "precision": "day"
+  }
+ ],
+ "8": [
+  {
+   "seen": "2024-12-11",
+   "net": "2025-02-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-12-27",
+   "net": "2025-03-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2024-12-28",
+   "net": "2025-02-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-01-16",
+   "net": "2025-03-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-01-17",
+   "net": "2025-02-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-01-20",
+   "net": "2025-03-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-01-20",
+   "net": "2025-02-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-01-24",
+   "net": "2025-02-22",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-01-28",
+   "net": "2025-01-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-01-28",
+   "net": "2025-02-22",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-01-28",
+   "net": "2025-02-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-02-02",
+   "net": "2025-02-24",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-02-15",
+   "net": "2025-03-05",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-02-17",
+   "net": "2025-02-24",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-02-17",
+   "net": "2025-03-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-02-17",
+   "net": "2025-02-24",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-02-18",
+   "net": "2025-03-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-02-20",
+   "net": "2025-02-24",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-02-20",
+   "net": "2025-03-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-02-20",
+   "net": "2025-02-26",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-02-24",
+   "net": "2025-02-28",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-02-27",
+   "net": "2025-03-03",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-03-04",
+   "net": "2025-03-05",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-03-05",
+   "net": "2025-03-06",
+   "precision": "day"
+  }
+ ],
+ "9": [
+  {
+   "seen": "2025-03-01",
+   "net": "2025-04-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-04-04",
+   "net": "2025-05-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-04-04",
+   "net": "2025-04-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-04-15",
+   "net": "2025-05-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-04-21",
+   "net": "2025-06-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-04-21",
+   "net": "2025-05-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-04-22",
+   "net": "2025-06-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-04-23",
+   "net": "2025-05-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-04-28",
+   "net": "2025-06-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-04-28",
+   "net": "2025-05-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-05-06",
+   "net": "2025-05-13",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-05-06",
+   "net": "2025-05-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-05-06",
+   "net": "2025-05-13",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-05-06",
+   "net": "2025-05-19",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-05-06",
+   "net": "2025-05-13",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-05-06",
+   "net": "2025-05-19",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-05-10",
+   "net": "2025-05-20",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-05-12",
+   "net": "2025-05-21",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-05-16",
+   "net": "2025-05-22",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-05-17",
+   "net": "2025-05-26",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-05-19",
+   "net": "2025-05-27",
+   "precision": "day"
+  }
+ ],
+ "10": [
+  {
+   "seen": "2025-06-14",
+   "net": "2025-06-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-06-18",
+   "net": "2025-06-29",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-06-18",
+   "net": "2025-06-19",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-06-18",
+   "net": "2025-06-29",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-08-01",
+   "net": "2025-08-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-08-07",
+   "net": "2025-08-16",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-08-08",
+   "net": "2025-08-23",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-08-08",
+   "net": "2025-08-22",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-08-15",
+   "net": "2025-08-24",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-08-25",
+   "net": "2025-08-25",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-08-25",
+   "net": "2025-08-26",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-08-25",
+   "net": "2025-08-25",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-08-26",
+   "net": "2025-08-26",
+   "precision": "day"
+  }
+ ],
+ "11": [
+  {
+   "seen": "2025-09-23",
+   "net": "2025-10-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2025-09-23",
+   "net": "2025-10-06",
+   "precision": "day"
+  },
+  {
+   "seen": "2025-09-26",
+   "net": "2025-10-13",
+   "precision": "day"
+  }
+ ],
+ "12": [
+  {
+   "seen": "2025-12-31",
+   "net": "2026-04-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2026-01-08",
+   "net": "2026-03-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2026-04-06",
+   "net": "2026-05-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2026-05-02",
+   "net": "2026-05-12",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-05-06",
+   "net": "2026-05-15",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-05-12",
+   "net": "2026-05-20",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-05-12",
+   "net": "2026-05-19",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-05-17",
+   "net": "2026-05-20",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-05-17",
+   "net": "2026-05-19",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-05-17",
+   "net": "2026-05-20",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-05-19",
+   "net": "2026-05-21",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-05-21",
+   "net": "2026-05-22",
+   "precision": "day"
+  }
+ ],
+ "13": [
+  {
+   "seen": "2026-07-12",
+   "net": "2026-07-16",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-07-16",
+   "net": "2026-07-17",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-07-17",
+   "net": "2026-07-20",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-07-19",
+   "net": "2026-07-23",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-07-23",
+   "net": "2026-07-24",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-07-24",
+   "net": "2026-07-25",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-07-25",
+   "net": "2026-07-24",
+   "precision": "day"
+  }
+ ],
+ "14": [
+  {
+   "seen": "2026-08-24",
+   "net": "2026-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2026-09-04",
+   "net": "2026-09-15",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-09-10",
+   "net": "2026-09-18",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-09-12",
+   "net": "2026-09-28",
+   "precision": "month"
+  },
+  {
+   "seen": "2026-09-12",
+   "net": "2026-09-18",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-09-14",
+   "net": "2026-09-22",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-09-17",
+   "net": "2026-09-28",
+   "precision": "day"
+  }
+ ],
+ "15": [
+  {
+   "seen": "2026-09-28",
+   "net": "2026-10-19",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-10-08",
+   "net": "2026-11-08",
+   "precision": "day"
+  },
+  {
+   "seen": "2026-10-30",
+   "net": "2026-11-12",
+   "precision": "day"
+  }
+ ]
+}

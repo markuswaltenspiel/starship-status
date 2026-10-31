@@ -1,0 +1,3114 @@
+{
+"74": {
+"name": "Booster 6.1",
+"events": []
+},
+"23": {
+"name": "Booster 4/Ship 20",
+"events": [
+{
+"name": "Propellant Loading Test #1",
+"date": "2022-03-16T21:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Propellant Loading Test #2",
+"date": "2022-03-18T22:21:58Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"35": {
+"name": "Ship 29",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2023-09-27T00:24:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2023-09-27T23:16:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime Test #1",
+"date": "2024-03-11T15:10:10Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2024-03-25T18:12:24Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2024/04/flight-4-preparations/",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2024-03-27T18:30:52Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2024/04/flight-4-preparations/",
+"status": 6
+}
+]
+},
+"62": {
+"name": "Ship 39",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-03-01T04:18:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-03-03T03:55:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2026-03-04T01:42:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime",
+"date": "2026-04-11T23:17:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Unknown Test #1",
+"date": "2026-04-12T23:00:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Unknown Test #2",
+"date": "2026-04-13T22:03:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "6-Engine Static Fire",
+"date": "2026-04-14T20:50:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/SpaceX/status/2044234610343551153",
+"status": 6
+},
+{
+"name": "Igniter Test",
+"date": "2026-05-15T23:00:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"9": {
+"name": "Starhopper",
+"events": [
+{
+"name": "Preburner Test #1",
+"date": "2019-03-25T19:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2019-04-04T00:56:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2019/04/starhopper-first-flight-starship-superheavy-updates/",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2019-04-06T03:37:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Preburner Test #2",
+"date": "2019-07-16T03:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #3",
+"date": "2019-07-17T03:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "18 Meter Hop",
+"date": "2019-07-26T04:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2019/07/spacex-resume-starhopper-tests/",
+"status": 6
+},
+{
+"name": "150 Meter Hop",
+"date": "2019-08-28T00:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2019/08/faa-spacexs-starhopper-hop/",
+"status": 6
+}
+]
+},
+"19": {
+"name": "Booster 3",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2021-07-12T19:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2021-07-19T23:59:59Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"78": {
+"name": "Ship 24.2",
+"events": []
+},
+"39": {
+"name": "Booster 10/Ship 28",
+"events": [
+{
+"name": "Wet Dress Rehearsal #1",
+"date": "2024-03-04T02:17:03Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Starship Flight 3",
+"date": "2024-03-14T13:25:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7363/",
+"status": 6
+}
+]
+},
+"81": {
+"name": "Booster 22",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-09-09T21:53:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-09-10T04:38:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "33-Engine Static Fire",
+"date": "2026-10-25T13:22:40Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/2114444137067844004",
+"status": 6
+}
+]
+},
+"5": {
+"name": "Starship SN3",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2020-04-03T07:07:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2020/04/spacex-starship-sn3-ground-flight-testing/",
+"status": 8
+}
+]
+},
+"15": {
+"name": "Starship SN11",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2021-03-11T23:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2021-03-22T23:59:59Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2021-03-26T12:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "10-Kilometer Test Flight",
+"date": "2021-03-30T13:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 8
+}
+]
+},
+"42": {
+"name": "Booster 13",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2024-04-27T02:07:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2024-04-29T22:08:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2024-10-25T00:11:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"54": {
+"name": "Booster 14/Ship 35",
+"events": [
+{
+"name": "Starship Flight 9",
+"date": "2025-05-27T23:36:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7818/",
+"status": 7
+}
+]
+},
+"55": {
+"name": "Booster 17",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-04-08T23:41:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2025-04-10T00:40:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"14": {
+"name": "Starship SN10",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2021-02-08T19:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2021-02-23T22:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "Static Fire #2",
+"date": "2021-02-25T21:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "10km Test Flight",
+"date": "2021-03-03T23:14:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 7
+}
+]
+},
+"4": {
+"name": "Starship SN4",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2020-04-27T04:44:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2020/04/starship-sn4-set-for-test/",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2020-05-06T01:57:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2020-05-07T07:38:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2020-05-10T04:40:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Preburner Test #1",
+"date": "2020-05-17T15:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #3",
+"date": "2020-05-19T19:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #4",
+"date": "2020-05-28T19:56:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #5",
+"date": "2020-05-29T19:47:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2020/06/spacex-swift-testin-starship-sn4-anomaly/",
+"status": 8
+}
+]
+},
+"80": {
+"name": "Ship 42",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-09-03T20:35:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-09-04T00:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2026-10-09T20:32:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Single-Engine Static Fire",
+"date": "2026-10-27T02:17:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/SpaceX/status/2115476295169814978",
+"status": 6
+},
+{
+"name": "6-Engine Static Fire",
+"date": "2026-10-27T21:45:20Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/SpaceX/status/2115476295169814978",
+"status": 6
+}
+]
+},
+"38": {
+"name": "Booster 12",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2024-01-11T00:12:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2024-01-13T00:59:58Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2024-07-11T17:08:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime",
+"date": "2024-07-12T16:37:33Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2024-07-15T15:13:50Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"79": {
+"name": "Ship 43.1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-08-28T00:40:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-10-22T02:27:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"59": {
+"name": "Ship 38",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-07-30T17:30:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2025-07-30T21:23:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2025-09-22T18:52:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"18": {
+"name": "BN2.1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2021-06-08T19:00:00Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Proof Testing #1",
+"date": "2021-06-17T19:00:00Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"63": {
+"name": "Booster 18",
+"events": [
+{
+"name": "Gas System Pressure Testing",
+"date": "2025-11-21T10:10:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "https://x.com/SpaceX/status/1991889258701885702",
+"status": 8
+}
+]
+},
+"8": {
+"name": "Starship Mk1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2019-11-20T21:27:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2019/11/spacex-starship-mk-1-fails-cryogenic-test/",
+"status": 8
+}
+]
+},
+"34": {
+"name": "Booster 9/Ship 25",
+"events": [
+{
+"name": "Partial Tanking Test",
+"date": "2023-10-22T20:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Wet Dress Rehearsal",
+"date": "2023-10-24T18:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Starship Flight Test 2",
+"date": "2023-11-18T13:02:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7167/",
+"status": 7
+}
+]
+},
+"22": {
+"name": "B2.1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2021-12-01T19:00:00Z",
+"location": "Launch Site Cryostation, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2021-12-02T19:00:00Z",
+"location": "Launch Site Cryostation, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2021-12-03T16:00:00Z",
+"location": "Launch Site Cryostation, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"75": {
+"name": "Booster 14.1",
+"events": [
+{
+"name": "Chopstick Test #1",
+"date": "2024-06-24T12:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Chopstick Test #2",
+"date": "2024-06-26T12:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Chopstick Test #3",
+"date": "2024-06-27T12:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Chopstick Test #4",
+"date": "2024-08-15T12:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"29": {
+"name": "Booster 9",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2022-12-21T22:18:55Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2022-12-29T20:56:04Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2023-07-23T14:30:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #1",
+"date": "2023-08-04T15:13:23Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "33-Engine Static Fire #1",
+"date": "2023-08-06T07:08:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "Spin Prime #2",
+"date": "2023-08-24T01:41:35Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "33-Engine Static Fire #2",
+"date": "2023-08-25T17:36:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2023/08/booster9_staticfireattempt2/",
+"status": 6
+}
+]
+},
+"68": {
+"name": "Ship 41",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-06-29T23:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-06-30T07:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Single-Engine Static Fire",
+"date": "2026-08-20T04:05:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/SpaceX/status/2090482050562146364",
+"status": 6
+},
+{
+"name": "6-Engine Static Fire",
+"date": "2026-08-21T03:20:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/SpaceX/status/2090876778646491549",
+"status": 6
+}
+]
+},
+"3": {
+"name": "Starship SN7",
+"events": [
+{
+"name": "Pressurize to Failure #1",
+"date": "2020-06-15T20:10:00Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Pressurize to Failure #2",
+"date": "2020-06-23T15:37:00Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"13": {
+"name": "Starship SN7.2",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2021-01-26T19:00:00Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Pressurize to Failure",
+"date": "2021-02-04T19:00:00Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"44": {
+"name": "Booster 12/Ship 30",
+"events": [
+{
+"name": "Propellant Load Test #1",
+"date": "2024-09-23T15:43:26Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://x.com/spacex/status/1838339364600057951",
+"status": 6
+},
+{
+"name": "Propellant Load Test #2",
+"date": "2024-10-07T20:08:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Starship Flight 5",
+"date": "2024-10-13T12:25:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7579/",
+"status": 6
+}
+]
+},
+"52": {
+"name": "Booster 16",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-03-01T00:13:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2025-03-04T21:57:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2025-06-06T18:04:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/1931101519601963340",
+"status": 6
+}
+]
+},
+"72": {
+"name": "Ship 39.1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-12-03T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2025-12-04T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2025-12-05T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2026-01-16T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #5",
+"date": "2026-01-18T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #6",
+"date": "2026-01-19T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #7",
+"date": "2026-01-21T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #8",
+"date": "2026-01-29T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #9",
+"date": "2026-02-16T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #10",
+"date": "2026-02-25T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #11",
+"date": "2026-03-23T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #12",
+"date": "2026-04-08T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #13",
+"date": "2026-04-18T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #14",
+"date": "2026-10-22T23:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"25": {
+"name": "Ship 24",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2022-06-02T18:05:27Z",
+"location": "Launch Site Cryostation, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2022-06-06T18:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2022-06-07T16:48:04Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #1",
+"date": "2022-07-18T18:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #2",
+"date": "2022-07-20T18:32:10Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #3",
+"date": "2022-07-20T19:35:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #4",
+"date": "2022-07-21T20:09:30Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #5",
+"date": "2022-07-21T20:31:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #6",
+"date": "2022-08-08T22:10:14Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #7",
+"date": "2022-08-08T23:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2022-08-10T01:20:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #8",
+"date": "2022-08-25T20:43:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2022-09-08T21:14:36Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #3",
+"date": "2022-12-15T18:45:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"33": {
+"name": "Ship 28",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2023-07-28T23:36:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2023-08-03T22:57:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime Test #1",
+"date": "2023-12-16T18:59:24Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2023-12-20T19:37:05Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2023-12-29T15:19:17Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime Test #2",
+"date": "2024-02-26T18:00:03Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"64": {
+"name": "Booster 19",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-02-03T00:03:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-02-05T00:55:31Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2026-02-07T04:07:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2026-02-07T23:18:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Tanking Test #1",
+"date": "2026-03-10T17:00:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2026/03/booster-19-initial-test-pad-2/",
+"status": 6
+},
+{
+"name": "Spin Prime #1",
+"date": "2026-03-12T01:21:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2026/03/booster-19-initial-test-pad-2/",
+"status": 6
+},
+{
+"name": "Igniter Test #1",
+"date": "2026-03-15T14:46:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2026/03/booster-19-initial-test-pad-2/",
+"status": 6
+},
+{
+"name": "10-Engine Static Fire",
+"date": "2026-03-16T18:42:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2026/03/booster-19-initial-test-pad-2/",
+"status": 7
+},
+{
+"name": "Spin Prime #2",
+"date": "2026-04-12T19:35:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Igniter Test #2",
+"date": "2026-04-13T14:54:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "33-Engine Static Fire #1",
+"date": "2026-04-15T23:21:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/2044590183761277386",
+"status": 7
+},
+{
+"name": "Tanking Test #2",
+"date": "2026-04-16T21:02:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "33-Engine Static Fire #2",
+"date": "2026-05-07T14:46:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://x.com/i/status/2052499098347979156",
+"status": 6
+}
+]
+},
+"48": {
+"name": "Booster 15",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2024-12-27T20:50:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2024-12-28T20:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2025-02-09T15:51:29Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/1888691903551655973",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2025-09-07T15:20:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"49": {
+"name": "Booster 14/Ship 33",
+"events": [
+{
+"name": "Wet Dress Rehearsal",
+"date": "2025-01-10T23:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Starship Flight 7",
+"date": "2025-01-16T22:37:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7705/",
+"status": 8
+}
+]
+},
+"65": {
+"name": "Ship 40",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-05-04T01:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-05-05T01:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Igniter Test",
+"date": "2026-06-24T22:24:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Single-Engine Static Fire",
+"date": "2026-06-25T23:37:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/SpaceX/status/2070482358369763674",
+"status": 6
+},
+{
+"name": "6-Engine Static Fire",
+"date": "2026-07-01T22:01:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/SpaceX/status/2072695632104468543",
+"status": 6
+}
+]
+},
+"32": {
+"name": "Booster 10",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2023-07-19T02:12:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2023-09-14T00:43:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2023-09-15T21:49:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2023-09-17T17:04:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2023-12-29T16:46:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"24": {
+"name": "Booster 7",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2022-04-04T17:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2022-04-13T23:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2022-04-14T17:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 8
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2022-05-09T16:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #5",
+"date": "2022-05-11T20:03:08Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #1",
+"date": "2022-07-12T00:24:40Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 8
+},
+{
+"name": "Spin Prime #2",
+"date": "2022-08-09T02:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #3",
+"date": "2022-08-09T02:29:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2022-08-09T22:26:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2022-08-11T20:18:44Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #4",
+"date": "2022-08-25T19:25:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #5",
+"date": "2022-08-30T20:01:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #3",
+"date": "2022-08-31T16:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #6",
+"date": "2022-09-08T17:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #7",
+"date": "2022-09-12T15:59:47Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #8",
+"date": "2022-09-16T16:21:20Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #9",
+"date": "2022-09-19T15:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #4",
+"date": "2022-09-19T16:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #10",
+"date": "2022-11-10T17:43:56Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #5",
+"date": "2022-11-14T19:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #6",
+"date": "2022-11-29T19:30:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "31-Engine Static Fire",
+"date": "2023-02-09T21:29:58Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime  #11",
+"date": "2023-02-17T19:40:50Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #6",
+"date": "2023-04-03T17:07:59Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"73": {
+"name": "Test Tank 16",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2024-07-25T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2024-09-05T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2024-09-09T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2024-09-12T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"53": {
+"name": "Ship 35",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-03-11T21:20:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2025-03-12T18:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Single Engine Static Fire",
+"date": "2025-05-01T03:48:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/spacex/status/1918036064196772269",
+"status": 6
+},
+{
+"name": "6-Engine Static Fire",
+"date": "2025-05-02T02:00:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "6-Engine Static Fire",
+"date": "2025-05-12T14:11:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/SpaceX/status/1922361827712725019",
+"status": 6
+},
+{
+"name": "Spin Prime",
+"date": "2025-05-23T01:30:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"45": {
+"name": "Booster 14",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2024-10-05T07:08:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2024-10-05T22:03:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime",
+"date": "2024-12-07T17:48:17Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2024-12-09T16:19:03Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/1866205160693010587",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2025-04-03T14:40:22Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/1907876664274473132",
+"status": 6
+}
+]
+},
+"12": {
+"name": "Starship SN9",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2020-12-29T21:10:58Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2021-01-06T19:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "Static Fire #2",
+"date": "2021-01-13T17:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #3",
+"date": "2021-01-13T19:30:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #4",
+"date": "2021-01-13T21:30:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #5",
+"date": "2021-01-21T20:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "Static Fire #6",
+"date": "2021-01-22T19:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "10km Test Flight",
+"date": "2021-02-02T19:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 7
+}
+]
+},
+"69": {
+"name": "Booster 20/Ship 40",
+"events": [
+{
+"name": "Launch Attempt #1",
+"date": "2026-07-16T22:45:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "",
+"status": 10
+},
+{
+"name": "Starship Flight 13",
+"date": "2026-07-24T22:51:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/8279/",
+"status": 6
+}
+]
+},
+"2": {
+"name": "Starship SN6",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2020-08-16T19:41:02Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2020-08-23T21:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "150-Meter Hop",
+"date": "2020-09-03T17:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"28": {
+"name": "Ship 25",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2022-11-01T18:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2022-11-02T18:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2022-11-07T19:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2023-03-21T23:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #5",
+"date": "2023-05-05T16:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime #1",
+"date": "2023-06-21T20:25:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2023/06/ship-25-engine-testing/",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2023-06-27T00:27:18Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"50": {
+"name": "Ship 34",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-01-18T00:37:40Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2025-01-18T16:35:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2025-02-12T02:14:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/spacex/status/1889799254472098080",
+"status": 6
+}
+]
+},
+"46": {
+"name": "Ship 33",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2024-10-30T02:10:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2024-10-30T18:21:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2024-11-01T00:45:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime",
+"date": "2024-12-13T03:35:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "6-Engine Static Fire",
+"date": "2024-12-15T20:14:05Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Single Engine Static Fire",
+"date": "2024-12-16T22:55:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"11": {
+"name": "Starship SN8",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2020-10-07T03:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2020-10-08T03:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2020-10-09T03:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Preburner Test #1",
+"date": "2020-10-19T11:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Preburner Test #2",
+"date": "2020-10-20T06:21:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2020-10-20T08:14:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "LOX Header Proof Test #1",
+"date": "2020-11-04T04:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2020-11-11T00:05:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #3",
+"date": "2020-11-13T01:36:47Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "Static Fire #4",
+"date": "2020-11-24T16:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "12.5km Test Flight",
+"date": "2020-12-09T14:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 7
+}
+]
+},
+"1": {
+"name": "Starship SN5",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2020-06-30T06:30:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2020-07-30T20:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2020/07/starship-sn5-static-fire-150-meter-hop/",
+"status": 6
+},
+{
+"name": "150 Meter Hop",
+"date": "2020-08-04T23:57:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2020/08/starship-sn5-set-150-meter-flight-test/",
+"status": 6
+}
+]
+},
+"66": {
+"name": "Booster 19/Ship 39",
+"events": [
+{
+"name": "Wet Dress Rehearsal",
+"date": "2026-05-11T15:18:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://x.com/spacex/status/2053929135936864393",
+"status": 6
+},
+{
+"name": "Partial Tanking Test",
+"date": "2026-05-20T14:28:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Launch Attempt #1",
+"date": "2026-05-21T22:30:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "",
+"status": 10
+},
+{
+"name": "Starship Flight 12",
+"date": "2026-05-22T22:30:24Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/8002/",
+"status": 6
+}
+]
+},
+"27": {
+"name": "Booster 7/Ship 24",
+"events": [
+{
+"name": "Partial Tanking Test #1",
+"date": "2022-10-24T15:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Partial Tanking Test #2",
+"date": "2022-10-26T18:52:36Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Partial Tanking Test #3",
+"date": "2022-10-31T18:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Partial Tanking Test #4",
+"date": "2022-11-03T18:07:01Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Partial Tanking Test #5",
+"date": "2022-11-07T16:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Partial Tanking Test #6",
+"date": "2023-01-13T16:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Partial Tanking Test #7",
+"date": "2023-01-18T18:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Wet Dress Rehearsal",
+"date": "2023-01-23T18:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Launch Attempt #1",
+"date": "2023-04-17T13:20:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 10
+},
+{
+"name": "Starship Test Flight",
+"date": "2023-04-20T12:30:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/6754/",
+"status": 8
+}
+]
+},
+"70": {
+"name": "Booster 21",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-07-18T15:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-07-19T15:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2026-07-20T15:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "33-Engine Static Fire",
+"date": "2026-08-28T18:10:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/2093477720638341395",
+"status": 6
+}
+]
+},
+"71": {
+"name": "Ship 26.1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2023-05-05T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2023-05-18T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2023-05-22T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2023-05-25T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Pressurize to Failure",
+"date": "2023-09-21T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"26": {
+"name": "Booster 7.1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2022-06-28T22:00:15Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2022-07-19T22:28:58Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2022-07-21T17:15:08Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2022-07-27T18:22:43Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #5",
+"date": "2022-09-01T18:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #6",
+"date": "2022-09-06T21:34:30Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"30": {
+"name": "Ship 26",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2023-02-21T20:33:47Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2023-02-27T20:35:01Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Preburner #1",
+"date": "2023-10-18T21:21:15Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2023-10-20T20:37:59Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2024-06-03T21:44:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"67": {
+"name": "Booster 20",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-06-06T23:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-06-07T22:16:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "33-Engine Static Fire",
+"date": "2026-07-10T14:56:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/2075718699869241679",
+"status": 6
+},
+{
+"name": "Propellant Dump Test",
+"date": "2026-07-22T17:20:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/2080007003875770375",
+"status": 6
+}
+]
+},
+"84": {
+"name": "Ship 43",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-10-23T20:20:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-10-24T04:20:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"10": {
+"name": "Starship SN7.1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2020-09-11T02:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Proof Testing #1",
+"date": "2020-09-15T02:00:00Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Proof Testing #2",
+"date": "2020-09-16T02:00:00Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Pressurize to Failure",
+"date": "2020-09-23T09:57:58Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"47": {
+"name": "Booster 13/Ship 31",
+"events": [
+{
+"name": "Propellant Load Test",
+"date": "2024-11-17T17:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/1858241453824287192",
+"status": 6
+},
+{
+"name": "Starship Flight 6",
+"date": "2024-11-19T22:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7656/",
+"status": 6
+}
+]
+},
+"51": {
+"name": "Booster 15/Ship 34",
+"events": [
+{
+"name": "Launch Attempt #1",
+"date": "2025-03-03T23:45:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 10
+},
+{
+"name": "Starship Flight 8",
+"date": "2025-03-06T23:30:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7770/",
+"status": 8
+}
+]
+},
+"60": {
+"name": "Booster 16/Ship 37",
+"events": [
+{
+"name": "Launch Attempt #1",
+"date": "2025-08-24T23:05:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 10
+},
+{
+"name": "Launch Attempt #2",
+"date": "2025-08-25T23:59:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 10
+},
+{
+"name": "Starship Flight 10",
+"date": "2025-08-26T23:30:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7885/",
+"status": 6
+}
+]
+},
+"37": {
+"name": "Ship 30",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2024-01-04T01:28:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2024-01-06T00:30:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2024-05-08T16:59:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "https://twitter.com/spacex/status/1788310386846179345",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2024-07-26T22:32:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Spin Prime",
+"date": "2024-08-08T01:06:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"21": {
+"name": "Ship 20",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2021-09-29T22:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Preburner Test #1",
+"date": "2021-10-19T04:30:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2021-10-21T23:30:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2021-10-22T01:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Preburner Test #2",
+"date": "2021-11-12T15:55:38Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #3",
+"date": "2021-11-12T18:54:46Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #4",
+"date": "2021-12-29T18:00:00Z",
+"location": "Suborbital Pad B, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2022-02-16T21:07:56Z",
+"location": "Launch Site Cryostation, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof #3",
+"date": "2022-02-17T18:19:41Z",
+"location": "Launch Site Cryostation, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2022-02-22T20:05:39Z",
+"location": "Launch Site Cryostation, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #5",
+"date": "2022-03-03T21:14:03Z",
+"location": "Launch Site Cryostation, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"76": {
+"name": "Booster 18.1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-05-28T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2025-06-02T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2025-08-15T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2025-08-16T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #5",
+"date": "2025-08-22T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #6",
+"date": "2025-08-23T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #7",
+"date": "2025-09-15T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #8",
+"date": "2025-09-16T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #9",
+"date": "2025-09-17T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #10",
+"date": "2025-09-18T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 8
+},
+{
+"name": "Cryogenic Proof Test #11",
+"date": "2025-12-16T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #12",
+"date": "2025-12-18T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #13",
+"date": "2026-01-06T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #14",
+"date": "2026-01-07T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #15",
+"date": "2026-01-08T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #16",
+"date": "2026-01-15T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"56": {
+"name": "Ship 36",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-04-27T16:17:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Single Engine Static Fire",
+"date": "2025-06-16T18:49:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/spacex/status/1935016991858835827",
+"status": 6
+},
+{
+"name": "6-Engine Static Fire",
+"date": "2025-06-19T04:02:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://www.spacex.com/updates/",
+"status": 8
+}
+]
+},
+"40": {
+"name": "Booster 11/Ship 29",
+"events": [
+{
+"name": "Partial Tanking Test #1",
+"date": "2024-05-16T17:18:42Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Wet Dress Rehearsal #1",
+"date": "2024-05-20T15:24:55Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Wet Dress Rehearsal #2",
+"date": "2024-05-28T15:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://x.com/spacex/status/1795840604972429597",
+"status": 6
+},
+{
+"name": "Starship Flight 4",
+"date": "2024-06-06T12:50:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7533/",
+"status": 6
+}
+]
+},
+"17": {
+"name": "Starship SN12 Nosecone",
+"events": [
+{
+"name": "Proof Test #1",
+"date": "2021-04-29T01:00:00Z",
+"location": "Test Tank Pad, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"7": {
+"name": "Starship SN1",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2020-02-29T03:59:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 8
+}
+]
+},
+"83": {
+"name": "Booster 23",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-10-15T21:17:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"82": {
+"name": "Booster 21/Ship 41",
+"events": [
+{
+"name": "Wet Dress Rehearsal",
+"date": "2026-09-24T15:36:00Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/2103230238390173995",
+"status": 6
+},
+{
+"name": "Starship Flight 14",
+"date": "2026-09-28T12:48:59Z",
+"location": "Pad 2, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/8346/",
+"status": 6
+}
+]
+},
+"6": {
+"name": "Starship SN2",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2020-03-08T18:33:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"16": {
+"name": "Starship SN15",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2021-04-12T19:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2021-04-13T19:00:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2021-04-26T21:50:21Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #2",
+"date": "2021-04-27T23:16:15Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "10-Kilometer Test Flight",
+"date": "2021-05-05T22:24:00Z",
+"location": "Suborbital Pad A, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"41": {
+"name": "Ship 31",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2024-05-12T21:47:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2024-07-02T23:45:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2024-07-04T02:07:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2024-09-08T16:48:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #5",
+"date": "2024-09-14T18:26:00Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire",
+"date": "2024-09-18T23:03:54Z",
+"location": "Static Fire Stand, Massey Outpost, Texas, USA",
+"url": "https://x.com/spacex/status/1836606716282311166",
+"status": 6
+}
+]
+},
+"57": {
+"name": "Ship 37",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-05-30T14:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2025-05-30T20:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Single Engine Static Fire",
+"date": "2025-07-31T18:52:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/1951030322767994912",
+"status": 6
+},
+{
+"name": "6-Engine Static Fire",
+"date": "2025-08-01T21:31:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://x.com/SpaceX/status/1951433951119286327",
+"status": 6
+},
+{
+"name": "Spin Prime",
+"date": "2025-08-13T13:03:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"77": {
+"name": "Booster 18.3",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2025-09-25T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 7
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2025-09-26T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2025-09-29T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2025-10-07T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #5",
+"date": "2025-11-14T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #6",
+"date": "2025-11-15T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #7",
+"date": "2025-11-17T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #8",
+"date": "2025-12-11T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #9",
+"date": "2026-01-16T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #10",
+"date": "2026-01-20T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 8
+},
+{
+"name": "Cryogenic Proof Test #11",
+"date": "2026-04-21T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #12",
+"date": "2026-04-24T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #13",
+"date": "2026-05-01T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #14",
+"date": "2026-05-04T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #15",
+"date": "2026-05-14T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #16",
+"date": "2026-05-18T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #17",
+"date": "2026-05-27T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #18",
+"date": "2026-05-28T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #19",
+"date": "2026-05-29T12:00:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"20": {
+"name": "Booster 4",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2021-12-17T18:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2021-12-21T17:00:00Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #3",
+"date": "2021-12-22T16:05:17Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #4",
+"date": "2022-02-18T17:31:39Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #5",
+"date": "2022-03-02T00:39:41Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "",
+"status": 6
+}
+]
+},
+"36": {
+"name": "Booster 11",
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2023-10-13T23:16:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2023-10-18T22:38:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Static Fire #1",
+"date": "2024-04-05T21:30:22Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://www.nasaspaceflight.com/2024/04/flight-4-preparations/",
+"status": 6
+}
+]
+},
+"61": {
+"name": "Booster 15/Ship 38",
+"events": [
+{
+"name": "Starship Flight 11",
+"date": "2025-10-13T23:23:41Z",
+"location": "Pad 1, Starbase, Texas, USA",
+"url": "https://nextspaceflight.com/launches/details/7945/",
+"status": 6
+}
+]
+}
+}

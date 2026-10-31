@@ -1,0 +1,412 @@
+<title>Starship-Prognose</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: ein Prüfstandsprotokoll aus Edelstahl. Oben die Antwort, darunter die Belege in Abschnitten. */
+:root{
+  color-scheme:light;
+  --bg:#f3f5f6;--panel:#fbfcfc;--ink:#10181c;--ink2:#465259;--muted:#6f7b82;--line:#d9dfe2;--axis:#b5bfc4;
+  --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--band:#2a78d6;
+  --good:#0ca30c;--warn:#fab219;--bad:#d03b3b;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --bg:#12171a;--panel:#1a2024;--ink:#eef2f3;--ink2:#c0c9ce;--muted:#8a969c;--line:#2b3338;--axis:#414c52;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--band:#3987e5}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#12171a;--panel:#1a2024;--ink:#eef2f3;--ink2:#c0c9ce;--muted:#8a969c;--line:#2b3338;--axis:#414c52;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--band:#3987e5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:1160px;margin-inline:auto;display:grid;gap:48px;grid-template-columns:minmax(0,1fr)}
+header.top{padding-block:32px 0;display:grid;gap:12px}
+h1{font:600 clamp(2.4rem,6vw,3.6rem)/1 var(--display);letter-spacing:.01em;margin:0;text-wrap:balance}
+h2{font:600 1.9rem/1.1 var(--display);letter-spacing:.01em;margin:0;text-wrap:balance}
+h3{font:600 1.05rem/1.3 var(--body);margin:0}
+p{margin:0;max-width:68ch}
+.lede{font-size:1.2rem;line-height:1.4;max-width:62ch}
+.stamp{display:flex;flex-wrap:wrap;gap:8px 16px;font:400 .82rem/1.4 var(--mono);color:var(--ink2)}
+section{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;border-top:2px solid var(--ink);padding-top:14px;min-width:0;scroll-margin-top:12px}
+.sub{color:var(--ink2)}
+nav{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.92rem}
+a{color:inherit;text-underline-offset:3px;text-decoration-color:var(--axis)}
+a:hover{text-decoration-color:currentColor}
+:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.banner{border-left:4px solid var(--bad);background:var(--panel);padding:10px 14px;font-weight:500}
+.banner[data-level="warn"]{border-left-color:var(--warn)}
+.chart{min-width:0;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{font:400 12px var(--mono);fill:var(--muted)}
+.chart text.ink{fill:var(--ink);font-weight:500}
+.chart text.ink2{fill:var(--ink2)}
+.tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--bg);padding:7px 10px;font:400 .8rem/1.4 var(--mono);max-width:300px;border-radius:2px}
+.flightgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.flightcard{background:var(--panel);padding:14px 16px;display:grid;gap:6px;align-content:start}
+.flightcard .label{font:500 .82rem var(--mono);color:var(--ink2)}
+.flightcard .day{font:600 2.3rem/1 var(--display)}
+.flightcard .prob{font-size:.86rem;color:var(--ink2)}
+.flightcard dl{display:grid;grid-template-columns:auto 1fr;gap:1px 10px;margin:6px 0 0;font-size:.88rem}
+.flightcard dt{color:var(--ink2)}.flightcard dd{margin:0;font:400 .84rem var(--mono)}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.84rem;color:var(--ink2);align-items:center}
+.key i{display:inline-block;width:14px;height:10px;margin-right:5px;border-radius:2px}
+.key i.round{width:10px;height:10px;border-radius:50%}
+.key i.dia{width:10px;height:10px;transform:rotate(45deg);border-radius:0}
+.tabs{display:inline-flex;border:1px solid var(--axis);width:max-content;max-width:100%}
+.tabs button{all:unset;cursor:pointer;padding:5px 12px;font-size:.88rem}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.tabs button:focus-visible{outline:2px solid var(--s1)}
+.answer{font:500 1.5rem/1.25 var(--display);max-width:44ch;text-wrap:balance}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:28px}
+.two>*{min-width:0;display:grid;gap:10px;align-content:start}
+.small4{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:20px}
+.small4>*{min-width:0;display:grid;gap:6px;align-content:start}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th{text-align:left;font-weight:600;border-bottom:1px solid var(--axis);padding:5px 10px 5px 0;white-space:nowrap}
+td{border-bottom:1px solid var(--line);padding:5px 10px 5px 0;vertical-align:top}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.date{font:400 .84rem var(--mono);white-space:nowrap;font-variant-numeric:tabular-nums}
+details{font-size:.9rem}
+summary{cursor:pointer;color:var(--ink2);padding-block:2px}
+details[open] summary{margin-bottom:8px}
+.pill{display:inline-flex;gap:5px;align-items:center;font-size:.84rem;font-weight:500;white-space:nowrap}
+.pill svg{width:13px;height:13px;flex:none}
+.steps{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.steps li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-block:5px;font-size:.93rem}
+.cell-empty{color:var(--axis)}
+.cell-weak{color:var(--ink2)}
+ul.notes{margin:0;padding-left:18px;display:grid;gap:6px;max-width:72ch}
+.finding{display:grid;gap:4px;border-left:3px solid var(--axis);padding-left:12px;max-width:74ch}
+footer{font-size:.84rem;color:var(--ink2)}
+</style>
+<div class="wrap">
+<header class="top">
+  <h1>Starship-Prognose</h1>
+  <p class="lede" id="lede">Die Prognose wird geladen.</p>
+  <div class="stamp" id="stamp"></div>
+  <div id="banners" style="display:grid;gap:8px"></div>
+  <nav aria-label="Abschnitte">
+    <a href="#fluege">Nächste Flüge</a><a href="#jahre">Flüge pro Jahr</a><a href="#stand">Aktueller Stand</a><a href="#fahrzeuge">Fahrzeugvergleich</a><a href="#schaetzungen">SpaceX-Schätzungen</a><a href="#lizenz">Lizenz</a><a href="#genauigkeit">Genauigkeit</a><a href="#daten">Daten</a>
+  </nav>
+</header>
+
+<section id="fluege">
+  <h2>Nächste Flüge</h2>
+  <p class="sub">Gilt, falls nichts Schwerwiegendes dazwischenkommt. Der wahrscheinlichste Tag ist die Spitze der Verteilung, der Bereich ist die ehrlichere Angabe.</p>
+  <div class="flightgrid" id="cards"></div>
+  <div class="chart" id="c-intervals"></div>
+  <div class="key" id="k-intervals"></div>
+  <details><summary>Wahrscheinlichkeit bis Monatsende</summary><div class="scroll" id="t-months"></div></details>
+</section>
+
+<section id="jahre">
+  <h2>Flüge pro Jahr</h2>
+  <p class="answer" id="year-answer"></p>
+  <div class="tabs" role="group" aria-label="Rechnung">
+    <button id="case-mit" aria-pressed="true">Mit Zwischenfällen</button><button id="case-ohne" aria-pressed="false">Ohne schwere Zwischenfälle</button>
+  </div>
+  <div class="two">
+    <div><h3>Prognose je Kalenderjahr</h3><div class="chart" id="c-years"></div><div class="key"><span><i style="background:var(--band);opacity:.25"></i>80 %-Bereich</span><span><i style="background:var(--band);opacity:.6"></i>50 %-Bereich</span><span><i class="round" style="background:var(--ink)"></i>Mitte</span></div></div>
+    <div><h3>Wo steht Starship gegenüber Falcon 9?</h3><div class="chart" id="c-falcon"></div><div class="key"><span><i class="round" style="background:var(--s2)"></i>Falcon 9</span><span><i class="round" style="background:var(--s1)"></i>Starship</span><span><i class="round" style="background:var(--band);opacity:.35"></i>Starship, Prognose</span></div><p class="sub" id="falcon-note"></p></div>
+  </div>
+  <details open><summary>Die drei Szenarien und ihre Werte</summary><div class="scroll" id="t-scen"></div></details>
+  <div class="finding"><h3>So ist das zu lesen</h3><p>Das ist eine Szenariorechnung und kein geprüftes Modell. Für die Jahreswerte gibt es keinen Rückblick-Test, und die Gewichte der Szenarien sind eine Annahme. Die Zwischenfälle nehmen mit der Flugzahl ab, wie bei Falcon 9 und Dragon. Was bei einem künftigen Versionswechsel passiert, ist nicht eingerechnet.</p></div>
+</section>
+
+<section id="stand">
+  <h2>Aktueller Stand</h2>
+  <div class="two">
+    <div><h3 id="next-title"></h3><ul class="steps" id="next-steps"></ul><p class="sub" id="next-note"></p></div>
+    <div><h3>Die folgenden Fahrzeuge</h3><div class="scroll" id="t-following"></div><h3>Alle Flüge</h3><div class="chart" id="c-history"></div><div class="key" id="k-history"></div></div>
+  </div>
+  <h3>Abstand zwischen den Flügen</h3>
+  <div class="chart" id="c-gaps"></div>
+  <div class="key"><span><i style="background:var(--s3)"></i>V1</span><span><i style="background:var(--s2)"></i>V2</span><span><i style="background:var(--s1)"></i>V3</span><span><i style="background:var(--muted);opacity:.45"></i>Blass: Sonderfall, zählt nicht als normaler Abstand</span></div>
+  <details><summary>Werte als Tabelle</summary><div class="scroll" id="t-gaps"></div></details>
+</section>
+
+<section id="fahrzeuge">
+  <h2>Fahrzeugvergleich</h2>
+  <div class="finding"><h3>Fängt V3 wieder dort an, wo V2 schon war?</h3><p id="v3-finding"></p></div>
+  <div class="tabs" role="group" aria-label="Fahrzeug"><button id="veh-ship" aria-pressed="true">Ships</button><button id="veh-booster" aria-pressed="false">Booster</button></div>
+  <div class="chart" id="c-timeline"></div>
+  <div class="key"><span>Tage ab dem ersten Cryo-Test</span><span><i style="background:var(--s2)"></i>V2</span><span><i style="background:var(--s1)"></i>V3</span><span><i class="round" style="background:var(--ink)"></i>letztes Static Fire</span><span>Linienende: Start. Blass: noch nicht geflogen</span></div>
+  <h3>Letztes Static Fire bis Start</h3>
+  <p class="sub">Gezählt ab dem Static Fire des zuletzt fertigen Fahrzeugs. Diese Zeit trägt die Prognose für den nächsten Flug. Blasse Flüge fließen nicht ein, weil Lizenz oder Unfälle sie prägten.</p>
+  <div class="chart" id="c-sf"></div>
+  <details><summary>Dauern als Tabelle</summary><div class="scroll" id="t-dur"></div></details>
+  <h3>Produktionsschritte</h3>
+  <p class="sub" id="matrix-note"></p>
+  <div class="scroll" id="t-matrix"></div>
+</section>
+
+<section id="schaetzungen">
+  <h2>SpaceX-Schätzungen</h2>
+  <div class="finding"><h3>Sind die Verzögerungen am Programmanfang größer?</h3><p id="slip-finding"></p></div>
+  <div class="two">
+    <div><h3>Angekündigter und tatsächlicher Vorlauf</h3><div class="chart" id="c-slip"></div><div class="key"><span><i class="round" style="background:var(--s3)"></i>Falcon</span><span><i class="round" style="background:var(--s2)"></i>Dragon</span><span><i class="round" style="background:var(--s1)"></i>Starship</span><span>Hohl: überfällig, Mindestwert</span></div></div>
+    <div><h3>Faktor nach Gruppe</h3><div class="scroll" id="t-groups"></div><p class="sub">Faktor 2 heißt: Von der Ankündigung bis zum Ereignis dauerte es doppelt so lange wie angekündigt.</p></div>
+  </div>
+  <details><summary>Alle Meilensteine mit Quelle</summary><div class="scroll" id="t-ms"></div></details>
+</section>
+
+<section id="lizenz">
+  <h2>Lizenz</h2>
+  <div class="finding"><h3>Bremst die FAA die Starts?</h3><p id="lic-finding"></p></div>
+  <div class="chart" id="c-license"></div>
+  <p class="sub">Tage, in denen SpaceX bereit war und nur noch auf die Lizenz wartete. Blass: höchstens wenige Tage, nicht sicher belegt.</p>
+  <details><summary>Einschätzung je Flug mit Quelle</summary><div class="scroll" id="t-lic"></div></details>
+</section>
+
+<section id="genauigkeit">
+  <h2>Genauigkeit</h2>
+  <div class="finding"><h3>Rückblick-Test</h3><p id="bt-finding"></p></div>
+  <div class="scroll" id="t-bt"></div>
+  <h3>Wie sich die Prognose über die Zeit bewegt</h3>
+  <p class="sub">Zurückgerechnet mit dem damaligen Wissen. Waagerecht das Datum der Prognose, senkrecht der vorhergesagte Starttag.</p>
+  <div class="small4" id="c-tracks"></div>
+  <div class="key"><span><i style="background:var(--band);opacity:.2"></i>80 %-Bereich</span><span><i style="background:var(--band)"></i>Mitte</span><span><i style="background:var(--s2)"></i>offizielles NET</span><span><i style="background:var(--ink)"></i>tatsächlicher Start</span></div>
+  <h3>Prognose-Log</h3>
+  <p class="sub" id="log-note"></p>
+  <div class="scroll" id="t-log"></div>
+  <div id="live-score" style="display:grid;gap:8px"></div>
+</section>
+
+<section id="daten">
+  <h2>Daten und Annahmen</h2>
+  <div class="scroll" id="t-sources"></div>
+  <ul class="notes" id="assumptions"></ul>
+</section>
+<footer id="foot"></footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script id="payload" type="application/json">/*__DATA__*/null</script>
+<script>
+"use strict";
+const D=JSON.parse(document.getElementById("payload").textContent);
+const $=id=>document.getElementById(id);
+const NS="http://www.w3.org/2000/svg";
+const day=s=>new Date(s.slice(0,10)+"T12:00:00Z");
+const MON=["Jan.","Feb.","März","Apr.","Mai","Juni","Juli","Aug.","Sept.","Okt.","Nov.","Dez."];
+const fmt=s=>{if(!s)return "–";const x=day(s);return `${x.getUTCDate()}. ${MON[x.getUTCMonth()]} ${x.getUTCFullYear()}`};
+const fmtS=s=>{if(!s)return "–";const x=day(s);return `${x.getUTCDate()}. ${MON[x.getUTCMonth()]}`};
+const num=s=>day(s).getTime();
+const VC={V1:"var(--s3)",V2:"var(--s2)",V3:"var(--s1)"};
+function el(tag,attrs={},...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==="text")e.textContent=v;else if(k==="class")e.className=v;else e.setAttribute(k,v)}kids.forEach(c=>e.append(c));return e}
+function s(tag,attrs={},parent){const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs)){if(k==="text")e.textContent=v;else e.setAttribute(k,v)}if(parent)parent.append(e);return e}
+function link(url,label){if(!/^https:\/\//.test(url||""))return document.createTextNode(label);return el("a",{href:url,target:"_blank",rel:"noopener noreferrer",text:label})}
+function table(host,head,rows,numeric=[]){const t=el("table"),tr=el("tr");head.forEach((h,i)=>tr.append(el("th",{text:h,class:numeric.includes(i)?"num":""})));const th=el("thead");th.append(tr);t.append(th);const tb=el("tbody");rows.forEach(r=>{const row=el("tr");r.forEach((c,i)=>{const td=el("td",{class:numeric.includes(i)?"num":""});if(c instanceof Node)td.append(c);else td.textContent=c==null?"–":c;row.append(td)});tb.append(row)});t.append(tb);host.replaceChildren(t)}
+const tip=$("tip");
+function hover(node,text){const show=e=>{tip.textContent=text;tip.hidden=false;const r=tip.getBoundingClientRect(),b=node.getBoundingClientRect(),x=(e.clientX||b.x)+12,y=(e.clientY||b.y)+12;tip.style.left=Math.max(4,Math.min(x,innerWidth-r.width-8))+"px";tip.style.top=Math.max(4,Math.min(y,innerHeight-r.height-8))+"px"};node.addEventListener("pointermove",show);node.addEventListener("pointerenter",show);node.addEventListener("pointerleave",()=>tip.hidden=true);node.setAttribute("tabindex","0");node.setAttribute("aria-label",text);node.addEventListener("focus",show);node.addEventListener("blur",()=>tip.hidden=true)}
+function svgFor(id,h){const host=$(id),w=Math.max(host.clientWidth||320,260),svg=s("svg",{viewBox:`0 0 ${w} ${h}`,role:"img"});host.replaceChildren(svg);return{svg,w,h}}
+const lin=(a,b,c,d)=>x=>c+(x-a)/(b-a||1)*(d-c);
+function monthTicks(a,b,maxN){const out=[],span=(b-a)/2.6e9,step=Math.max(1,Math.ceil(span/maxN));let d=new Date(a);d=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,1));while(d.getTime()<=b){out.push(d.getTime());d=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+step,1))}return out}
+const monthLabel=t=>{const x=new Date(t);return x.getUTCMonth()===0?String(x.getUTCFullYear()):MON[x.getUTCMonth()]};
+function statusPill(kind,label){const col={good:"var(--good)",warn:"var(--warn)",bad:"var(--bad)",open:"var(--muted)"}[kind],p=el("span",{class:"pill"}),v=s("svg",{viewBox:"0 0 14 14","aria-hidden":"true"});if(kind==="good"){s("circle",{cx:7,cy:7,r:7,fill:col},v);s("path",{d:"M3.8 7.2l2.2 2.2 4.2-4.6",stroke:"#fff","stroke-width":1.8,fill:"none"},v)}else if(kind==="bad"){s("circle",{cx:7,cy:7,r:7,fill:col},v);s("path",{d:"M4.5 4.5l5 5m0-5l-5 5",stroke:"#fff","stroke-width":1.8},v)}else{s("circle",{cx:7,cy:7,r:5.8,fill:"none",stroke:col,"stroke-width":2},v)}p.append(v,document.createTextNode(label));return p}
+const median=a=>{const b=a.filter(x=>x!=null).sort((x,y)=>x-y);return b.length?(b.length%2?b[(b.length-1)/2]:(b[b.length/2-1]+b[b.length/2])/2):null};
+const nextYear=+D.as_of.slice(0,4)+1;
+const de=v=>v==null?"–":String(v).replace(".",",");
+const endS=t=>t.replace(/\.$/,"");
+
+function renderHead(){
+  const f=D.near[0],m=D.years.cases.mit;
+  $("lede").textContent=`Flug ${f.n} startet am wahrscheinlichsten um den ${fmtS(f.mode)}, mit 80 % zwischen ${fmtS(f.p10)} und ${endS(fmtS(f.p90))}. Für ${nextYear} ergibt die Rechnung etwa ${m[nextYear].p50} Flüge, für ${nextYear+1} etwa ${m[nextYear+1].p50}.`;
+  $("stamp").replaceChildren(el("span",{text:`Stand ${fmt(D.as_of)}, ${D.generated.slice(11,16)} UTC`}),el("span",{text:`Modell ${D.model_version}`}),el("span",{text:`${D.log_count} ${D.log_count===1?"Prognose":"Prognosen"} im Log`}));
+  const b=$("banners");b.replaceChildren();
+  const age=(Date.now()-new Date(D.generated).getTime())/36e5;
+  if(age>48)b.append(el("div",{class:"banner",text:`Diese Ansicht ist ${Math.round(age/24)} Tage alt und nicht aktuell. Die automatische Aktualisierung läuft offenbar nicht.`}));
+  const bad=D.status.filter(x=>!x.ok);
+  if(bad.length)b.append(el("div",{class:"banner","data-level":"warn",text:`Beim letzten Lauf fehlte: ${bad.map(x=>x.label).join(", ")}. Die Prognose nutzt dafür den letzten bekannten Stand.`}));
+}
+
+function renderCards(){
+  const host=$("cards");host.replaceChildren();
+  D.near.forEach(f=>{const net=D.net_current[f.n],c=el("article",{class:"flightcard"});
+    c.append(el("div",{class:"label",text:`Flug ${f.n} · ${f.booster} / ${f.ship} · ${f.pad}`}),el("div",{class:"day",text:fmt(f.mode)}),el("div",{class:"prob",text:`wahrscheinlichster Tag, nur etwa ${Math.max(1,Math.round(f.mode_probability*100))} % auf genau diesen Tag`}));
+    const dl=el("dl");[["Mitte",fmt(f.p50)],["50 %",`${fmtS(f.p25)} – ${fmtS(f.p75)}`],["80 %",`${fmtS(f.p10)} – ${fmtS(f.p90)}`],["NET offiziell",net?fmtS(net.net):"keines"]].forEach(([a,b])=>dl.append(el("dt",{text:a}),el("dd",{text:b})));
+    c.append(dl);host.append(c)});
+}
+
+function renderIntervals(){
+  const rows=D.near,rowH=46,top=8,bottom=26,{svg,w}=svgFor("c-intervals",top+rows.length*rowH+bottom),left=58,right=w-12;
+  const lo=num(D.as_of),hi=Math.max(...rows.map(r=>num(r.p90)))+6e8,x=lin(lo,hi,left,right);
+  monthTicks(lo,hi,w<520?5:10).forEach(t=>{s("line",{x1:x(t),x2:x(t),y1:top,y2:top+rows.length*rowH,stroke:"var(--line)"},svg);s("text",{x:x(t),y:top+rows.length*rowH+17,"text-anchor":"middle",text:monthLabel(t)},svg)});
+  const comps=D.assumptions.comparators||[];
+  rows.forEach((f,i)=>{const cy=top+i*rowH+rowH/2,g=s("g",{},svg);
+    s("text",{x:0,y:cy+4,class:"ink",text:`Flug ${f.n}`},svg);
+    s("rect",{x:x(num(f.p10)),y:cy-4,width:Math.max(2,x(num(f.p90))-x(num(f.p10))),height:8,rx:2,fill:"var(--band)",opacity:.28},g);
+    s("rect",{x:x(num(f.p25)),y:cy-7,width:Math.max(2,x(num(f.p75))-x(num(f.p25))),height:14,rx:2,fill:"var(--band)",opacity:.7},g);
+    s("circle",{cx:x(num(f.mode)),cy,r:5.5,fill:"var(--ink)",stroke:"var(--bg)","stroke-width":2},g);
+    s("rect",{x:left,y:cy-rowH/2,width:right-left,height:rowH,fill:"transparent"},g);
+    const net=D.net_current[f.n];
+    if(net&&num(net.net)>=lo&&num(net.net)<=hi){const nx=x(num(net.net));s("path",{d:`M${nx} ${cy-19}l5 5-5 5-5-5z`,fill:"var(--s2)"},svg)}
+    comps.filter(c=>c.flight===f.n).forEach(c=>{const nx=x(num(c.date));s("path",{d:`M${nx-5} ${cy+11}h10l-5 7z`,fill:"var(--muted)"},svg)});
+    hover(g,`Flug ${f.n}: wahrscheinlichster Tag ${fmt(f.mode)}. Mitte ${fmt(f.p50)}. 50 % ${fmtS(f.p25)} – ${fmtS(f.p75)}. 80 % ${fmtS(f.p10)} – ${fmtS(f.p90)}.`)});
+  const k=$("k-intervals");k.replaceChildren();
+  [["80 %-Bereich","background:var(--band);opacity:.28",""],["50 %-Bereich","background:var(--band);opacity:.7",""],["wahrscheinlichster Tag","background:var(--ink)","round"],["offizielles NET","background:var(--s2)","dia"]].forEach(([t,st,c])=>{const sp=el("span"),i=el("i",{style:st});if(c)i.className=c;sp.append(i,document.createTextNode(t));k.append(sp)});
+  if(comps.length)k.append(el("span",{text:`▼ ${comps.map(c=>`${c.label}: ${fmtS(c.date)}`).join(", ")}`}));
+  const label=m=>{const[y,mm]=m.split("-");return `${MON[+mm-1]} ${y}`};
+  table($("t-months"),["Bis Ende",...D.near.map(f=>`Flug ${f.n}`)],D.near[0].months.map((m,i)=>[label(m.month),...D.near.map(f=>Math.round(f.months[i].p*100)+" %")]),D.near.map((_,i)=>i+1));
+}
+
+let caseName="mit";
+function renderYears(){
+  const data=D.years.cases[caseName],years=Object.keys(data),m=D.years.cases.mit,c=D.years.cumulative;
+  $("year-answer").textContent=`Vermutlich ${m[nextYear].p50} Flüge in ${nextYear}, ${m[nextYear+1].p50} in ${nextYear+1} und ${m[nextYear+2].p50} in ${nextYear+2}. Bis Ende 2030 insgesamt rund ${c.mit["2030"].p50}, ohne schwere Zwischenfälle rund ${c.ohne["2030"].p50}. Die Spanne ist groß: ${nextYear+1} liegt mit 80 % zwischen ${m[nextYear+1].p10} und ${m[nextYear+1].p90} Flügen.`;
+  const H=290,{svg,w}=svgFor("c-years",H),L=38,R=w-10,T=12,B=H-26,maxV=Math.max(...years.map(y=>data[y].p90),10);
+  const yy=v=>lin(0,Math.log10(maxV*1.1),B,T)(Math.log10(Math.max(v,1)));
+  [1,3,10,30,100,300].filter(v=>v<=maxV*1.1).forEach(v=>{s("line",{x1:L,x2:R,y1:yy(v),y2:yy(v),stroke:"var(--line)"},svg);s("text",{x:L-6,y:yy(v)+4,"text-anchor":"end",text:v},svg)});
+  const step=(R-L)/years.length;
+  years.forEach((y,i)=>{const a=data[y],cx=L+step*(i+.5),g=s("g",{},svg);
+    s("rect",{x:cx-6,y:yy(a.p90),width:12,height:Math.max(2,yy(a.p10)-yy(a.p90)),rx:3,fill:"var(--band)",opacity:.25},g);
+    s("rect",{x:cx-6,y:yy(a.p75),width:12,height:Math.max(2,yy(a.p25)-yy(a.p75)),rx:3,fill:"var(--band)",opacity:.6},g);
+    s("circle",{cx,cy:yy(a.p50),r:4.5,fill:"var(--ink)",stroke:"var(--bg)","stroke-width":2},g);
+    s("text",{x:cx+10,y:yy(a.p50)+4,class:"ink",text:a.p50},svg);
+    s("text",{x:cx,y:H-8,"text-anchor":"middle",text:w<420?"’"+y.slice(2):y},svg);
+    s("rect",{x:cx-step/2,y:T,width:step,height:B-T,fill:"transparent"},g);
+    hover(g,`${y}: Mitte ${a.p50} Flüge, 50 % ${a.p25}–${a.p75}, 80 % ${a.p10}–${a.p90}`)});
+  const H2=290,f=svgFor("c-falcon",H2),l2=38,r2=f.w-10,t2=12,b2=H2-26;
+  let cum=0;const all=Object.entries(D.falcon.years).map(([y,v])=>{cum+=v;return{y,v,cum}}),fp=all.filter(p=>p.v>0&&p.cum>=2);
+  const byYear={};D.flights.forEach(x=>{const y=x.date.slice(0,4);byYear[y]=(byYear[y]||0)+1});let sc=0;
+  const sp=Object.entries(byYear).filter(([y])=>+y<+D.as_of.slice(0,4)).map(([y,v])=>{sc+=v;return{y,v,cum:sc}});
+  const fc=Object.keys(m).slice(1).map(y=>({y,v:m[y].p50,cum:c.mit[y].p50}));
+  const flown=D.flights.length,near=all.reduce((a,b)=>Math.abs(b.cum-flown)<Math.abs(a.cum-flown)?b:a);
+  $("falcon-note").textContent=`Beide Achsen logarithmisch. Waagerecht die Flüge insgesamt bis Jahresende, senkrecht die Flüge im Jahr. Mit ${flown} Flügen steht Starship etwa dort, wo Falcon 9 Ende ${near.y} stand (${near.cum} Flüge).`;
+  const xmax=Math.max(...fp.map(p=>p.cum),...fc.map(p=>p.cum)),ymax=Math.max(...fp.map(p=>p.v),...fc.map(p=>p.v)),fx=lin(0,Math.log10(xmax*1.15),l2,r2),fyy=lin(0,Math.log10(ymax*1.2),b2,t2);
+  [1,3,10,30,100].filter(v=>v<=ymax*1.2).forEach(v=>{s("line",{x1:l2,x2:r2,y1:fyy(Math.log10(v)),y2:fyy(Math.log10(v)),stroke:"var(--line)"},f.svg);s("text",{x:l2-6,y:fyy(Math.log10(v))+4,"text-anchor":"end",text:v},f.svg)});
+  [1,3,10,30,100,300].filter(v=>v<=xmax*1.15).forEach(v=>s("text",{x:fx(Math.log10(v)),y:H2-8,"text-anchor":"middle",text:v},f.svg));
+  const line=(pts,col,op,who)=>{s("polyline",{points:pts.map(p=>`${fx(Math.log10(p.cum))},${fyy(Math.log10(p.v))}`).join(" "),fill:"none",stroke:col,"stroke-width":2,opacity:op},f.svg);pts.forEach(p=>{const g=s("g",{},f.svg),cx=fx(Math.log10(p.cum)),cy=fyy(Math.log10(p.v));s("circle",{cx,cy,r:4,fill:col,opacity:op,stroke:"var(--bg)","stroke-width":2},g);s("circle",{cx,cy,r:12,fill:"transparent"},g);hover(g,`${who} ${p.y}: ${p.v} Flüge, insgesamt ${p.cum}`)})};
+  line(fp,"var(--s2)",1,"Falcon 9");line(fc,"var(--band)",.4,"Starship-Prognose");line(sp,"var(--s1)",1,"Starship");
+  const lt=D.assumptions.long_term,names={falcon:`Wie Falcon 9: Tempo wächst um ${Math.round((lt.falcon_growth-1)*100)} % pro Jahr`,production:`Produktion: heutige Fertigung (${de(D.years.production_12m)} Ships pro Jahr), wächst um ${Math.round((lt.production_growth-1)*100)} % pro Jahr`,target:`SpaceX-Ziel: ein- und zweimal pro Woche, mit Faktor ${String(lt.slip_multiplier).replace(".",",")} verspätet`};
+  table($("t-scen"),["Szenario","Gewicht",...years],Object.entries(D.years.scenarios).map(([k,v])=>[names[k],Math.round(lt.scenario_weights[k]*100)+" %",...years.map(y=>v[y]?v[y].p50:"–")]),[1,...years.map((_,i)=>i+2)]);
+}
+
+function renderStand(){
+  const n=D.next,lic=D.license.find(x=>x.n===n.n),net=D.net_current[n.n];
+  $("next-title").textContent=`Flug ${n.n}: ${n.booster.name} / ${n.ship.name}, ${n.pad}`;
+  const list=$("next-steps");list.replaceChildren();
+  [["Cryo-Test Booster",n.booster.cryo],["Cryo-Test Ship",n.ship.cryo],["Static Fire Booster",n.booster.sf],["Static Fire Ship",n.ship.sf],["Generalprobe (WDR)",n.stack.wdr],["Lizenz",lic&&lic.license_date]].forEach(([a,b])=>{const li=el("li");li.append(el("span",{text:a}),statusPill(b?"good":"open",b?fmtS(b):"offen"));list.append(li)});
+  const li=el("li");li.append(el("span",{text:"Offizielles NET"}),el("span",{text:net?fmtS(net.net):"keines",class:"pill"}));list.append(li);
+  $("next-note").textContent="Eine erteilte Lizenz erkennt das Programm nicht automatisch, das Feld kommt aus einer Datei. Es bremst die Prognose nur wenig, siehe Abschnitt Lizenz.";
+  table($("t-following"),["Flug","Fahrzeug","Letzter Test"],D.following.flatMap(f=>[f.booster,f.ship].map(v=>[f.n,v.name,v.last?`${v.last.name}, ${fmtS(v.last.date)}`:"noch kein Test erfasst"])));
+  const fl=D.flights,H=64,{svg,w}=svgFor("c-history",H),st=(w-4)/fl.length,col={success:"var(--good)",partial:"var(--warn)",failure:"var(--bad)"};
+  fl.forEach((f,i)=>{const g=s("g",{},svg),cx=2+st*(i+.5),a=Math.min(st-3,24);s("rect",{x:cx-a/2,y:6,width:a,height:a,rx:3,fill:col[f.outcome]},g);s("text",{x:cx,y:6+a+15,"text-anchor":"middle",text:f.n},svg);s("rect",{x:cx-st/2,y:0,width:st,height:H,fill:"transparent"},g);hover(g,`Flug ${f.n}, ${fmt(f.date)}: ${f.booster}/${f.ship}, ${f.version}, ${({success:"Erfolg",partial:"Teilerfolg",failure:"Fehlschlag"})[f.outcome]}`)});
+  $("k-history").replaceChildren(statusPill("good","Erfolg"),statusPill("bad","Fehlschlag"),el("span",{text:"Einordnung laut Wikipedia"}));
+  const g=D.gaps,H3=240,c=svgFor("c-gaps",H3),L=36,R=c.w-6,T=16,B=H3-24,maxG=Math.max(...g.map(x=>x.gap)),yy=lin(0,maxG,B,T);
+  [0,50,100,150,200].filter(v=>v<=maxG).forEach(v=>{s("line",{x1:L,x2:R,y1:yy(v),y2:yy(v),stroke:v?"var(--line)":"var(--axis)"},c.svg);s("text",{x:L-6,y:yy(v)+4,"text-anchor":"end",text:v},c.svg)});
+  const step=(R-L)/g.length;
+  g.forEach((x,i)=>{const cx=L+step*(i+.5),bw=Math.min(step-4,30),gg=s("g",{},c.svg),h=B-yy(x.gap);
+    s("path",{d:`M${cx-bw/2} ${B}v${-h+4}q0 -4 4 -4h${bw-8}q4 0 4 4v${h-4}z`,fill:VC[x.version],opacity:x.excluded?.4:1},gg);
+    s("text",{x:cx,y:H3-8,"text-anchor":"middle",text:x.n},c.svg);
+    if(x.gap>150||i>=g.length-2)s("text",{x:cx,y:yy(x.gap)-5,"text-anchor":"middle",class:"ink",text:x.gap},c.svg);
+    s("rect",{x:cx-step/2,y:T,width:step,height:B-T,fill:"transparent"},gg);
+    hover(gg,`Flug ${x.n}: ${x.gap} Tage seit dem Vorflug${x.excluded?". "+x.excluded:""}`)});
+  table($("t-gaps"),["Flug","Version","Tage seit Vorflug","Anmerkung"],g.map(x=>[x.n,x.version,x.gap,x.excluded||""]),[2]);
+}
+
+let vehKind="ship";
+function renderVehicles(){
+  const by=v=>D.durations.filter(r=>r.version===v),mv=(v,k)=>median(by(v).map(r=>r[k])),gapM=v=>median(D.gaps.filter(g=>g.version===v&&!g.transition&&!g.excluded).map(g=>g.gap));
+  const a3=mv("V3","ship_cryo_launch"),a2=mv("V2","ship_cryo_launch"),a1=mv("V1","ship_cryo_launch"),trans=n=>D.gaps.find(g=>g.n===n).gap;
+  const verdict=a3<=a2*1.15?"Beim Fahrzeug nicht bei null: V3 liegt ungefähr auf V2-Niveau und deutlich unter V1, ist aber auch nicht schneller als V2.":a3>=a1*.8?"Ja: V3 liegt näher an V1 als an V2.":"Teilweise: V3 liegt zwischen V1 und V2.";
+  $("v3-finding").textContent=`${verdict} Ein Ship braucht vom ersten Cryo-Test bis zum Start im Median: V1 ${de(a1)} Tage, V2 ${de(a2)} Tage, V3 ${de(a3)} Tage. Der normale Flugabstand beträgt bei V2 ${de(gapM("V2"))} Tage, bei V3 ${de(gapM("V3"))} Tage. Der Preis fällt beim Wechsel an: ${trans(7)} Tage von V1 auf V2, ${trans(12)} Tage von V2 auf V3. Mit ${by("V3").length} V3-Flügen ist das ein Zwischenstand.`;
+  const dur=D.durations.filter(r=>r.version!=="V1"),kind=vehKind,rows=dur.map(r=>({name:r[kind],version:r.version,start:r[kind+"_cryo"],sf:r[kind+"_sf"],end:r.date})).filter(r=>r.start);
+  const pend=[D.next,...D.following].map(f=>f[kind]).filter(v=>v&&v.cryo&&!v.reused).map(v=>({name:v.name,version:"V3",start:v.cryo,sf:v.sf,end:null}));
+  const all=[...rows,...pend],rowH=26,T=6,bot=28,H=T+all.length*rowH+bot,{svg,w}=svgFor("c-timeline",H),L=48,R=w-40;
+  const dd=r=>Math.round(((r.end?num(r.end):num(D.as_of))-num(r.start))/864e5),mx=Math.max(...all.map(dd),60),x=lin(0,mx,L,R);
+  for(let t=0;t<=mx;t+=30){s("line",{x1:x(t),x2:x(t),y1:T,y2:T+all.length*rowH,stroke:"var(--line)"},svg);if(t%60===0||w>560)s("text",{x:x(t),y:H-10,"text-anchor":"middle",text:t},svg)}
+  all.forEach((r,i)=>{const cy=T+i*rowH+rowH/2,g=s("g",{},svg),d=dd(r),col=VC[r.version];
+    s("text",{x:0,y:cy+4,class:"ink",text:r.name},svg);
+    s("line",{x1:x(0),x2:x(d),y1:cy,y2:cy,stroke:col,"stroke-width":3,"stroke-linecap":"round",opacity:r.end?1:.45},g);
+    s("circle",{cx:x(0),cy,r:3,fill:col},g);
+    if(r.sf){s("circle",{cx:x(Math.round((num(r.sf)-num(r.start))/864e5)),cy,r:5,fill:"var(--ink)",stroke:"var(--bg)","stroke-width":2},g)}
+    s("text",{x:x(d)+7,y:cy+4,class:"ink2",text:d+(r.end?"":"+")},svg);
+    s("rect",{x:0,y:cy-rowH/2,width:w,height:rowH,fill:"transparent"},g);
+    hover(g,`${r.name}: Cryo ${fmtS(r.start)}, Static Fire ${r.sf?fmtS(r.sf):"offen"}, ${r.end?`Start ${fmtS(r.end)}`:"noch nicht geflogen"}, ${d} Tage`)});
+  const q=D.durations.filter(r=>r.last_sf_launch!=null&&r.n>=3),H2=190,c=svgFor("c-sf",H2),l=36,r2=c.w-6,t=14,b=H2-24,ma=Math.max(...q.map(x=>x.last_sf_launch)),yy=lin(0,ma,b,t);
+  [0,25,50,75].filter(v=>v<=ma).forEach(v=>{s("line",{x1:l,x2:r2,y1:yy(v),y2:yy(v),stroke:v?"var(--line)":"var(--axis)"},c.svg);s("text",{x:l-6,y:yy(v)+4,"text-anchor":"end",text:v},c.svg)});
+  const st=(r2-l)/q.length;q.forEach((x,i)=>{const cx=l+st*(i+.5),bw=Math.min(st-4,30),h=b-yy(x.last_sf_launch),gg=s("g",{},c.svg);
+    s("path",{d:`M${cx-bw/2} ${b}v${-h+4}q0 -4 4 -4h${bw-8}q4 0 4 4v${h-4}z`,fill:VC[x.version],opacity:x.n<6?.4:1},gg);
+    s("text",{x:cx,y:H2-8,"text-anchor":"middle",text:x.n},c.svg);
+    if(st>24)s("text",{x:cx,y:yy(x.last_sf_launch)-4,"text-anchor":"middle",class:"ink2",text:x.last_sf_launch},c.svg);
+    s("rect",{x:cx-st/2,y:t,width:st,height:b-t,fill:"transparent"},gg);hover(gg,`Flug ${x.n}: ${x.last_sf_launch} Tage ab letztem Static Fire (${x.limit} war zuletzt fertig)`)});
+  table($("t-dur"),["Flug","Version","Ship","Cryo → SF","SF → Start","Booster","Cryo → SF","SF → Start","Zuletzt fertig"],D.durations.map(r=>[r.n,r.version,r.ship,r.ship_cryo_sf,r.ship_sf_launch,r.booster,r.booster_cryo_sf,r.booster_sf_launch,r.limit]),[3,4,6,7]);
+  const M=D.matrix;$("matrix-note").textContent=`Cryo-Test, Static Fire, WDR und Start kommen automatisch. Die übrigen Felder stammen aus NASASpaceflight-Berichten: ${M.manual_filled} von ${M.manual_total} sind belegt. Die Lücken sind echt, denn diese Schritte werden selten mit Datum berichtet. Deshalb gehen sie nicht in die Prognose ein. LOX- und CH₄-Stacking getrennt ließ sich kaum belegen, die Tabelle zeigt das Stacking-Ende. Blass: ungefähre Angabe.`;
+  const tb=el("tbody"),t2=el("table"),tr=el("tr"),th=el("thead");tr.append(el("th",{text:"Fahrzeug"}));M.steps.forEach(x=>tr.append(el("th",{text:M.labels[x]})));th.append(tr);t2.append(th);
+  M.rows.forEach(r=>{const row=el("tr");row.append(el("td",{text:r.vehicle}));M.steps.forEach(x=>{const c=r.cells[x],td=el("td",{class:"date"});if(!c){td.append(el("span",{class:"cell-empty",text:"·"}))}else{const pre={approx:"ca. ",before:"vor ",after:"ab "}[c.precision]||"",lab=pre+fmtS(c.date);if(c.confidence!=="hoch"||c.precision==="approx")td.className="date cell-weak";if(c.note)td.title=c.note;td.append(c.source?link(c.source,lab):document.createTextNode(lab))}row.append(td)});tb.append(row)});t2.append(tb);$("t-matrix").replaceChildren(t2);
+}
+
+function renderSlip(){
+  const M=D.milestones,g=M.groups,lang=g["Lange Vorläufe (über 12 Monate)"],kurz=g["Kurze Vorläufe (unter 3 Monaten)"],fal=g["Falcon und Dragon, alle"],st=g["Starship, alle"],overdue=M.open.filter(x=>x.overdue);
+  $("slip-finding").textContent=`Nur teilweise, und mit diesen Daten nicht sauber zu trennen. Falcon und Dragon liegen im Median bei Faktor ${de(fal.median)}, Starship bei ${de(st.median)}. Das liegt aber auch daran, dass die Starship-Liste viele kurzfristige Ankündigungen enthält: Bei unter drei Monaten Vorlauf beträgt der Faktor ${de(kurz.median)}, bei über einem Jahr ${de(lang.median)}. Der Vorlauf erklärt also mindestens so viel wie das Programmalter. Kurzfristige Starship-Termine rutschten im Median um ${de(M.short_slip_median)} Tage. ${overdue.length} überfällige Ziele fehlen im Median und würden ihn nach oben ziehen.`;
+  const H=330,{svg,w}=svgFor("c-slip",H),L=44,R=w-12,T=12,B=H-30,pts=M.done,lo=Math.log10(10),hi=Math.log10(Math.max(...pts.map(p=>p.actual_lead),...overdue.map(p=>p.actual_lead))*1.2),x=lin(lo,hi,L,R),y=lin(lo,hi,B,T);
+  [[30,"1 Mon."],[90,"3 Mon."],[365,"1 J."],[1095,"3 J."],[3650,"10 J."]].forEach(([v,l])=>{const p=Math.log10(v);if(p>hi)return;s("line",{x1:x(p),x2:x(p),y1:T,y2:B,stroke:"var(--line)"},svg);s("line",{x1:L,x2:R,y1:y(p),y2:y(p),stroke:"var(--line)"},svg);s("text",{x:x(p),y:H-14,"text-anchor":"middle",text:l},svg);s("text",{x:L-6,y:y(p)+4,"text-anchor":"end",text:l},svg)});
+  [[1,"wie angekündigt"],[3,"Faktor 3"]].forEach(([f,l])=>{const off=Math.log10(f),b=hi-off;s("line",{x1:x(lo),y1:y(lo+off),x2:x(b),y2:y(hi),stroke:"var(--axis)"},svg);const lx=lo+(hi-lo)*(f===1?.5:.16);s("text",{x:x(lx)+(f===1?10:-6),y:y(lx+off)+(f===1?14:-8),"text-anchor":f===1?"start":"end",class:"ink2",text:l},svg)});
+  const col={Falcon:"var(--s3)",Dragon:"var(--s2)",Starship:"var(--s1)"};
+  pts.forEach(p=>{const g2=s("g",{},svg),cx=x(Math.log10(p.lead)),cy=y(Math.log10(p.actual_lead));s("circle",{cx,cy,r:5,fill:col[p.program],stroke:"var(--bg)","stroke-width":2},g2);s("circle",{cx,cy,r:12,fill:"transparent"},g2);hover(g2,`${p.label}: angekündigt ${p.lead} Tage, tatsächlich ${p.actual_lead} Tage, Faktor ${de(p.ratio)}`)});
+  overdue.forEach(p=>{const g2=s("g",{},svg),cx=x(Math.log10(p.lead)),cy=y(Math.log10(p.actual_lead));s("circle",{cx,cy,r:4.5,fill:"var(--panel)",stroke:col[p.program],"stroke-width":2},g2);s("circle",{cx,cy,r:12,fill:"transparent"},g2);hover(g2,`${p.label}: angekündigt ${p.lead} Tage, bisher ${p.actual_lead} Tage und noch offen`)});
+  s("text",{x:R,y:H-1,"text-anchor":"end",text:"angekündigter Vorlauf →"},svg);
+  table($("t-groups"),["Gruppe","Anzahl","Median-Faktor"],Object.entries(g).map(([k,v])=>[k,v.n,de(v.median)]),[1,2]);
+  table($("t-ms"),["Meilenstein","Programm","Angekündigt","Ziel","Tatsächlich","Faktor","Quelle"],M.done.map(m=>[m.label,m.program,m.announced,m.target,m.actual,de(m.ratio),link(m.source,"Quelle")]).concat(M.open.map(m=>[m.label,m.program,m.announced,m.target,m.overdue?"überfällig":"offen",m.overdue?"≥ "+de(m.ratio_min):"–",link(m.source,"Quelle")])),[5]);
+}
+
+function renderLicense(){
+  const L0=D.license,known=L0.filter(x=>x.wait_max!=null),big=known.filter(x=>x.wait_min>0),zero=known.filter(x=>x.wait_min===0),a=D.assumptions.license;
+  $("lic-finding").textContent=`Dein Eindruck stimmt für die meisten Flüge. Bei ${zero.length} von ${known.length} einschätzbaren Flügen ist höchstens eine Wartezeit von wenigen Tagen erkennbar, die Lizenz kam oft kurz vor dem Start. Es gibt aber Gegenbeispiele: ${big.map(x=>`Flug ${x.n} (${x.wait_min}–${x.wait_max} Tage)`).join(" und ")}. Deshalb sagt eine fehlende Lizenz wenig aus, und die Prognose rechnet sie nicht als Sperre. Sie nimmt normal ${Math.round(a.p_normal*100)} % Wahrscheinlichkeit für eine Wartezeit an, bei einem neuen Flugprofil wie Flug 15 ${Math.round(a.p_new_profile*100)} % mit im Median ${a.median_days_new} Tagen. Die Werte sind eine Einschätzung aus teils einseitigen Quellen und keine Messung.`;
+  const rowH=20,T=6,H=T+known.length*rowH+28,{svg,w}=svgFor("c-license",H),l=62,R=w-44,mx=Math.max(...known.map(x=>x.wait_max)),x=lin(0,mx,l,R);
+  [0,20,40,60].filter(v=>v<=mx).forEach(v=>{s("line",{x1:x(v),x2:x(v),y1:T,y2:T+known.length*rowH,stroke:v?"var(--line)":"var(--axis)"},svg);s("text",{x:x(v),y:H-10,"text-anchor":"middle",text:v},svg)});
+  known.forEach((f,i)=>{const cy=T+i*rowH+rowH/2,g=s("g",{},svg),lab=f.wait_max===0?"0":`${f.wait_min}–${f.wait_max}`;s("text",{x:0,y:cy+4,class:"ink",text:`Flug ${f.n}`},svg);
+    if(f.wait_max>0)s("rect",{x:x(f.wait_min),y:cy-5,width:Math.max(3,x(f.wait_max)-x(f.wait_min)),height:10,rx:3,fill:"var(--s1)",opacity:f.wait_min>0?1:.45},g);else s("circle",{cx:x(0),cy,r:3.5,fill:"var(--s1)"},g);
+    s("text",{x:x(f.wait_max)+8,y:cy+4,class:"ink2",text:lab},svg);s("rect",{x:0,y:cy-rowH/2,width:w,height:rowH,fill:"transparent"},g);hover(g,`Flug ${f.n}: ${lab} Tage Wartezeit. ${f.note}`)});
+  table($("t-lic"),["Flug","Lizenz","Wartezeit","Vertrauen","Grundlage",""],L0.map(x=>[x.n,x.license_date?fmt(x.license_date):"–",x.wait_max==null?"unklar":x.wait_max===0?"0":`${x.wait_min}–${x.wait_max}`,x.confidence,x.note,link(x.source,"Quelle")]));
+}
+
+function renderAccuracy(){
+  const B=D.backtest_summary,A=B["alle"],b14=B["14"],b30=B["30"],cmp=(a,b)=>a<b?"besser":a>b?"schlechter":"gleich gut";
+  const b7=B["7"],b60=B["60"];
+  $("bt-finding").textContent=`Für die Flüge ab 7 wurde die Prognose mit dem damaligen Wissen nachgerechnet, insgesamt ${A.count} Zeitpunkte. Der 80 %-Bereich traf in ${Math.round(A.in80*100)} % der Fälle, bei 60 Tagen Vorlauf aber nur in ${Math.round(b60.in80*100)} %. Verglichen dort, wo ein NET vorlag, liegt die Mitte daneben: vier Wochen vorher ${de(b30.model_mae_where_net)} Tage gegen ${de(b30.net_mae)} Tage beim NET, zwei Wochen vorher ${de(b14.model_mae_where_net)} gegen ${de(b14.net_mae)}, eine Woche vorher ${de(b7.model_mae_where_net)} gegen ${de(b7.net_mae)}. Der einfache Abstand zum Vorflug liegt bei ${de(A.cadence_mae)} Tagen. Vorsicht: Das Modell entstand mit Blick auf genau diese Flüge, die Fahrzeugzuordnung war bekannt, und für Flug 16 und später gibt es keine vergleichbare Prüfung. Aussagekräftig wird erst das Log künftiger Flüge.`;
+  const lab={"60":"60 Tage vorher","30":"30 Tage vorher","14":"14 Tage vorher","7":"7 Tage vorher","alle":"Alle"};
+  table($("t-bt"),["Vorlauf","Zeitpunkte","Fehler Modell","Fehler NET","NET-Werte","Fehler Abstand","Verzerrung","Treffer 50 %","Treffer 80 %"],Object.entries(B).sort((a,b)=>(+b[0]||-1)-(+a[0]||-1)).map(([k,v])=>[lab[k],v.count,de(v.model_mae)+" T",v.net_mae==null?"–":de(v.net_mae)+" T",v.net_count,de(v.cadence_mae)+" T",(v.model_bias>0?"+":"")+de(v.model_bias)+" T",Math.round(v.in50*100)+" %",Math.round(v.in80*100)+" %"]),[1,2,3,4,5,6,7,8]);
+  const host=$("c-tracks");host.replaceChildren();
+  const drawn=Object.entries(D.tracks).filter(([,t])=>t.track.length>=2);
+  drawn.forEach(([n,t])=>{const box=el("div");box.append(el("h3",{text:t.actual?`Flug ${n}, Start ${fmtS(t.actual)}`:`Flug ${n}, noch offen`}),el("div",{class:"chart",id:"tr-"+n}));host.append(box)});
+  drawn.forEach(([n,t])=>{const cid="tr-"+n;
+    const H=210,{svg,w}=svgFor(cid,H),L=48,R=w-6,T=8,B2=H-24,tr=t.track,xs=tr.map(p=>num(p.as_of)),vals=[...tr.flatMap(p=>[num(p.p10),num(p.p90)]),...tr.filter(p=>p.net).map(p=>num(p.net))];if(t.actual)vals.push(num(t.actual));
+    const x=lin(Math.min(...xs),Math.max(...xs),L,R),y=lin(Math.min(...vals),Math.max(...vals),B2,T);
+    monthTicks(Math.min(...vals),Math.max(...vals),4).forEach(v=>{s("line",{x1:L,x2:R,y1:y(v),y2:y(v),stroke:"var(--line)"},svg);s("text",{x:L-5,y:y(v)+4,"text-anchor":"end",text:monthLabel(v)},svg)});
+    monthTicks(Math.min(...xs),Math.max(...xs),3).forEach(v=>s("text",{x:x(v),y:H-8,"text-anchor":"middle",text:monthLabel(v)},svg));
+    s("polygon",{points:[...tr.map(p=>`${x(num(p.as_of))},${y(num(p.p90))}`),...[...tr].reverse().map(p=>`${x(num(p.as_of))},${y(num(p.p10))}`)].join(" "),fill:"var(--band)",opacity:.18},svg);
+    s("polyline",{points:tr.map(p=>`${x(num(p.as_of))},${y(num(p.p50))}`).join(" "),fill:"none",stroke:"var(--band)","stroke-width":2},svg);
+    const nets=tr.filter(p=>p.net);if(nets.length){let path="";nets.forEach((p,i)=>{const px=x(num(p.as_of)),py=y(num(p.net));path+=i?`H${px}V${py}`:`M${px} ${py}`});s("path",{d:path,fill:"none",stroke:"var(--s2)","stroke-width":2},svg)}
+    if(t.actual)s("line",{x1:L,x2:R,y1:y(num(t.actual)),y2:y(num(t.actual)),stroke:"var(--ink)","stroke-width":1.5},svg);
+    tr.forEach(p=>{const g=s("g",{},svg);s("rect",{x:x(num(p.as_of))-8,y:T,width:16,height:B2-T,fill:"transparent"},g);hover(g,`Am ${fmtS(p.as_of)}: Mitte ${fmtS(p.p50)}, 80 % ${fmtS(p.p10)} – ${fmtS(p.p90)}${p.net?`, NET ${fmtS(p.net)}`:""}`)})});
+  $("log-note").textContent="Jeder Stand bleibt im Log und wird nie überschrieben: neu bei geänderten Daten, sonst einmal pro Woche. Die Tabelle zeigt die letzten Einträge, die vollständige Datei liegt unter data/log/forecasts.jsonl.";
+  const ns=D.near.map(f=>f.n);
+  table($("t-log"),["Stand","Modell",...ns.map(n=>`Flug ${n}`),`Flüge ${nextYear}`],[...D.log].reverse().slice(0,12).map(e=>[fmt(e.as_of),e.model_version,...ns.map(n=>{const x=e.flights.find(f=>f.n===n);return x?fmtS(x.mode):"–"}),e.years[nextYear]??"–"]));
+  const live=$("live-score");live.replaceChildren();
+  if(D.scored.length){const b=el("div",{class:"scroll"});live.append(el("h3",{text:"Bewertung der echten Prognosen"}),b);table(b,["Prognose vom","Flug","Vorlauf","Fehler Mitte","Fehler wahrsch. Tag","Im 80 %-Bereich"],D.scored.slice(-20).reverse().map(x=>[fmt(x.as_of),x.n,x.lead+" T",x.error+" T",x.mode_error+" T",x.in80?"ja":"nein"]))}
+  else live.append(el("p",{class:"sub",text:"Echte Prognosen werden bewertet, sobald der erste vorhergesagte Flug gestartet ist."}));
+}
+
+function renderData(){
+  table($("t-sources"),["Quelle","Letzter Lauf","Ergebnis"],D.status.map(x=>[x.url?link(x.url,x.label):x.label,statusPill(x.ok?"good":"bad",x.ok?"erreichbar":"Fehler"),x.detail]));
+  const a=D.assumptions,up=D.upcoming["16"],ms=D.milestones,items=[
+    "Nächste Flüge: Jede Simulation zieht die verbleibenden Abschnitte aus früheren Fahrzeugen, V3 zählt dreifach. Maßgeblich ist das später fertige Fahrzeug. Dazu kommt das offizielle NET, korrigiert um frühere Verschiebungen bei ähnlichem Vorlauf.",
+    ...(up?[`Flug 16: ${Math.round((up.pad_probability||1)*100)} % Wahrscheinlichkeit für ${up.pad}, mit im Median ${a.pad.new_pad_median_days} zusätzlichen Tagen für den neuen Startplatz. Das ist eine Annahme.`]:[]),
+    "Ab dem dritten Flug stehen meist weder Fahrzeugstand noch NET zur Verfügung, die Prognose folgt dann dem Flugabstand. Die Zuordnung dieser Flüge schreibt nur die Seriennummern fort.",
+    `Jahreswerte: drei Szenarien, Risiko eines schweren Zwischenfalls anfangs ${Math.round(a.long_term.hazard_at_14*100)} % pro Flug, danach mit der Flugzahl fallend. Die Form des Rückgangs stammt aus dem Falcon-9-Verlauf.`,
+    `Die Meilenstein-Liste hat ${ms.done.length} abgeschlossene und ${ms.open.length} offene Einträge. Die Falcon- und Dragon-Daten sowie der Faktor ${String(a.long_term.slip_multiplier).replace(".",",")} stammen überwiegend aus einer Sekundärquelle und sind nicht vollständig an Primärquellen geprüft.`,
+    "X-Konten und die NASASpaceflight-Seiten lassen sich nicht automatisch abrufen. Produktionsschritte und Lizenzen aktualisieren sich deshalb nicht von selbst, Testereignisse, Flüge und Zieldaten schon.",
+    "Änderbar in data/manual/: Annahmen, Lizenzen, Produktionsschritte und Meilensteine."];
+  $("assumptions").replaceChildren(...items.map(t=>el("li",{text:t})));
+  $("foot").textContent="Privates Auswertungsprojekt, nicht mit SpaceX verbunden. Prognosen sind Schätzungen.";
+}
+
+function renderAll(){renderHead();renderCards();renderIntervals();renderYears();renderStand();renderVehicles();renderSlip();renderLicense();renderAccuracy();renderData()}
+function toggle(a,b,fn){$(a).addEventListener("click",()=>{$(a).setAttribute("aria-pressed","true");$(b).setAttribute("aria-pressed","false");fn()})}
+toggle("case-mit","case-ohne",()=>{caseName="mit";renderYears()});toggle("case-ohne","case-mit",()=>{caseName="ohne";renderYears()});
+toggle("veh-ship","veh-booster",()=>{vehKind="ship";renderVehicles()});toggle("veh-booster","veh-ship",()=>{vehKind="booster";renderVehicles()});
+renderAll();
+let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(renderAll,150)});
+</script>

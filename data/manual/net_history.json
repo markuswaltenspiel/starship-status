@@ -1,0 +1,72 @@
+[
+ {
+  "flight": 12,
+  "seen": "2026-04-03",
+  "net": "2026-05-08",
+  "precision": "range",
+  "source": "Musk 4–6 Wochen"
+ },
+ {
+  "flight": 12,
+  "seen": "2026-05-01",
+  "net": "2026-05-15",
+  "precision": "day",
+  "source": "Wikipedia"
+ },
+ {
+  "flight": 13,
+  "seen": "2026-06-25",
+  "net": "2026-07-16",
+  "precision": "day",
+  "source": "Teslarati"
+ },
+ {
+  "flight": 14,
+  "seen": "2026-07-28",
+  "net": "2026-09-01",
+  "precision": "range",
+  "source": "NSF"
+ },
+ {
+  "flight": 14,
+  "seen": "2026-09-05",
+  "net": "2026-09-22",
+  "precision": "day",
+  "source": "NSF"
+ },
+ {
+  "flight": 14,
+  "seen": "2026-09-20",
+  "net": "2026-09-28",
+  "precision": "day",
+  "source": "Space.com"
+ },
+ {
+  "flight": 15,
+  "seen": "2026-09-24",
+  "net": "2026-10-19",
+  "precision": "day",
+  "source": "Planungsfolie Cadena"
+ },
+ {
+  "flight": 15,
+  "seen": "2026-10-08",
+  "net": "2026-11-08",
+  "precision": "day",
+  "source": "Planungsfolie Cadena"
+ },
+ {
+  "flight": 15,
+  "seen": "2026-10-29",
+  "net": "2026-11-12",
+  "precision": "day",
+  "source": "Planungsfolie / Wikipedia"
+ },
+ {
+  "flight": 16,
+  "seen": "2026-10-28",
+  "net": "2026-12-10",
+  "precision": "day",
+  "source": "Wikipedia"
+ }
+]
