@@ -87,7 +87,6 @@ def forecast(as_of, flight_days, seed=11, tankers=None):
         spacex_crew = max(landing_demo + lag("demo_to_crew_days"), after(days, landing_demo, tankers + 2))
         blue = reference("blue_lander")
         pathfinder = reference("blue_pathfinder")
-        blue = max(blue, pathfinder + lag("pathfinder_to_crew_days"))
         suit = _d(a["suit_sortie"]).toordinal() + rng.gauss(0, a["suit_sigma_days"]) if rng.random() < a["suit_sortie_share"] else _d(a["suit_late"]).toordinal() + rng.gauss(0, a["suit_sigma_days"])
         a4 = max(min(spacex_crew, blue), a3 + lag("a3_to_a4_days"), suit)
         a5 = a4 + lag("a4_to_a5_days")
