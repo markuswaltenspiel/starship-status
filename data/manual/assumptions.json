@@ -1,5 +1,5 @@
 {
- "model_version": "1.1",
+ "model_version": "1.2",
  "simulations": 6000,
  "license": {
   "p_new_profile": 0.25,
@@ -53,5 +53,10 @@
   14,
   40
  ],
- "cadence_share": 0.5
+ "cadence_share": 0.5,
+ "review_after_flight": 17,
+ "open_mishap_days": [
+  30,
+  0.6
+ ]
 }

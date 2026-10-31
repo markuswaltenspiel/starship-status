@@ -1,0 +1,93 @@
+{
+"flight": 15,
+"items": [
+{
+"title": "Booster 22 Proof Campaign",
+"confirmed": true
+},
+{
+"title": "Ship 42 Proof Campaign",
+"confirmed": true
+},
+{
+"title": "Booster 22's Raptor 3 Engines Installed",
+"confirmed": true
+},
+{
+"title": "Ship 42's Raptor 3 Engines Installed",
+"confirmed": true
+},
+{
+"title": "Booster 22 Static Fire Campaign",
+"confirmed": true
+},
+{
+"title": "Ship 42 Static Fire Campaign",
+"confirmed": true
+},
+{
+"title": "Confirmation from SpaceX",
+"confirmed": false
+},
+{
+"title": "Payload Loaded",
+"confirmed": false
+},
+{
+"title": "Booster 22 at Launch Site",
+"confirmed": false
+},
+{
+"title": "Ship 42 at Launch Site",
+"confirmed": false
+},
+{
+"title": "Vehicles Stacked",
+"confirmed": false
+},
+{
+"title": "FAA Operations Advisory",
+"confirmed": false
+},
+{
+"title": "COMPASS Airspace Advisory",
+"confirmed": false
+},
+{
+"title": "Notice To Air Mission (NOTAM) for Launch",
+"confirmed": false
+},
+{
+"title": "USCG Notice to Mariners (NOTMAR) for Launch",
+"confirmed": false
+},
+{
+"title": "NGA Notice to Mariners (NOTMAR) for Launch",
+"confirmed": false
+},
+{
+"title": "Notice To Air Mission (NOTAM) for Ship Splashdown",
+"confirmed": false
+},
+{
+"title": "NGA Notice to Mariners (NOTMAR) for Ship Splashdown",
+"confirmed": false
+},
+{
+"title": "Temporary Flight Restriction (TFR)",
+"confirmed": false
+},
+{
+"title": "Road Closure for Launch",
+"confirmed": false
+},
+{
+"title": "Wet Dress Rehearsal (WDR)",
+"confirmed": false
+},
+{
+"title": "Regulatory Approval",
+"confirmed": false
+}
+]
+}

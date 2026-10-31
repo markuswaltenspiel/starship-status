@@ -1,0 +1,294 @@
+{
+"steps": {
+"S24": {
+"engines": {
+"date": "2022-06-09",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S30": {
+"rollout_test": {
+"date": "2024-07-21",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S31": {
+"rollout_test": {
+"date": "2024-05-11",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"engines": {
+"date": "2024-07-05",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S33": {
+"stack_done": {
+"date": "2024-08-23",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"engines": {
+"date": "2024-12-11",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"rollout_pad": {
+"date": "2025-01-09",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S34": {
+"rollout_test": {
+"date": "2025-02-10",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"rollout_pad": {
+"date": "2025-03-01",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S37": {
+"rollout_pad": {
+"date": "2025-07-28",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S38": {
+"engines": {
+"date": "2025-08-14",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"rollout_pad": {
+"date": "2025-09-17",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S39": {
+"stack_done": {
+"date": "2025-11-15",
+"precision": "approx",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"rollout_test": {
+"date": "2026-02-26",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"rollout_pad": {
+"date": "2026-05-09",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S40": {
+"stack_done": {
+"date": "2026-03-02",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"engines": {
+"date": "2026-06-23",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S41": {
+"rollout_test": {
+"date": "2026-08-18",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S42": {
+"stack_start": {
+"date": "2026-07-03",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"rollout_test": {
+"date": "2026-09-02",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"rollout_pad": {
+"date": "2026-09-11",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"B8": {
+"stack_done": {
+"date": "2022-07-08",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B10": {
+"stack_done": {
+"date": "2023-03-15",
+"precision": "approx",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B11": {
+"stack_done": {
+"date": "2023-06-15",
+"precision": "approx",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B12": {
+"stack_start": {
+"date": "2023-06-15",
+"precision": "approx",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+},
+"engines": {
+"date": "2024-01-15",
+"precision": "approx",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+},
+"rollout_pad": {
+"date": "2024-09-20",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B13": {
+"stack_done": {
+"date": "2024-02-03",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+},
+"rollout_test": {
+"date": "2024-04-25",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B14": {
+"rollout_pad": {
+"date": "2025-05-13",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B15": {
+"rollout_pad": {
+"date": "2025-02-25",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B16": {
+"stack_start": {
+"date": "2024-10-24",
+"precision": "approx",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B17": {
+"stack_start": {
+"date": "2025-01-04",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+},
+"rollout_test": {
+"date": "2025-04-08",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B18": {
+"stack_start": {
+"date": "2025-05-19",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+},
+"rollout_test": {
+"date": "2025-11-20",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B19": {
+"stack_start": {
+"date": "2025-11-27",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+},
+"stack_done": {
+"date": "2025-12-24",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+},
+"rollout_test": {
+"date": "2026-02-01",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+},
+"engines": {
+"date": "2026-02-09",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+},
+"rollout_pad": {
+"date": "2026-03-08",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+},
+"B20": {
+"rollout_test": {
+"date": "2026-06-05",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Super_Heavy_boosters"
+}
+}
+},
+"versions": {
+"S24": "V1",
+"S25": "V1",
+"S26": "V1",
+"S28": "V1",
+"S29": "V1",
+"S30": "V1",
+"S31": "V1",
+"S32": "V1",
+"S33": "V2",
+"S34": "V2",
+"S35": "V2",
+"S36": "V2",
+"S37": "V2",
+"S38": "V2",
+"S39": "V3",
+"S40": "V3",
+"S41": "V3",
+"S42": "V3",
+"B7": "V1",
+"B8": "V1",
+"B9": "V1",
+"B10": "V1",
+"B11": "V1",
+"B12": "V1",
+"B13": "V1",
+"B14": "V2",
+"B15": "V2",
+"B16": "V2",
+"B17": "V2",
+"B18": "V3",
+"B19": "V3",
+"B20": "V3"
+}
+}

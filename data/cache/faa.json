@@ -1,0 +1,68 @@
+[
+{
+"date": "2024-06-05",
+"headline": "SpaceX Starship Flight 4 The FAA is responsible for and committed to protecting the public during commercial space transportation launch and reen",
+"kind": "other",
+"flight": 4
+},
+{
+"date": "2025-03-31",
+"headline": "SpaceX Starship Flight 7 Mishap Investigation (Closed on March 28, 2025) The FAA-required investigation of the SpaceX Starship Flight 7 mishap on",
+"kind": "mishap_closed",
+"flight": 7
+},
+{
+"date": "2025-05-06",
+"headline": "FAA Issues Final Environmental Assessment for SpaceX Starship in Texas The FAA has issued its Final Environmental Assessment (EA) analyzing SpaceX’s p",
+"kind": "other",
+"flight": null
+},
+{
+"date": "2025-05-15",
+"headline": "FAA Statement on SpaceX Starship Flight 9 License Approval The FAA approved license modifications for the SpaceX Starship Flight 9 mission",
+"kind": "approval",
+"flight": 9
+},
+{
+"date": "2025-05-22",
+"headline": "FAA Approves SpaceX Starship Vehicle Return to Flight The FAA conducted a comprehensive safety review of the SpaceX Starship Flight 8 mishap and deter",
+"kind": "approval",
+"flight": 8
+},
+{
+"date": "2025-05-30",
+"headline": "FAA Requires Mishap Investigation for SpaceX Starship Flight 9 The FAA is requiring SpaceX to conduct a mishap investigation for the Starship Flight 9",
+"kind": "mishap_open",
+"flight": 9
+},
+{
+"date": "2025-06-12",
+"headline": "FAA Closes SpaceX Starship Flight 8 Mishap Investigation The FAA-required investigation of the SpaceX Starship Flight 8 mishap is closed",
+"kind": "mishap_closed",
+"flight": 8
+},
+{
+"date": "2025-08-15",
+"headline": "FAA Closes SpaceX Starship Flight 9 Mishap Investigation, Flight 10 Can Proceed The FAA-required investigation of the SpaceX Starship Flight 9 mishap ",
+"kind": "mishap_closed",
+"flight": 9
+},
+{
+"date": "2026-05-22",
+"headline": "SpaceX Starship Flight 12 Anomaly The FAA is aware an anomaly occurred during the SpaceX Starship Flight 12 mission that launched from Starbase,",
+"kind": "other",
+"flight": 12
+},
+{
+"date": "2026-05-27",
+"headline": "FAA Requires Mishap Investigation of SpaceX Starship Flight 12 After a thorough assessment of the operation, the FAA has determined the May 22 SpaceX ",
+"kind": "mishap_open",
+"flight": 12
+},
+{
+"date": "2026-07-13",
+"headline": "FAA Closes SpaceX Starship Flight 12 Mishap Investigation, Flight 13 Can Proceed The FAA-required investigation of the SpaceX Starship Flight 12 launc",
+"kind": "mishap_closed",
+"flight": 12
+}
+]

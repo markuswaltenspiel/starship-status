@@ -59,9 +59,43 @@ class Data:
                 m = re.fullmatch(r"Booster (\d+)/Ship (\d+)", v["name"])
                 if m:
                     self.stacks[(f"B{m.group(1)}", f"S{m.group(2)}")] = v["events"]
+        self.steps = self._cache("wiki_steps", {"steps": {}, "versions": {}})
+        self.status = self._cache("status", None)
+        self.faa = self._cache("faa", [])
         self._merge_new_flights()
         self.all_flights = list(self.flights)
         self.net = self._net_history()
+
+    @staticmethod
+    def _cache(name, default):
+        path = CACHE / f"{name}.json"
+        return json.loads(path.read_text()) if path.exists() else default
+
+    def version_of(self, ship):
+        return self.steps["versions"].get(ship, "V3")
+
+    def checklist_vehicles(self):
+        """Fahrzeuge des nächsten Flugs stehen in den Punkten der Checkliste."""
+        if not self.status:
+            return None, None
+        titles = " ".join(i["title"] for i in self.status["items"])
+        b = re.search(r"Booster (\d+)", titles)
+        s = re.search(r"Ship (\d+)", titles)
+        return (f"B{b.group(1)}" if b else None), (f"S{s.group(1)}" if s else None)
+
+    def license_cleared(self, n):
+        if self.status and self.status["flight"] == n:
+            return any(i["title"] == "Regulatory Approval" and i["confirmed"] for i in self.status["items"])
+        return False
+
+    def open_mishap(self):
+        """Letzter geflogener Flug mit offener FAA-Untersuchung, sonst None."""
+        opened = [r for r in self.faa if r["kind"] == "mishap_open" and r["flight"]]
+        if not opened:
+            return None
+        last = opened[-1]
+        closed = any(r["kind"] == "mishap_closed" and r["date"] >= last["date"] and (r["flight"] or 0) >= last["flight"] for r in self.faa)
+        return None if closed else last
 
     def _merge_new_flights(self):
         """Neue Flüge erkennt das Programm selbst an den Ereignissen der Stapel."""
@@ -73,7 +107,7 @@ class Data:
                     outcome = {6: "success", 7: "partial", 8: "failure"}[e["status"]]
                     upcoming = self.meta["upcoming"].get(m.group(1), {})
                     self.flights.append({"n": int(m.group(1)), "date": e["date"][:10], "booster": b, "ship": s,
-                                         "version": "V3", "pad": upcoming.get("pad", e["location"].split(",")[0]), "outcome": outcome, "auto": True})
+                                         "version": self.version_of(s), "pad": upcoming.get("pad", e["location"].split(",")[0]), "outcome": outcome, "auto": True})
         self.flights.sort(key=lambda f: f["n"])
 
     def _net_history(self):
@@ -113,6 +147,10 @@ class Data:
         if f:
             return f["booster"], f["ship"], f["pad"]
         up = self.meta["upcoming"].get(str(n))
+        if self.status and self.status["flight"] == n:
+            b, s = self.checklist_vehicles()
+            if b and s:
+                return b, s, up["pad"] if up else "Pad 2"
         if up:
             return up["booster"], up["ship"], up["pad"]
         flown = {f["booster"] for f in self.all_flights} | {f["ship"] for f in self.all_flights}
@@ -175,8 +213,16 @@ def durations(data):
 def gaps(data):
     out = []
     for a, b in zip(data.flights, data.flights[1:]):
-        out.append({"n": b["n"], "gap": (d(b["date"]) - d(a["date"])).days, "version": b["version"], "transition": a["version"] != b["version"],
-                    "excluded": data.meta["gap_excluded"].get(str(b["n"]))})
+        gap = (d(b["date"]) - d(a["date"])).days
+        reason = data.meta["gap_excluded"].get(str(b["n"]))
+        recent = [g["gap"] for g in out if not g["excluded"]][-5:]
+        # Die Regel gilt nur für neue Flüge; die bisherigen sind in flights.json von Hand eingeordnet
+        is_new = b.get("auto", False)
+        if is_new and not reason and a["outcome"] == "failure" and recent and gap > 2 * statistics.median(recent):
+            reason = "Lange Pause nach Fehlschlag"
+        if is_new and not reason and a["version"] != b["version"]:
+            reason = "Versionswechsel"
+        out.append({"n": b["n"], "gap": gap, "version": b["version"], "transition": a["version"] != b["version"], "excluded": reason})
     return out
 
 
@@ -272,14 +318,19 @@ def sample_flight(data, n, as_of, rng, table, prev_sample=None, gap_pool=None):
     # Solange ein Fahrzeug nicht fertig getestet ist, sagt der Flugabstand ähnlich viel wie die Pipeline
     both_done = data.final_sf(ship, n, as_of) and data.final_sf(booster, n, as_of)
     this_flight = next((f for f in data.all_flights if f["n"] == n), None)
-    same_version = not last or (this_flight["version"] if this_flight else "V3") == last[-1]["version"]
+    same_version = not last or (this_flight["version"] if this_flight else data.version_of(ship)) == last[-1]["version"]
     if not both_done and same_version and gap_pool and rng.random() < cfg["cadence_share"]:
         cadence = (prev_sample if prev_sample is not None else prior) + draw(rng, gap_pool, 0.2)
         if cadence >= 1:
             pipeline = cadence
 
     entry = data.license.get(n)
-    pipeline += license_wait(rng, cfg, entry, as_of)
+    if not data.license_cleared(n):
+        pipeline += license_wait(rng, cfg, entry, as_of)
+    mishap = data.open_mishap()
+    if mishap and n == (last[-1]["n"] + 1 if last else n) and d(mishap["date"]) <= as_of:
+        median_days, sigma = cfg["open_mishap_days"]
+        pipeline += rng.lognormvariate(math.log(median_days), sigma)
 
     up = data.meta["upcoming"].get(str(n), {})
     is_new_pad = pad == "LC-39A" and not any(f["pad"] == "LC-39A" for f in last)
@@ -401,7 +452,9 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
     by_scenario = {s: {y: [] for y in years} for s in names}
     flown_before = {f["n"] for f in data.flights if d(f["date"]) <= as_of}
     done_year = {y: sum(1 for f in data.flights if d(f["date"]).year == y and d(f["date"]) <= as_of) for y in years}
-    horizon = date(last_year, 12, 31)
+    horizon = date(last_year + 4, 12, 31)
+    year_end = date(last_year, 12, 31)
+    flight_days = []
     for run in runs:
         scenario = rng.choices(names, [lt["scenario_weights"][s] for s in names])[0]
         if scenario == "falcon":
@@ -424,6 +477,7 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
             day = as_of + timedelta(days=round(near[-1]))
             n = len(flown_before) + len(near)
             local = random.Random(rng.random())
+            days_list = sorted((as_of + timedelta(days=round(x))).toordinal() for x in near)
             while True:
                 r = max(rate(day) * scale, 1.0)
                 step = 365 / r * local.lognormvariate(0, lt["gap_sigma"])
@@ -433,10 +487,14 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
                         step += local.choice(lt["stand_down_days"]) * (n / 14) ** -0.3
                 day += timedelta(days=max(1, round(step)))
                 n += 1
-                if day > horizon:
+                if day > horizon or len(days_list) > 250:
                     break
+                if incidents:
+                    days_list.append(day.toordinal())
                 if day.year in count:
                     count[day.year] += 1
+            if incidents:
+                flight_days.append(days_list)
             for y in years:
                 by_case[case][y].append(count[y])
                 if incidents:
@@ -447,7 +505,7 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
         pick = lambda p: s[min(len(s) - 1, int(p * len(s)))]
         return {"p10": pick(.1), "p25": pick(.25), "p50": pick(.5), "p75": pick(.75), "p90": pick(.9)}
 
-    out = {"current_rate": round(current, 1), "production_12m": produced, "cases": {}, "scenarios": {}, "cumulative": {}}
+    out = {"flight_days": flight_days, "current_rate": round(current, 1), "production_12m": produced, "cases": {}, "scenarios": {}, "cumulative": {}}
     for case, table in by_case.items():
         out["cases"][case] = {str(y): stats(v) for y, v in table.items()}
         total_before = sum(1 for f in data.flights if d(f["date"]).year < as_of.year)
@@ -552,3 +610,79 @@ def milestone_stats():
     short_slips = [x["slip"] for x in done if x["kind"] == "kurz"]
     return {"done": done, "open": still, "groups": {k: {"median": median(v), "n": len(v)} for k, v in groups.items()},
             "short_slip_median": median(short_slips)}
+
+
+def _fit(points):
+    """Logarithmische Trendlinie; Rückgabe: Änderung in Prozent je Einheit von x."""
+    points = [(x, y) for x, y in points if y and y > 0]
+    if len(points) < 4:
+        return None
+    mx = statistics.mean(x for x, _ in points)
+    my = statistics.mean(math.log(y) for _, y in points)
+    den = sum((x - mx) ** 2 for x, _ in points)
+    if not den:
+        return None
+    slope = sum((x - mx) * (math.log(y) - my) for x, y in points) / den
+    return slope
+
+
+def _rolling(values, width=3):
+    out = []
+    for i in range(len(values)):
+        window = [v for v in values[max(0, i - width + 1): i + 1] if v is not None]
+        out.append(statistics.median(window) if len(window) == width or (i >= width - 1 and window) else None)
+    return out
+
+
+def _median_by(rows, field):
+    groups = {}
+    for r in rows:
+        if r.get(field) is not None:
+            groups.setdefault(r["version"], []).append(r[field])
+    return {k: statistics.median(v) for k, v in groups.items()}
+
+
+def trends(data, steps_table):
+    """Wie entwickeln sich Flugabstand, Testkampagne und Fertigungstakt?"""
+    gap_rows = gaps(data)
+    normal = [g for g in gap_rows if not g["excluded"] and not g["transition"]]
+    slope = _fit([(g["n"], g["gap"]) for g in normal])
+    rolled = _rolling([g["gap"] if not g["excluded"] and not g["transition"] else None for g in gap_rows])
+    gap_series = [{**g, "rolling": rolled[i]} for i, g in enumerate(gap_rows)]
+    table = durations(data)
+    campaign = {}
+    for kind, field in (("ship", "ship_cryo_launch"), ("booster", "booster_cryo_launch")):
+        rows = []
+        for r in table:
+            cryo = r.get(f"{kind}_cryo")
+            if cryo:
+                rows.append({"name": r[kind], "n": r["n"], "version": r["version"], "days": (d(r["date"]) - d(cryo)).days})
+        recent = [x for x in rows if x["version"] != "V1"]
+        fit = _fit([(x["n"], x["days"]) for x in recent])
+        campaign[kind] = {"rows": rows, "median": _median_by(rows, "days"), "pct_per_10": round((math.exp(10 * fit) - 1) * 100) if fit is not None else None}
+    cadence = {}
+    for prefix, floor in (("S", 24), ("B", 7)):
+        firsts = []
+        for name in data.vehicles:
+            if re.fullmatch(rf"{prefix}\d+", name) and int(name[1:]) >= floor:
+                c = data.cryo_first(name)
+                if c:
+                    firsts.append((int(name[1:]), name, c))
+        firsts.sort()
+        rows = []
+        for a, b in zip(firsts, firsts[1:]):
+            version = data.steps["versions"].get(b[1]) or ("V3" if (prefix == "S" and b[0] >= 39) or (prefix == "B" and b[0] >= 18) else "V2" if (prefix == "S" and b[0] >= 33) or (prefix == "B" and b[0] >= 14) else "V1")
+            rows.append({"name": b[1], "date": str(b[2]), "version": version, "days": (b[2] - a[2]).days})
+        rows = [r for r in rows if r["days"] >= 0]
+        med = _median_by(rows, "days")
+        last_year_count = sum(1 for _, _, c in firsts if c >= firsts[-1][2] - timedelta(days=365))
+        fit = _fit([(d(r["date"]).toordinal() / 365.25, r["days"]) for r in rows if r["days"] > 0 and r["version"] != "V1"])
+        cadence[prefix] = {"rows": rows, "median": med, "last_12_months": last_year_count, "growth_per_year": round(math.exp(-fit), 2) if fit is not None else None}
+    pre = []
+    for row in steps_table:
+        cells = row["cells"]
+        start, done, cryo = (cells.get(k, {}).get("date") for k in ("stack_start", "stack_done", "cryo"))
+        pre.append({"name": row["vehicle"], "stacking": (d(done) - d(start)).days if start and done and d(done) >= d(start) else None,
+                    "wait": (d(cryo) - d(done)).days if cryo and done and d(cryo) >= d(done) else None})
+    return {"gaps": gap_series, "gap_pct_per_10": round((math.exp(10 * slope) - 1) * 100) if slope is not None else None, "gap_median": _median_by(normal, "gap"), "gap_count": len(normal),
+            "campaign": campaign, "cadence": cadence, "stacking": [x for x in pre if x["stacking"] is not None or x["wait"] is not None]}

@@ -1,0 +1,37 @@
+[
+{
+"mission": "III",
+"kind": "upcoming",
+"net": "2027-06-30",
+"status": "TBD",
+"precision": "M"
+},
+{
+"mission": "IV",
+"kind": "upcoming",
+"net": "2028-06-30",
+"status": "TBD",
+"precision": "H1"
+},
+{
+"mission": "V",
+"kind": "upcoming",
+"net": "2028-12-31",
+"status": "TBD",
+"precision": "H2"
+},
+{
+"mission": "II",
+"kind": "previous",
+"net": "2026-04-01",
+"status": "Success",
+"precision": "SEC"
+},
+{
+"mission": "I",
+"kind": "previous",
+"net": "2022-11-16",
+"status": "Success",
+"precision": ""
+}
+]

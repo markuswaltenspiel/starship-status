@@ -1,0 +1,159 @@
+{
+ "sources": [
+  {
+   "label": "NASA, 23.10.2026",
+   "url": "https://www.nasa.gov/blogs/missions/2026/10/23/nasa-shares-artemis-acceleration-plans-for-moon-missions/"
+  },
+  {
+   "label": "SpacePolicyOnline, 23.10.2026",
+   "url": "https://spacepolicyonline.com/news/nasa-is-full-steam-ahead-on-artemis-iii-iv-and-v/"
+  },
+  {
+   "label": "Wikipedia: Artemis program",
+   "url": "https://en.wikipedia.org/wiki/Artemis_program"
+  },
+  {
+   "label": "Wikipedia: Treibstofftransfer",
+   "url": "https://en.wikipedia.org/wiki/Starship_Propellant_Transfer_Demonstration"
+  },
+  {
+   "label": "Wikipedia: Blue Moon Pathfinder",
+   "url": "https://en.wikipedia.org/wiki/Blue_Moon_Pathfinder_Mission_1"
+  }
+ ],
+ "assumptions": {
+  "tankers_min": 6,
+  "tankers_max": 22,
+  "transfer_to_demo_days": [
+   270,
+   0.4
+  ],
+  "demo_to_crew_days": [
+   240,
+   0.4
+  ],
+  "pathfinder_to_crew_days": [
+   600,
+   0.35
+  ],
+  "a3_to_a4_days": [
+   240,
+   0.3
+  ],
+  "a4_to_a5_days": [
+   300,
+   0.35
+  ],
+  "suit_sortie": "2028-09-30",
+  "suit_late": "2030-12-31",
+  "suit_sortie_share": 0.65,
+  "suit_sigma_days": 150
+ },
+ "milestones": [
+  {
+   "id": "artemis2",
+   "label": "Artemis II: bemannter Mondvorbeiflug",
+   "official": "geflogen",
+   "done": "2026-04-01",
+   "ll2_mission": "II",
+   "source": "https://en.wikipedia.org/wiki/Artemis_program",
+   "note": "Vom 1. bis 11. April 2026, erfolgreich."
+  },
+  {
+   "id": "sls3",
+   "label": "Artemis III: SLS-Kernstufe mit Boostern verbunden",
+   "official": "erledigt",
+   "done": "2026-10-28",
+   "source": "https://cfpublic.org/space/2026-10-30/next-artemis-rocket-closer-to-launch-from-kennedy-space-center",
+   "note": "Als Nächstes folgt ein Betankungstest am Startplatz."
+  },
+  {
+   "id": "propellant",
+   "label": "Starship: Treibstofftransfer im Orbit",
+   "official": "Anfang 2027",
+   "target": "2027-03-31",
+   "announced": "2026-10-15",
+   "factor": 1.8,
+   "sigma": 0.45,
+   "source": "https://spacepolicyonline.com/news/nasa-is-full-steam-ahead-on-artemis-iii-iv-and-v/",
+   "drivers": "Zwei Starships kurz nacheinander, Kopplung im Orbit. Nötig für jede Starship-Landung.",
+   "history": [
+    "März 2025",
+    "März 2026",
+    "Anfang 2027"
+   ],
+   "note": "Das Ziel rutschte bisher etwa ein Jahr pro Jahr."
+  },
+  {
+   "id": "blue_pathfinder",
+   "label": "Blue Moon MK1: erster Testflug",
+   "official": "frühestens 1. Quartal 2027",
+   "target": "2027-03-31",
+   "announced": "2026-09-15",
+   "factor": 1.6,
+   "sigma": 0.4,
+   "source": "https://en.wikipedia.org/wiki/Blue_Moon_Pathfinder_Mission_1",
+   "drivers": "Voraussetzung für den zweiten Lander-Weg über Blue Origin.",
+   "history": [
+    "Anfang 2026",
+    "Herbst 2026",
+    "1. Quartal 2027"
+   ],
+   "note": "Eine Mondlandung wäre der Test des Landers selbst."
+  },
+  {
+   "id": "artemis3",
+   "label": "Artemis III: Kopplungstest im Erdorbit",
+   "official": "Mitte 2027",
+   "target": "2027-06-30",
+   "announced": "2026-10-23",
+   "factor": 1.5,
+   "sigma": 0.3,
+   "ll2_mission": "III",
+   "source": "https://spacepolicyonline.com/news/nasa-is-full-steam-ahead-on-artemis-iii-iv-and-v/",
+   "drivers": "SLS und Orion sowie mindestens ein Lander-Prototyp im Orbit. Treibstofftransfer ist dafür nicht nötig.",
+   "note": "NASA hält an Mitte 2027 fest. Isaacman nannte den Termin im September intern „90 Tage hinter Plan“."
+  },
+  {
+   "id": "landing_demo",
+   "label": "Starship: unbemannte Mondlandung",
+   "official": "Ende 2027",
+   "target": "2027-12-31",
+   "source": "https://spacepolicyonline.com/news/nasa-is-full-steam-ahead-on-artemis-iii-iv-and-v/",
+   "drivers": "Treibstofftransfer und viele Tankerflüge. Schätzungen reichen von 6–8 Flügen (Musk) bis rund 22 (NASA-Sicherheitsgremium).",
+   "note": "Hängt direkt an der Starship-Flugzahl."
+  },
+  {
+   "id": "blue_lander",
+   "label": "Blue Moon MK2: bereit für Crew",
+   "official": "2028",
+   "target": "2028-12-31",
+   "announced": "2026-10-23",
+   "factor": 1.6,
+   "sigma": 0.35,
+   "source": "https://spacepolicyonline.com/news/nasa-is-full-steam-ahead-on-artemis-iii-iv-and-v/",
+   "drivers": "MK1-Testflug, unbemannter Test, drei MK1-Schlepper bringen MK2 in den Mondorbit.",
+   "note": "Laut Bericht kommt Blue Origin bisher langsam voran."
+  },
+  {
+   "id": "artemis4",
+   "label": "Artemis IV: erste bemannte Landung",
+   "official": "2028",
+   "target": "2028-12-31",
+   "ll2_mission": "IV",
+   "source": "https://spacepolicyonline.com/news/nasa-is-full-steam-ahead-on-artemis-iii-iv-and-v/",
+   "drivers": "Der schnellere der beiden Lander, Artemis III und ein Raumanzug. NASA erlaubt dafür inzwischen einen einfacheren Anzug.",
+   "note": "NASA: Crew bis Ende 2028 auf der Oberfläche. Die Startliste nennt das 1. Halbjahr 2028."
+  },
+  {
+   "id": "artemis5",
+   "label": "Artemis V: zweite bemannte Landung",
+   "official": "2028",
+   "target": "2028-12-31",
+   "ll2_mission": "V",
+   "source": "https://spacepolicyonline.com/news/nasa-is-full-steam-ahead-on-artemis-iii-iv-and-v/",
+   "drivers": "Folgt auf Artemis IV. Die SLS-Produktion begrenzt den Abstand.",
+   "note": "Zwei Landungen im selben Jahr wären ein sehr enger Plan."
+  }
+ ]
+}

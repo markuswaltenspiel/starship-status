@@ -78,6 +78,7 @@ details[open] summary{margin-bottom:8px}
 .cell-weak{color:var(--ink2)}
 ul.notes{margin:0;padding-left:18px;display:grid;gap:6px;max-width:72ch}
 .finding{display:grid;gap:4px;border-left:3px solid var(--axis);padding-left:12px;max-width:74ch}
+#t-artemis td:nth-child(1){min-width:150px}#t-artemis td:nth-child(6){min-width:320px}
 footer{font-size:.84rem;color:var(--ink2)}
 </style>
 <div class="wrap">
@@ -87,7 +88,7 @@ footer{font-size:.84rem;color:var(--ink2)}
   <div class="stamp" id="stamp"></div>
   <div id="banners" style="display:grid;gap:8px"></div>
   <nav aria-label="Abschnitte">
-    <a href="#fluege">Nächste Flüge</a><a href="#jahre">Flüge pro Jahr</a><a href="#stand">Aktueller Stand</a><a href="#fahrzeuge">Fahrzeugvergleich</a><a href="#schaetzungen">SpaceX-Schätzungen</a><a href="#lizenz">Lizenz</a><a href="#genauigkeit">Genauigkeit</a><a href="#daten">Daten</a>
+    <a href="#fluege">Nächste Flüge</a><a href="#jahre">Flüge pro Jahr</a><a href="#artemis">Artemis</a><a href="#stand">Aktueller Stand</a><a href="#trends">Trends</a><a href="#fahrzeuge">Fahrzeugvergleich</a><a href="#schaetzungen">SpaceX-Schätzungen</a><a href="#lizenz">Lizenz</a><a href="#genauigkeit">Genauigkeit</a><a href="#daten">Daten</a>
   </nav>
 </header>
 
@@ -114,16 +115,44 @@ footer{font-size:.84rem;color:var(--ink2)}
   <div class="finding"><h3>So ist das zu lesen</h3><p>Das ist eine Szenariorechnung und kein geprüftes Modell. Für die Jahreswerte gibt es keinen Rückblick-Test, und die Gewichte der Szenarien sind eine Annahme. Die Zwischenfälle nehmen mit der Flugzahl ab, wie bei Falcon 9 und Dragon. Was bei einem künftigen Versionswechsel passiert, ist nicht eingerechnet.</p></div>
 </section>
 
+<section id="artemis">
+  <h2>Artemis</h2>
+  <p class="answer" id="artemis-answer"></p>
+  <div class="chart" id="c-artemis"></div>
+  <div class="key"><span><i style="background:var(--band);opacity:.28"></i>80 %-Bereich</span><span><i class="round" style="background:var(--ink)"></i>Mitte der Rechnung</span><span><i class="dia" style="background:var(--s2)"></i>offizielles Ziel</span></div>
+  <div class="scroll" id="t-artemis"></div>
+  <div class="finding"><h3>So ist das zu lesen</h3><p id="artemis-note"></p></div>
+  <details><summary>Annahmen und Quellen</summary><ul class="notes" id="artemis-assumptions"></ul></details>
+</section>
+
 <section id="stand">
   <h2>Aktueller Stand</h2>
   <div class="two">
     <div><h3 id="next-title"></h3><ul class="steps" id="next-steps"></ul><p class="sub" id="next-note"></p></div>
     <div><h3>Die folgenden Fahrzeuge</h3><div class="scroll" id="t-following"></div><h3>Alle Flüge</h3><div class="chart" id="c-history"></div><div class="key" id="k-history"></div></div>
   </div>
-  <h3>Abstand zwischen den Flügen</h3>
+  <details id="all-checks"><summary id="checks-summary">Alle Punkte der Checkliste</summary><ul class="steps" id="checks-all"></ul></details>
+  <div id="news-box" style="display:grid;gap:8px"><h3>Neueste Berichte</h3><ul class="notes" id="news"></ul></div>
+</section>
+
+<section id="trends">
+  <h2>Trends</h2>
+  <div class="finding"><h3>Wird der Abstand zwischen den Flügen kürzer?</h3><p id="trend-gap"></p></div>
   <div class="chart" id="c-gaps"></div>
-  <div class="key"><span><i style="background:var(--s3)"></i>V1</span><span><i style="background:var(--s2)"></i>V2</span><span><i style="background:var(--s1)"></i>V3</span><span><i style="background:var(--muted);opacity:.45"></i>Blass: Sonderfall, zählt nicht als normaler Abstand</span></div>
+  <div class="key"><span><i style="background:var(--s3)"></i>V1</span><span><i style="background:var(--s2)"></i>V2</span><span><i style="background:var(--s1)"></i>V3</span><span><i style="background:var(--muted);opacity:.45"></i>Blass: Sonderfall, zählt nicht als normaler Abstand</span><span><i style="background:var(--ink);height:2px"></i>Median der letzten drei normalen Abstände</span></div>
   <details><summary>Werte als Tabelle</summary><div class="scroll" id="t-gaps"></div></details>
+  <div class="finding"><h3>Wird der Bau schneller?</h3><p id="trend-cadence"></p></div>
+  <div class="two">
+    <div><h3>Abstand zwischen zwei neuen Ships</h3><div class="chart" id="c-cad-s"></div></div>
+    <div><h3>Abstand zwischen zwei neuen Boostern</h3><div class="chart" id="c-cad-b"></div></div>
+  </div>
+  <p class="sub">Tage zwischen den ersten Cryo-Tests aufeinanderfolgender Fahrzeuge. Das misst, wie schnell fertige Fahrzeuge aus der Fabrik kommen. Blass: erstes Fahrzeug einer neuen Version.</p>
+  <div class="finding"><h3>Werden die Tests schneller?</h3><p id="trend-campaign"></p></div>
+  <div class="two">
+    <div><h3>Ship: erster Cryo-Test bis Start</h3><div class="chart" id="c-camp-s"></div></div>
+    <div><h3>Booster: erster Cryo-Test bis Start</h3><div class="chart" id="c-camp-b"></div></div>
+  </div>
+  <details><summary>Stacking-Dauer und Wartezeit bis zum Cryo-Test</summary><p class="sub" id="stack-note"></p><div class="scroll" id="t-stack"></div></details>
 </section>
 
 <section id="fahrzeuge">
@@ -136,9 +165,7 @@ footer{font-size:.84rem;color:var(--ink2)}
   <p class="sub">Gezählt ab dem Static Fire des zuletzt fertigen Fahrzeugs. Diese Zeit trägt die Prognose für den nächsten Flug. Blasse Flüge fließen nicht ein, weil Lizenz oder Unfälle sie prägten.</p>
   <div class="chart" id="c-sf"></div>
   <details><summary>Dauern als Tabelle</summary><div class="scroll" id="t-dur"></div></details>
-  <h3>Produktionsschritte</h3>
-  <p class="sub" id="matrix-note"></p>
-  <div class="scroll" id="t-matrix"></div>
+  <details><summary>Produktionsschritte je Fahrzeug</summary><p class="sub" id="matrix-note"></p><div class="scroll" id="t-matrix"></div></details>
 </section>
 
 <section id="schaetzungen">
@@ -157,6 +184,7 @@ footer{font-size:.84rem;color:var(--ink2)}
   <div class="chart" id="c-license"></div>
   <p class="sub">Tage, in denen SpaceX bereit war und nur noch auf die Lizenz wartete. Blass: höchstens wenige Tage, nicht sicher belegt.</p>
   <details><summary>Einschätzung je Flug mit Quelle</summary><div class="scroll" id="t-lic"></div></details>
+  <details><summary>Letzte FAA-Mitteilungen</summary><div class="scroll" id="t-faa"></div></details>
 </section>
 
 <section id="genauigkeit">
@@ -216,6 +244,9 @@ function renderHead(){
   const b=$("banners");b.replaceChildren();
   const age=(Date.now()-new Date(D.generated).getTime())/36e5;
   if(age>48)b.append(el("div",{class:"banner",text:`Diese Ansicht ist ${Math.round(age/24)} Tage alt und nicht aktuell. Die automatische Aktualisierung läuft offenbar nicht.`}));
+  const review=D.assumptions.review_after_flight;
+  if(review&&D.flights[D.flights.length-1].n>=review)b.append(el("div",{class:"banner","data-level":"warn",text:`Wiedervorlage: Flug ${review} ist geflogen. Die Prognose sollte jetzt anhand des Logs geprüft und eventuell feinjustiert werden.`}));
+  if(D.open_mishap)b.append(el("div",{class:"banner","data-level":"warn",text:`Die FAA-Untersuchung zu Flug ${D.open_mishap.flight} ist noch offen (seit ${fmt(D.open_mishap.date)}). Die Prognose rechnet zusätzliche Wartezeit ein.`}));
   const bad=D.status.filter(x=>!x.ok);
   if(bad.length)b.append(el("div",{class:"banner","data-level":"warn",text:`Beim letzten Lauf fehlte: ${bad.map(x=>x.label).join(", ")}. Die Prognose nutzt dafür den letzten bekannten Stand.`}));
 }
@@ -286,9 +317,16 @@ function renderStand(){
   const n=D.next,lic=D.license.find(x=>x.n===n.n),net=D.net_current[n.n];
   $("next-title").textContent=`Flug ${n.n}: ${n.booster.name} / ${n.ship.name}, ${n.pad}`;
   const list=$("next-steps");list.replaceChildren();
-  [["Cryo-Test Booster",n.booster.cryo],["Cryo-Test Ship",n.ship.cryo],["Static Fire Booster",n.booster.sf],["Static Fire Ship",n.ship.sf],["Generalprobe (WDR)",n.stack.wdr],["Lizenz",lic&&lic.license_date]].forEach(([a,b])=>{const li=el("li");li.append(el("span",{text:a}),statusPill(b?"good":"open",b?fmtS(b):"offen"));list.append(li)});
+  const chk=D.checklist&&D.checklist.flight===n.n?D.checklist.items:[];
+  const found=name=>chk.find(i=>i.title===name);
+  const row=(a,state,when)=>{const li=el("li");li.append(el("span",{text:a}),statusPill(state?"good":"open",state?(when?fmtS(when):"bestätigt"):"offen"));list.append(li)};
+  row("Static Fire Booster",!!n.booster.sf,n.booster.sf);row("Static Fire Ship",!!n.ship.sf,n.ship.sf);
+  [["Vehicles Stacked","Fahrzeuge gestapelt"],["Wet Dress Rehearsal (WDR)","Generalprobe (WDR)"],["Regulatory Approval","Lizenz"],["Road Closure for Launch","Straßensperrung"],["Notice To Air Mission (NOTAM) for Launch","Luftraumwarnung"],["Confirmation from SpaceX","Termin von SpaceX"]].forEach(([k,lab])=>{const it=found(k);row(lab,!!(it&&it.confirmed))});
   const li=el("li");li.append(el("span",{text:"Offizielles NET"}),el("span",{text:net?fmtS(net.net):"keines",class:"pill"}));list.append(li);
-  $("next-note").textContent="Eine erteilte Lizenz erkennt das Programm nicht automatisch, das Feld kommt aus einer Datei. Es bremst die Prognose nur wenig, siehe Abschnitt Lizenz.";
+  $("next-note").textContent=chk.length?"Die Punkte kommen automatisch aus der NextSpaceflight-Checkliste. Das Programm notiert, wann ein Punkt umspringt. Eine offene Lizenz bremst die Prognose nur wenig, siehe Abschnitt Lizenz.":"Die Checkliste war beim letzten Lauf nicht verfügbar.";
+  const done=chk.filter(i=>i.confirmed).length;$("checks-summary").textContent=`Alle Punkte der Checkliste: ${done} von ${chk.length} bestätigt`;
+  $("checks-all").replaceChildren(...chk.map(i=>{const x=el("li");x.append(el("span",{text:i.title}),statusPill(i.confirmed?"good":"open",i.confirmed?"bestätigt":"offen"));return x}));
+  $("news-box").hidden=!D.news.length;$("news").replaceChildren(...D.news.map(a=>{const x=el("li");x.append(link(a.url,a.title),document.createTextNode(a.date?` (${fmtS(a.date)})`:""));return x}));
   table($("t-following"),["Flug","Fahrzeug","Letzter Test"],D.following.flatMap(f=>[f.booster,f.ship].map(v=>[f.n,v.name,v.last?`${v.last.name}, ${fmtS(v.last.date)}`:"noch kein Test erfasst"])));
   const fl=D.flights,H=64,{svg,w}=svgFor("c-history",H),st=(w-4)/fl.length,col={success:"var(--good)",partial:"var(--warn)",failure:"var(--bad)"};
   fl.forEach((f,i)=>{const g=s("g",{},svg),cx=2+st*(i+.5),a=Math.min(st-3,24);s("rect",{x:cx-a/2,y:6,width:a,height:a,rx:3,fill:col[f.outcome]},g);s("text",{x:cx,y:6+a+15,"text-anchor":"middle",text:f.n},svg);s("rect",{x:cx-st/2,y:0,width:st,height:H,fill:"transparent"},g);hover(g,`Flug ${f.n}, ${fmt(f.date)}: ${f.booster}/${f.ship}, ${f.version}, ${({success:"Erfolg",partial:"Teilerfolg",failure:"Fehlschlag"})[f.outcome]}`)});
@@ -302,6 +340,8 @@ function renderStand(){
     if(x.gap>150||i>=g.length-2)s("text",{x:cx,y:yy(x.gap)-5,"text-anchor":"middle",class:"ink",text:x.gap},c.svg);
     s("rect",{x:cx-step/2,y:T,width:step,height:B-T,fill:"transparent"},gg);
     hover(gg,`Flug ${x.n}: ${x.gap} Tage seit dem Vorflug${x.excluded?". "+x.excluded:""}`)});
+  const roll=D.trends.gaps.map((x,i)=>x.rolling==null?null:[L+step*(i+.5),yy(x.rolling)]).filter(Boolean);
+  if(roll.length>1)s("polyline",{points:roll.map(p=>p.join(",")).join(" "),fill:"none",stroke:"var(--ink)","stroke-width":2},c.svg);
   table($("t-gaps"),["Flug","Version","Tage seit Vorflug","Anmerkung"],g.map(x=>[x.n,x.version,x.gap,x.excluded||""]),[2]);
 }
 
@@ -332,9 +372,59 @@ function renderVehicles(){
     if(st>24)s("text",{x:cx,y:yy(x.last_sf_launch)-4,"text-anchor":"middle",class:"ink2",text:x.last_sf_launch},c.svg);
     s("rect",{x:cx-st/2,y:t,width:st,height:b-t,fill:"transparent"},gg);hover(gg,`Flug ${x.n}: ${x.last_sf_launch} Tage ab letztem Static Fire (${x.limit} war zuletzt fertig)`)});
   table($("t-dur"),["Flug","Version","Ship","Cryo → SF","SF → Start","Booster","Cryo → SF","SF → Start","Zuletzt fertig"],D.durations.map(r=>[r.n,r.version,r.ship,r.ship_cryo_sf,r.ship_sf_launch,r.booster,r.booster_cryo_sf,r.booster_sf_launch,r.limit]),[3,4,6,7]);
-  const M=D.matrix;$("matrix-note").textContent=`Cryo-Test, Static Fire, WDR und Start kommen automatisch. Die übrigen Felder stammen aus NASASpaceflight-Berichten: ${M.manual_filled} von ${M.manual_total} sind belegt. Die Lücken sind echt, denn diese Schritte werden selten mit Datum berichtet. Deshalb gehen sie nicht in die Prognose ein. LOX- und CH₄-Stacking getrennt ließ sich kaum belegen, die Tabelle zeigt das Stacking-Ende. Blass: ungefähre Angabe.`;
+  const M=D.matrix;$("matrix-note").textContent=`Cryo-Test, Static Fire, WDR und Start kommen automatisch. Die übrigen Felder liest das Programm aus den Wikipedia-Fahrzeuglisten, dazu kommen ältere Handrecherchen: ${M.manual_filled} von ${M.manual_total} sind belegt. Die Lücken sind echt, denn diese Schritte werden selten mit Datum berichtet. Deshalb gehen sie nicht in die Prognose ein. Blass: ungefähre Angabe.`;
   const tb=el("tbody"),t2=el("table"),tr=el("tr"),th=el("thead");tr.append(el("th",{text:"Fahrzeug"}));M.steps.forEach(x=>tr.append(el("th",{text:M.labels[x]})));th.append(tr);t2.append(th);
   M.rows.forEach(r=>{const row=el("tr");row.append(el("td",{text:r.vehicle}));M.steps.forEach(x=>{const c=r.cells[x],td=el("td",{class:"date"});if(!c){td.append(el("span",{class:"cell-empty",text:"·"}))}else{const pre={approx:"ca. ",before:"vor ",after:"ab "}[c.precision]||"",lab=pre+fmtS(c.date);if(c.confidence!=="hoch"||c.precision==="approx")td.className="date cell-weak";if(c.note)td.title=c.note;td.append(c.source?link(c.source,lab):document.createTextNode(lab))}row.append(td)});tb.append(row)});t2.append(tb);$("t-matrix").replaceChildren(t2);
+}
+
+function versionBars(id,rows,label,value,opts={}){
+  const H=opts.h||210,c=svgFor(id,H),l=36,r=c.w-6,t=14,b=H-24,cap=opts.cap||Infinity,vals=rows.map(x=>Math.min(x[value],cap)),ma=Math.max(...vals,10),y=lin(0,ma,b,t);
+  const nice=ma>200?[0,100,200,300]:ma>100?[0,50,100,150]:[0,25,50,75,100];
+  nice.filter(v=>v<=ma).forEach(v=>{s("line",{x1:l,x2:r,y1:y(v),y2:y(v),stroke:v?"var(--line)":"var(--axis)"},c.svg);s("text",{x:l-6,y:y(v)+4,"text-anchor":"end",text:v},c.svg)});
+  const st=(r-l)/rows.length;rows.forEach((x,i)=>{const cx=l+st*(i+.5),bw=Math.max(3,Math.min(st-3,26)),v=vals[i],h=Math.max(4,b-y(v)),g=s("g",{},c.svg),first=i>0&&rows[i-1].version!==x.version;
+    s("path",{d:`M${cx-bw/2} ${b}v${-h+3}q0 -3 3 -3h${bw-6}q3 0 3 3v${h-3}z`,fill:VC[x.version]||"var(--s1)",opacity:first?.4:1},g);
+    if(st>26||i%2===0)s("text",{x:cx,y:H-8,"text-anchor":"middle",text:x[label].slice(0,4)},c.svg);
+    if(st>24)s("text",{x:cx,y:y(v)-4,"text-anchor":"middle",class:"ink2",text:x[value]},c.svg);
+    s("rect",{x:cx-st/2,y:t,width:st,height:b-t,fill:"transparent"},g);hover(g,`${x[label]}: ${x[value]} Tage`)});
+}
+function renderTrends(){
+  const T=D.trends,gm=T.gap_median,trend=p=>p==null?"zu wenig Daten":Math.abs(p)<10?"kein klarer Trend":p<0?`etwa ${-p} % kürzer je 10 Flüge`:`etwa ${p} % länger je 10 Flüge`;
+  const gapLead=T.gap_pct_per_10==null||Math.abs(T.gap_pct_per_10)<10?"Bisher nicht":T.gap_pct_per_10<0?"Ja, leicht":"Nein, eher länger";
+  $("trend-gap").textContent=`${gapLead}. Normale Abstände ohne Sonderfälle: V1 im Median ${de(gm.V1)} Tage, V2 ${de(gm.V2)} Tage, V3 ${de(gm.V3)} Tage. Über alle ${T.gap_count} normalen Abstände: ${trend(T.gap_pct_per_10)}. Die großen Unterschiede entstehen durch die Sonderfälle: Pausen nach Fehlschlägen, Lizenzen und Versionswechsel. Falcon 9 brauchte ebenfalls Jahre, bis das Tempo stark stieg.`;
+  const cs=T.cadence.S,cb=T.cadence.B;
+  const rate=m=>m?de(Math.round(365/m*10)/10):"–";
+  const cadLead=Math.max(cs.growth_per_year||0,cb.growth_per_year||0)<1.3?"Bisher kaum messbar":"Ja, messbar";
+  $("trend-cadence").textContent=`${cadLead}. Neue Ships kamen im Median alle ${de(cs.median.V1)} Tage bei V1, alle ${de(cs.median.V2)} Tage bei V2 und alle ${de(cs.median.V3)} Tage bei V3, das sind bei V3 rund ${rate(cs.median.V3)} pro Jahr. Bei Boostern sind es ${de(cb.median.V2)} Tage bei V2 und ${de(cb.median.V3)} Tage bei V3. Der Trend seit V2 ergibt pro Jahr etwa Faktor ${de(cs.growth_per_year)} bei Ships und ${de(cb.growth_per_year)} bei Boostern. Das Produktions-Szenario der Jahresprognose nimmt Faktor ${de(D.assumptions.long_term.production_growth)} an. Es setzt auf neue Fabrikkapazität und Wiederverwendung, die sich in diesen Daten ${(cs.growth_per_year||0)<D.assumptions.long_term.production_growth?"noch nicht zeigen":"bereits zeigen"}.`;
+  const ca=T.campaign;
+  $("trend-campaign").textContent=`Vom ersten Cryo-Test bis zum Start braucht ein Ship im Median ${de(ca.ship.median.V2)} Tage bei V2 und ${de(ca.ship.median.V3)} Tage bei V3, ein neuer Booster ${de(ca.booster.median.V2)} und ${de(ca.booster.median.V3)} Tage. Bei so wenigen Fahrzeugen ist das nur eine Tendenz und wird nicht hochgerechnet.`;
+  const recent=(rows,count)=>rows.slice(-count);
+  versionBars("c-cad-s",recent(cs.rows,13),"name","days");versionBars("c-cad-b",recent(cb.rows,12),"name","days");
+  versionBars("c-camp-s",ca.ship.rows.filter(x=>x.version!=="V1"),"name","days");versionBars("c-camp-b",ca.booster.rows.filter(x=>x.version!=="V1"),"name","days");
+  $("stack-note").textContent="Automatisch aus den Wikipedia-Fahrzeuglisten und älteren Handrecherchen. Die Stichprobe ist klein, deshalb gibt es hierzu keine Trendaussage. Wartezeit: vom Stacking-Ende bis zum ersten Cryo-Test.";
+  table($("t-stack"),["Fahrzeug","Stacking (Tage)","Wartezeit bis Cryo (Tage)"],T.stacking.map(x=>[x.name,x.stacking,x.wait]),[1,2]);
+}
+function renderArtemis(){
+  const A=D.artemis,rows=A.rows,get=i=>rows.find(x=>x.id===i),a3=get("artemis3"),a4=get("artemis4"),pt=get("propellant"),few=A.few_tankers||{};
+  const pct=p=>p==null?"–":p<.01?"unter 1\u00a0%":Math.round(p*100)+"\u00a0%";
+  $("artemis-answer").textContent=`Artemis III liegt laut Rechnung eher um ${fmtS(a3.p50).replace(/^\d+\. /,"")} ${a3.p50.slice(0,4)} statt Mitte 2027. Die erste Landung bis Ende 2028 hat etwa ${pct(a4.p_target)} Chance, die Mitte der Rechnung liegt bei ${MON[+a4.p50.slice(5,7)-1]} ${a4.p50.slice(0,4)}.`;
+  const open=rows.filter(x=>x.p50),rowH=34,T=8,H=T+open.length*rowH+26,{svg,w}=svgFor("c-artemis",H),L=w<620?8:300,R=w-14;
+  const lo=num(D.as_of),hi=Math.max(...open.map(x=>num(x.p90)))+1e9,x=lin(lo,hi,L,R);
+  for(let y=new Date(lo).getUTCFullYear()+1;Date.UTC(y,0,1)<=hi;y++){const t=x(Date.UTC(y,0,1));s("line",{x1:t,x2:t,y1:T,y2:T+open.length*rowH,stroke:"var(--line)"},svg);s("text",{x:t,y:T+open.length*rowH+17,"text-anchor":"middle",text:w<520?"’"+String(y).slice(2):y},svg)}
+  open.forEach((r,i)=>{const cy=T+i*rowH+rowH/2+(w<620?7:0),g=s("g",{},svg);
+    s("text",{x:w<620?8:0,y:w<620?cy-13:cy+4,class:"ink",text:r.label.length>46&&w>=620?r.label.slice(0,45)+"…":r.label},svg);
+    s("rect",{x:x(num(r.p10)),y:cy-4,width:Math.max(3,x(num(r.p90))-x(num(r.p10))),height:8,rx:2,fill:"var(--band)",opacity:.28},g);
+    s("circle",{cx:x(num(r.p50)),cy,r:5.5,fill:"var(--ink)",stroke:"var(--bg)","stroke-width":2},g);
+    const tx=x(num(r.target));s("path",{d:`M${tx} ${cy-6}l6 6-6 6-6-6z`,fill:"var(--s2)",stroke:"var(--bg)","stroke-width":1},g);
+    s("rect",{x:L,y:cy-rowH/2,width:R-L,height:rowH,fill:"transparent"},g);
+    hover(g,`${r.label}: Ziel ${r.official}, Rechnung Mitte ${fmt(r.p50)}, 80 % ${fmtS(r.p10)} ${r.p10.slice(0,4)} – ${fmtS(r.p90)} ${r.p90.slice(0,4)}, Chance ${pct(r.p_target)}`)});
+  const tone={"realistisch":"good","knapp":"open","unwahrscheinlich":"bad","sehr unwahrscheinlich":"bad"};
+  table($("t-artemis"),["Meilenstein","Offizielles Ziel","Rechnung, Mitte","Chance bis Ziel","Einschätzung","Woran es hängt",""],rows.map(r=>r.done?[r.label,r.official,fmt(r.done),"–",statusPill("good","erreicht"),r.note,link(r.source,"Quelle")]:[r.label,r.official,fmt(r.p50),pct(r.p_target),statusPill(tone[r.verdict],r.verdict),`${r.drivers||""} ${r.note||""}${r.history?` Frühere Ziele: ${r.history.join(", ")}.`:""}`,link(r.source,"Quelle")]));
+  const fa4=few.artemis4||{},fd=few.landing_demo||{};
+  $("artemis-note").textContent=`Das ist eine Abschätzung, kein Rückblick-Test: Es gibt zu wenige vergleichbare Fälle. Für den Treibstofftransfer und Artemis III rechnet sie mit typischen Verzugsfaktoren, für Landungen zusätzlich mit der Starship-Flugzahl aus der Jahresprognose. Am stärksten wirkt die Zahl der Tankerflüge: Reichen wie von Musk erwartet 6 bis 8, rückt die unbemannte Landung auf ${fd.p50?fmt(fd.p50):"–"} (Chance ${pct(fd.p_target)}) und Artemis IV auf ${fa4.p50?fmt(fa4.p50):"–"} (Chance ${pct(fa4.p_target)}).`;
+  const a=A.assumptions,days=([m])=>`${m} Tage`;
+  const notes=[`Tankerflüge je Landung: ${a.tankers_min} bis ${a.tankers_max}, je Simulation zufällig.`,`Vom Treibstofftransfer zur unbemannten Landung im Median ${days(a.transfer_to_demo_days)}, von dort zur Crew-Bereitschaft ${days(a.demo_to_crew_days)}. Für beide Landungen müssen zusätzlich genug Starship-Flüge stattfinden.`,`Artemis IV frühestens im Median ${days(a.a3_to_a4_days)} nach Artemis III, Artemis V im Median ${days(a.a4_to_a5_days)} nach Artemis IV.`,`Raumanzug: zu ${Math.round(a.suit_sortie_share*100)} % um ${fmt(a.suit_sortie)} dank einfacherer Anforderungen, sonst um ${fmt(a.suit_late)}. Das Generalinspektorat der NASA nannte laut Berichten 2031 als möglichen Termin; das Originaldokument habe ich nicht geprüft.`,"Offizielle Ziele aktualisieren sich aus der Startliste, wenn sie dort später liegen. Geflogene Artemis-Missionen werden automatisch erkannt. Die Ziele für Treibstofftransfer und Lander kommen aus Berichten vom Oktober 2026 und bleiben stehen, bis jemand sie ändert."];
+  const list=$("artemis-assumptions");list.replaceChildren(...notes.map(n=>el("li",{text:n})));
+  const src=el("li");src.append(document.createTextNode("Quellen: "));A.sources.forEach((q,i)=>{if(i)src.append(document.createTextNode(", "));src.append(link(q.url,q.label))});list.append(src);
 }
 
 function renderSlip(){
@@ -359,6 +449,7 @@ function renderLicense(){
   known.forEach((f,i)=>{const cy=T+i*rowH+rowH/2,g=s("g",{},svg),lab=f.wait_max===0?"0":`${f.wait_min}–${f.wait_max}`;s("text",{x:0,y:cy+4,class:"ink",text:`Flug ${f.n}`},svg);
     if(f.wait_max>0)s("rect",{x:x(f.wait_min),y:cy-5,width:Math.max(3,x(f.wait_max)-x(f.wait_min)),height:10,rx:3,fill:"var(--s1)",opacity:f.wait_min>0?1:.45},g);else s("circle",{cx:x(0),cy,r:3.5,fill:"var(--s1)"},g);
     s("text",{x:x(f.wait_max)+8,y:cy+4,class:"ink2",text:lab},svg);s("rect",{x:0,y:cy-rowH/2,width:w,height:rowH,fill:"transparent"},g);hover(g,`Flug ${f.n}: ${lab} Tage Wartezeit. ${f.note}`)});
+  table($("t-faa"),["Datum","Mitteilung"],[...D.faa].reverse().map(x=>[fmt(x.date),x.headline]));
   table($("t-lic"),["Flug","Lizenz","Wartezeit","Vertrauen","Grundlage",""],L0.map(x=>[x.n,x.license_date?fmt(x.license_date):"–",x.wait_max==null?"unklar":x.wait_max===0?"0":`${x.wait_min}–${x.wait_max}`,x.confidence,x.note,link(x.source,"Quelle")]));
 }
 
@@ -397,13 +488,13 @@ function renderData(){
     "Ab dem dritten Flug stehen meist weder Fahrzeugstand noch NET zur Verfügung, die Prognose folgt dann dem Flugabstand. Die Zuordnung dieser Flüge schreibt nur die Seriennummern fort.",
     `Jahreswerte: drei Szenarien, Risiko eines schweren Zwischenfalls anfangs ${Math.round(a.long_term.hazard_at_14*100)} % pro Flug, danach mit der Flugzahl fallend. Die Form des Rückgangs stammt aus dem Falcon-9-Verlauf.`,
     `Die Meilenstein-Liste hat ${ms.done.length} abgeschlossene und ${ms.open.length} offene Einträge. Die Falcon- und Dragon-Daten sowie der Faktor ${String(a.long_term.slip_multiplier).replace(".",",")} stammen überwiegend aus einer Sekundärquelle und sind nicht vollständig an Primärquellen geprüft.`,
-    "X-Konten und die NASASpaceflight-Seiten lassen sich nicht automatisch abrufen. Produktionsschritte und Lizenzen aktualisieren sich deshalb nicht von selbst, Testereignisse, Flüge und Zieldaten schon.",
-    "Änderbar in data/manual/: Annahmen, Lizenzen, Produktionsschritte und Meilensteine."];
+    "Automatisch aktualisieren sich Testereignisse, Flüge, Fahrzeugzuordnung, Checkliste mit Lizenzstatus, FAA-Mitteilungen, Zieldaten und Fahrzeuggeschichte. Der NASASpaceflight-Feed liefert nur Überschriften, weil die Texterkennung dort zu viele Fehler machte. Von Hand bleiben nur die Einschätzung früherer Lizenz-Wartezeiten, die SpaceX-Meilensteine und einzelne Artemis-Ziele. Der Startplatz künftiger Flüge steht ebenfalls in einer Datei.",
+    "Änderbar in data/manual/: Annahmen, Lizenzen, Produktionsschritte, Meilensteine und Artemis.",`Wiedervorlage: nach Flug ${a.review_after_flight} werden Modell und Annahmen geprüft und eventuell feinjustiert.`];
   $("assumptions").replaceChildren(...items.map(t=>el("li",{text:t})));
   $("foot").textContent="Privates Auswertungsprojekt, nicht mit SpaceX verbunden. Prognosen sind Schätzungen.";
 }
 
-function renderAll(){renderHead();renderCards();renderIntervals();renderYears();renderStand();renderVehicles();renderSlip();renderLicense();renderAccuracy();renderData()}
+function renderAll(){renderHead();renderCards();renderIntervals();renderYears();renderArtemis();renderStand();renderTrends();renderVehicles();renderSlip();renderLicense();renderAccuracy();renderData()}
 function toggle(a,b,fn){$(a).addEventListener("click",()=>{$(a).setAttribute("aria-pressed","true");$(b).setAttribute("aria-pressed","false");fn()})}
 toggle("case-mit","case-ohne",()=>{caseName="mit";renderYears()});toggle("case-ohne","case-mit",()=>{caseName="ohne";renderYears()});
 toggle("veh-ship","veh-booster",()=>{vehKind="ship";renderVehicles()});toggle("veh-booster","veh-ship",()=>{vehKind="booster";renderVehicles()});

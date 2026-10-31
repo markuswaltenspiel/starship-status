@@ -7,8 +7,10 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import artemis
 import fetch
 import model
+import sources
 
 ROOT = Path(__file__).resolve().parent.parent
 LOG = ROOT / "data" / "log"
@@ -36,6 +38,18 @@ def record_observation(rows, seen):
             append(path, {"flight": r["flight"], "seen": seen, "net": r["net"], "precision": r["precision"], "source": r["source"]})
 
 
+def record_status(status, seen):
+    """Notiert, wann ein Punkt der Checkliste umspringt; daraus entstehen künftig echte Daten."""
+    path = LOG / "status_changes.jsonl"
+    state = {}
+    for row in read_log(path):
+        state[(row["flight"], row["item"])] = row["confirmed"]
+    for item in status["items"]:
+        key = (status["flight"], item["title"])
+        if state.get(key) != item["confirmed"]:
+            append(path, {"flight": status["flight"], "item": item["title"], "confirmed": item["confirmed"], "seen": seen, "first_run": key not in state and not state})
+
+
 def update_sources(next_n, today, force_all):
     status = []
 
@@ -61,9 +75,19 @@ def update_sources(next_n, today, force_all):
         record_observation([{**r, "source": "Wikipedia"} for r in rows], str(today))
         return f"{len(rows)} Zieldaten"
 
+    def checklist():
+        status_now, detail = sources.fetch_status()
+        record_status(status_now, str(today))
+        return detail
+
     attempt("vehicles", "NextSpaceflight (Testereignisse)", "https://nextspaceflight.com/starship/", vehicles)
     attempt("ll2", "Launch Library 2 (Startliste)", "https://thespacedevs.com/llapi", ll2)
     attempt("wiki", "Wikipedia (Zieldaten)", "https://en.wikipedia.org/wiki/List_of_Starship_launches", wiki)
+    attempt("status", "NextSpaceflight (Checkliste)", "https://nextspaceflight.com/starship/", checklist)
+    attempt("wiki_vehicles", "Wikipedia (Fahrzeuglisten)", "https://en.wikipedia.org/wiki/List_of_Starship_vehicles", sources.fetch_wiki_vehicles)
+    attempt("faa", "FAA (Mitteilungen)", "https://www.faa.gov/newsroom/statements/general-statements", sources.fetch_faa)
+    attempt("feed", "NASASpaceflight (Überschriften)", "https://www.nasaspaceflight.com/", sources.fetch_feed)
+    attempt("artemis", "Launch Library 2 (Artemis)", "https://thespacedevs.com/llapi", sources.fetch_artemis)
     return status
 
 
@@ -86,8 +110,11 @@ def stack_status(data, booster, ship):
 
 def production_matrix(data):
     prod = model.load("production")
-    names = ["S37", "S38", "S39", "S40", "S41", "S42", "S43", "S44", "B16", "B19", "B20", "B21", "B22", "B23"]
-    steps = ["stack_done", "flaps", "engines", "heat_shield", "rollout_test", "rollout_pad", "cryo", "sf", "wdr", "flight"]
+    def recent(prefix, floor, count):
+        nums = sorted(int(v[1:]) for v in set(data.vehicles) | set(data.steps["steps"]) | {r["vehicle"] for r in prod["rows"]} if v[0] == prefix and int(v[1:]) >= floor)
+        return [f"{prefix}{x}" for x in nums[-count:]]
+    names = recent("S", 37, 10) + recent("B", 16, 8)
+    steps = ["stack_start", "stack_done", "flaps", "engines", "heat_shield", "rollout_test", "rollout_pad", "cryo", "sf", "wdr", "flight"]
     labels = {**prod["steps"], "cryo": "Cryo-Test", "sf": "Static Fire", "wdr": "WDR", "flight": "Start"}
     rows = []
     for name in names:
@@ -95,6 +122,10 @@ def production_matrix(data):
         for r in prod["rows"]:
             if r["vehicle"] == name and r["step"] in steps:
                 cells[r["step"]] = {"date": r["date"], "kind": "manuell", "confidence": r["confidence"], "note": r["note"], "precision": r["precision"], "source": r["source"]}
+        for step, value in data.steps["steps"].get(name, {}).items():
+            current = cells.get(step)
+            if step in steps and (not current or (value["precision"] == "day" and current["precision"] != "day")):
+                cells[step] = {"date": value["date"], "kind": "auto", "confidence": "hoch" if value["precision"] == "day" else "mittel", "precision": value["precision"], "source": value["source"], "note": "Aus der Wikipedia-Fahrzeugliste"}
         cryo = data.cryo_first(name)
         if cryo:
             cells["cryo"] = {"date": str(cryo), "kind": "auto", "confidence": "hoch"}
@@ -109,8 +140,8 @@ def production_matrix(data):
             if wdr:
                 cells["wdr"] = {"date": wdr, "kind": "auto", "confidence": "hoch"}
         rows.append({"vehicle": name, "cells": cells})
-    filled = sum(1 for r in rows for s in steps[:6] if s in r["cells"])
-    return {"steps": steps, "labels": labels, "rows": rows, "manual_filled": filled, "manual_total": len(rows) * 6}
+    filled = sum(1 for r in rows for s in steps[:7] if s in r["cells"])
+    return {"steps": steps, "labels": labels, "rows": rows, "manual_filled": filled, "manual_total": len(rows) * 7}
 
 
 def build_page(payload):
@@ -131,11 +162,15 @@ def main():
         status = update_sources(probe.flights[-1]["n"] + 1, today, "--all" in sys.argv)
     data = model.Data()
     cfg = data.cfg
-    fingerprint = hashlib.sha256((json.dumps(data.vehicles, sort_keys=True) + json.dumps(data.net, sort_keys=True) + json.dumps(data.flights, sort_keys=True) + json.dumps(cfg, sort_keys=True)).encode()).hexdigest()[:16]
+    fingerprint = hashlib.sha256((json.dumps(data.vehicles, sort_keys=True) + json.dumps(data.net, sort_keys=True) + json.dumps(data.flights, sort_keys=True) + json.dumps(cfg, sort_keys=True) + json.dumps(data.status, sort_keys=True) + json.dumps(data.faa, sort_keys=True) + (ROOT / "data" / "manual" / "artemis.json").read_text()).encode()).hexdigest()[:16]
     seed = int(fingerprint[:8], 16)
 
     near, runs, _ = model.forecast_near(data, today, seed=seed)
     years = model.forecast_years(data, today, runs, seed=seed + 1)
+    flight_days = years.pop("flight_days")
+    moon = artemis.forecast(today, flight_days, seed=seed + 2)
+    few_tankers = artemis.forecast(today, flight_days, seed=seed + 2, tankers=(6, 8))
+    moon["few_tankers"] = {x["id"]: {"p50": x.get("p50"), "p_target": x.get("p_target")} for x in few_tankers["rows"]}
     bt = model.backtest(data)
     tracks = {}
     for f in data.flights[-3:]:
@@ -153,7 +188,8 @@ def main():
         entry = {"as_of": str(today), "model_version": cfg["model_version"], "fingerprint": fingerprint,
                  "flights": [{k: x[k] for k in ("n", "mode", "p10", "p25", "p50", "p75", "p90")} for x in near],
                  "years": {y: years["cases"]["mit"][y]["p50"] for y in years["cases"]["mit"]},
-                 "years_no_incident": {y: years["cases"]["ohne"][y]["p50"] for y in years["cases"]["ohne"]}}
+                 "years_no_incident": {y: years["cases"]["ohne"][y]["p50"] for y in years["cases"]["ohne"]},
+                 "artemis": {x["id"]: {"p50": x["p50"], "p_target": x["p_target"], "target": x["target"]} for x in moon["rows"] if x.get("p50")}}
         append(logpath, entry)
         log.append(entry)
     if status:
@@ -174,13 +210,17 @@ def main():
         status = runs_log[-1]["sources"]
 
     b, s, pad = data.assignment(nxt)
+    matrix = production_matrix(data)
+    feed = data._cache("feed", {"articles": []})["articles"][-8:]
+    changes = read_log(LOG / "status_changes.jsonl")
     payload = {
         "generated": datetime.now(timezone.utc).isoformat(timespec="minutes"), "as_of": str(today), "offline": offline, "model_version": cfg["model_version"],
         "status": status, "flights": data.flights, "gaps": model.gaps(data), "durations": model.durations(data), "near": near, "years": years,
         "net_current": {str(x["n"]): model.net_as_of(data, x["n"], today) for x in near},
         "next": {"n": nxt, "pad": pad, "booster": vehicle_status(data, b, nxt), "ship": vehicle_status(data, s, nxt), "stack": stack_status(data, b, s)},
         "following": [{"n": x["n"], "booster": vehicle_status(data, x["booster"], x["n"]), "ship": vehicle_status(data, x["ship"], x["n"])} for x in near[1:3]],
-        "license": model.load("license"), "matrix": production_matrix(data), "milestones": model.milestone_stats(), "falcon": model.load("falcon_years"),
+        "license": model.load("license"), "matrix": matrix, "trends": model.trends(data, matrix["rows"]), "artemis": moon,
+        "checklist": data.status, "status_changes": [c for c in changes if not c.get("first_run")][-20:], "faa": data.faa[-8:], "open_mishap": data.open_mishap(), "news": feed[::-1], "license_cleared": data.license_cleared(nxt), "milestones": model.milestone_stats(), "falcon": model.load("falcon_years"),
         "backtest_summary": model.backtest_summary(bt), "tracks": tracks, "log": log[-60:], "log_count": len(log), "scored": scored,
         "assumptions": cfg, "upcoming": data.meta["upcoming"],
     }
