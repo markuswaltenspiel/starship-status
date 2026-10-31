@@ -1,4 +1,5 @@
 """Prognosemodell: nahe Flüge aus Fahrzeugstand und NET, ferne Jahre aus Szenarien."""
+import heapq
 import json
 import math
 import random
@@ -409,13 +410,13 @@ def forecast_near(data, as_of, count=4, sims=None, seed=1):
     return out, all_runs, numbers
 
 
-def production_rate(data, as_of):
-    """Getestete Ships pro Jahr, hochgerechnet aus den letzten neun Monaten (erster Cryo-Test)."""
+def production_rate(data, as_of, prefix="S"):
+    """Getestete Fahrzeuge pro Jahr, hochgerechnet aus den letzten neun Monaten (erster Cryo-Test)."""
     window = 270
     start = as_of - timedelta(days=window)
     firsts = []
     for name in data.vehicles:
-        if re.fullmatch(r"S\d+", name):
+        if re.fullmatch(rf"{prefix}\d+", name):
             c = data.cryo_first(name, as_of)
             if c and c >= start:
                 firsts.append(c)
@@ -440,12 +441,98 @@ def target_rate_fn(cfg, multiplier, start):
     return rate
 
 
+def reflights(data, stage, as_of):
+    """Bisherige Wiederholungsflüge einer Stufe, je mit Datum, Tagen seit dem letzten Flug und Baureihe."""
+    last, out = {}, []
+    for f in data.flights:
+        day = d(f["date"])
+        if day > as_of:
+            continue
+        vehicle = f[stage]
+        if vehicle in last:
+            out.append({"date": day, "days": (day - last[vehicle]).days, "version": f["version"]})
+        last[vehicle] = day
+    return out
+
+
+def sample_fleet(data, as_of, rng, produced):
+    """Zieht die unsicheren Werte des Flottenmodells einmal je Simulation."""
+    lt = data.cfg["long_term"]
+    fc = lt["fleet"]
+    offset = lambda day: (day - as_of).days
+    stretched = lambda announced, target, sigma: offset(d(announced)) + (d(target) - d(announced)).days * lt["slip_multiplier"] * math.exp(rng.gauss(0, sigma))
+    stages = {}
+    for stage, c in fc["stages"].items():
+        history = reflights(data, stage, as_of)
+        v3 = [r for r in history if r["version"] == "V3"]
+        # Echte Flüge ersetzen die Annahmen; der erste Reflug der Baureihe V3 setzt den Startpunkt
+        start = offset(v3[0]["date"]) if v3 else max(0.0, stretched(c["reuse_announced"], c["reuse_target"], c["reuse_sigma"]))
+        first = statistics.median(r["days"] for r in history[-3:]) if history else c["first_turnaround_days"]
+        stages[stage] = {"start": start, "first_turnaround": first * math.exp(rng.gauss(0, .3)), "min_turnaround": c["min_turnaround_days"],
+                         "recovery": min(.97, c["recovery_max"] * math.exp(rng.gauss(0, .08))), "life": max(2, round(c["service_life_flights"] * math.exp(rng.gauss(0, .35))))}
+    slip = math.exp(rng.gauss(0, fc["pad_slip_sigma"]))
+    pads = []
+    for p in fc["pads"]:
+        opens = None if p.get("active") else offset(d(p["announced"])) + (d(p["target"]) - d(p["announced"])).days * lt["slip_multiplier"] * slip
+        pads.append({"name": p["name"], "site": p["site"], "opens": None if opens is None else max(0.0, opens)})
+    growth = fc["production_growth"] * math.exp(rng.gauss(0, fc["production_growth_sigma"]))
+    return {"stages": stages, "pads": pads, "growth": growth, "learning": fc["turnaround_learning"] * math.exp(rng.gauss(0, .08)), "produced": produced}
+
+
+class Fleet:
+    """Jeder Flug braucht einen Booster, ein Ship und einen freien Startplatz."""
+
+    def __init__(self, data, params, first_day, rng):
+        self.params, self.rng = params, rng
+        self.fc = data.cfg["long_term"]["fleet"]
+        self.base_gap = data.cfg["pad"]["same_pad_floor_days"]
+        self.stock = {"ship": [], "booster": []}
+        self.next_build = {"ship": first_day, "booster": first_day}
+
+    def _build(self, stage, until):
+        p = self.params
+        while self.next_build[stage] <= until or not self.stock[stage]:
+            when = self.next_build[stage]
+            heapq.heappush(self.stock[stage], (when, 0))
+            self.next_build[stage] += 365 / max(p["produced"][stage] * p["growth"] ** (when / 365), .5)
+
+    def pad_gap(self, day):
+        """Tage zwischen zwei Starts bei den Startplätzen, die an diesem Tag fertig sind."""
+        gap = self.base_gap * self.fc["pad_learning"] ** (max(day, 0) / 365)
+        by_site = {}
+        for pad in self.params["pads"]:
+            if pad["opens"] is None or pad["opens"] <= day:
+                by_site[pad["site"]] = by_site.get(pad["site"], 0) + 1
+        return 365 / sum(min(self.fc["site_limits"][site], count * 365 / gap) for site, count in by_site.items())
+
+    def launch(self, earliest):
+        """Startet am frühesten möglichen Tag und schickt geborgene Stufen in die Wartung."""
+        for stage in self.stock:
+            self._build(stage, earliest)
+        ready = {stage: self.stock[stage][0][0] for stage in self.stock}
+        start = max(earliest, *ready.values())
+        reused = {}
+        for stage, c in self.params["stages"].items():
+            _, flown = heapq.heappop(self.stock[stage])
+            reused[stage] = flown > 0
+            if start >= c["start"]:
+                years = (start - c["start"]) / 365
+                recovery = c["recovery"] * (1 - math.exp(-years / self.fc["recovery_ramp_years"]))
+                if flown + 1 < c["life"] and self.rng.random() < recovery:
+                    service = max(c["min_turnaround"], c["first_turnaround"] * self.params["learning"] ** years)
+                    heapq.heappush(self.stock[stage], (start + service * self.rng.lognormvariate(0, self.fc["turnaround_sigma"]), flown + 1))
+        return start, reused
+
+
 def forecast_years(data, as_of, runs, last_year=2032, seed=2):
     """Flüge je Jahr, je einmal mit und ohne schwere Zwischenfälle."""
     lt = data.cfg["long_term"]
     rng = random.Random(seed)
     current = 365 / statistics.median([g["gap"] for g in gaps(data) if g["version"] == "V3" and not g["transition"]] or [65])
     produced = max(production_rate(data, as_of), 3)
+    produced_stages = {"ship": produced, "booster": max(production_rate(data, as_of, "B"), 3)}
+    fleet_flights = {y: {"flights": 0, "reused_ship": 0} for y in range(as_of.year, last_year + 1)}
+    fleet_samples = []
     years = list(range(as_of.year, last_year + 1))
     names = list(lt["scenario_weights"])
     by_case = {"mit": {y: [] for y in years}, "ohne": {y: [] for y in years}}
@@ -460,13 +547,16 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
         if scenario == "falcon":
             g = lt["falcon_growth"] * math.exp(rng.gauss(0, .15))
             rate = lambda day, g=g: current * g ** ((day - as_of).days / 365)
-        elif scenario == "production":
-            g = lt["production_growth"] * math.exp(rng.gauss(0, .2))
-            rate = lambda day, g=g: produced * g ** ((day - as_of).days / 365)
+        elif scenario == "fleet":
+            rate = None
         else:
             rate = target_rate_fn(lt, lt["slip_multiplier"] * math.exp(rng.gauss(0, .25)), as_of)
         scale = math.exp(rng.gauss(0, .2))
         hazard_factor = math.exp(rng.gauss(0, .3))
+        params = None
+        if scenario == "fleet":
+            params = sample_fleet(data, as_of, rng, {k: v * scale for k, v in produced_stages.items()})
+            fleet_samples.append(params)
         for case, incidents in (("mit", True), ("ohne", False)):
             count = dict(done_year)
             near = run[:2]
@@ -478,14 +568,26 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
             n = len(flown_before) + len(near)
             local = random.Random(rng.random())
             days_list = sorted((as_of + timedelta(days=round(x))).toordinal() for x in near)
+            # Die beiden nahen Flüge verbrauchen die vorhandenen Fahrzeuge, danach zählt die neue Fertigung
+            fleet = Fleet(data, params, (day - as_of).days, local) if params else None
             while True:
-                r = max(rate(day) * scale, 1.0)
-                step = 365 / r * local.lognormvariate(0, lt["gap_sigma"])
+                if fleet:
+                    step = fleet.pad_gap((day - as_of).days) * local.lognormvariate(0, lt["fleet"]["pad_gap_sigma"])
+                else:
+                    r = max(rate(day) * scale, 1.0)
+                    step = 365 / r * local.lognormvariate(0, lt["gap_sigma"])
+                stand_down = 0
                 if incidents:
                     h = min(.5, lt["hazard_at_14"] * hazard_factor * (n / 14) ** lt["hazard_exponent"])
                     if local.random() < h:
-                        step += local.choice(lt["stand_down_days"]) * (n / 14) ** -0.3
-                day += timedelta(days=max(1, round(step)))
+                        stand_down = local.choice(lt["stand_down_days"]) * (n / 14) ** -0.3
+                step += stand_down
+                reused = None
+                if fleet:
+                    start, reused = fleet.launch((day - as_of).days + max(1, round(step)))
+                    day = as_of + timedelta(days=round(start))
+                else:
+                    day += timedelta(days=max(1, round(step)))
                 n += 1
                 if day > horizon:
                     break
@@ -493,6 +595,10 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
                     days_list.append(day.toordinal())
                 if day.year in count:
                     count[day.year] += 1
+                    if fleet and incidents:
+                        row = fleet_flights[day.year]
+                        row["flights"] += 1
+                        row["reused_ship"] += reused["ship"]
             if incidents:
                 flight_days.append(days_list)
             for y in years:
@@ -505,7 +611,13 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
         pick = lambda p: s[min(len(s) - 1, int(p * len(s)))]
         return {"p10": pick(.1), "p25": pick(.25), "p50": pick(.5), "p75": pick(.75), "p90": pick(.9)}
 
-    out = {"flight_days": flight_days, "current_rate": round(current, 1), "production_12m": produced, "cases": {}, "scenarios": {}, "cumulative": {}}
+    middle_day = lambda values: str(as_of + timedelta(days=round(statistics.median(values)))) if values else None
+    fleet_view = {
+        "reuse_share": {str(y): round(100 * r["reused_ship"] / r["flights"]) for y, r in fleet_flights.items() if r["flights"] and y > as_of.year},
+        "first_ship_reuse": middle_day([p["stages"]["ship"]["start"] for p in fleet_samples]),
+        "pads": [{"name": pad["name"], "opens": None if pad.get("active") else middle_day([p["pads"][i]["opens"] for p in fleet_samples])} for i, pad in enumerate(lt["fleet"]["pads"])],
+    }
+    out = {"flight_days": flight_days, "current_rate": round(current, 1), "production_12m": produced, "fleet": fleet_view, "cases": {}, "scenarios": {}, "cumulative": {}}
     for case, table in by_case.items():
         out["cases"][case] = {str(y): stats(v) for y, v in table.items()}
         total_before = sum(1 for f in data.flights if d(f["date"]).year < as_of.year)

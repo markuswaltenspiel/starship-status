@@ -36,7 +36,8 @@ open dist/index.html
 
 **Nach Flug 17 die Prognose prüfen und eventuell feinjustieren** (Stand der Vereinbarung: 31.10.2026, Modell 1.2).
 Zu prüfen: Trefferquote im Log, Fehler nach Vorlauf, Halbwertszeit der Gewichte, Anteil des Flugabstands,
-Wachstumsannahme im Produktions-Szenario gegen den gemessenen Fertigungstakt. Die Seite zeigt ab Flug 17 einen Hinweis.
+im Flotten-Szenario Fertigungswachstum gegen den gemessenen Takt, Wartungszeiten gegen echte Wiederholungsflüge und die Termine der Startplätze.
+Außerdem die festen 30, 45 oder 60 Tage für wiederverwendete Fahrzeuge bei den nahen Flügen (`src/model.py`, Funktion `sample_flight`). Die Seite zeigt ab Flug 17 einen Hinweis.
 
 ## Quellen
 

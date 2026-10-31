@@ -1,5 +1,5 @@
 {
- "model_version": "1.5",
+ "model_version": "1.6",
  "simulations": 6000,
  "license": {
   "p_new_profile": 0.25,
@@ -21,12 +21,53 @@
  "long_term": {
   "scenario_weights": {
    "falcon": 0.35,
-   "production": 0.35,
+   "fleet": 0.35,
    "target": 0.3
   },
   "falcon_growth": 1.37,
-  "production_growth": 1.8,
   "slip_multiplier": 2.75,
+  "fleet": {
+   "production_growth": 1.25,
+   "production_growth_sigma": 0.2,
+   "recovery_ramp_years": 1.2,
+   "turnaround_learning": 0.72,
+   "turnaround_sigma": 0.35,
+   "stages": {
+    "ship": {
+     "reuse_announced": "2026-10-20",
+     "reuse_target": "2027-01-31",
+     "reuse_sigma": 0.6,
+     "first_turnaround_days": 240,
+     "min_turnaround_days": 30,
+     "recovery_max": 0.8,
+     "service_life_flights": 10
+    },
+    "booster": {
+     "reuse_announced": "2026-10-20",
+     "reuse_target": "2026-12-31",
+     "reuse_sigma": 0.5,
+     "first_turnaround_days": 150,
+     "min_turnaround_days": 21,
+     "recovery_max": 0.9,
+     "service_life_flights": 20
+    }
+   },
+   "pad_learning": 0.75,
+   "pad_gap_sigma": 0.25,
+   "pad_slip_sigma": 0.25,
+   "site_limits": {
+    "Starbase": 25,
+    "LC-39A": 44,
+    "SLC-37": 76
+   },
+   "pads": [
+    {"name": "Starbase Pad 2", "site": "Starbase", "active": true},
+    {"name": "LC-39A", "site": "LC-39A", "announced": "2026-10-29", "target": "2026-12-31", "basis": "NASASpaceflight: Flug 16 frühestens Dezember 2026"},
+    {"name": "Starbase Pad 1", "site": "Starbase", "announced": "2026-07-15", "target": "2027-09-30", "basis": "NASASpaceflight: Rückkehr später im Jahr 2027; Monat geschätzt"},
+    {"name": "SLC-37A", "site": "SLC-37", "announced": "2026-10-29", "target": "2028-01-31", "basis": "NASASpaceflight-Schätzung: Ende 2027 oder Anfang 2028, kein SpaceX-Termin"},
+    {"name": "SLC-37B", "site": "SLC-37", "announced": "2026-10-29", "target": "2029-01-31", "basis": "Eigene Annahme: ein Jahr nach SLC-37A, keine Quelle"}
+   ]
+  },
   "hazard_at_14": 0.2,
   "hazard_exponent": -0.6,
   "stand_down_days": [
