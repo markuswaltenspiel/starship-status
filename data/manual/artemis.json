@@ -43,7 +43,11 @@
   "suit_sortie": "2028-09-30",
   "suit_late": "2030-12-31",
   "suit_sortie_share": 0.65,
-  "suit_sigma_days": 150
+  "suit_sigma_days": 150,
+  "blue_origin_factor": [
+   1.6,
+   0.35
+  ]
  },
  "milestones": [
   {
@@ -86,16 +90,15 @@
    "official": "frühestens 1. Quartal 2027",
    "target": "2027-03-31",
    "announced": "2026-09-15",
-   "factor": 1.6,
-   "sigma": 0.4,
    "source": "https://en.wikipedia.org/wiki/Blue_Moon_Pathfinder_Mission_1",
-   "drivers": "Voraussetzung für den zweiten Lander-Weg über Blue Origin.",
+   "drivers": "Gerechnet nur mit dem allgemeinen Blue-Origin-Verzugsfaktor, ohne einzelne Abhängigkeiten.",
    "history": [
     "Anfang 2026",
     "Herbst 2026",
     "1. Quartal 2027"
    ],
-   "note": "Eine Mondlandung wäre der Test des Landers selbst."
+   "note": "Wäre zugleich der erste Test des Landers.",
+   "factor_group": "blue_origin_factor"
   },
   {
    "id": "artemis3",
@@ -125,11 +128,10 @@
    "official": "2028",
    "target": "2028-12-31",
    "announced": "2026-10-23",
-   "factor": 1.6,
-   "sigma": 0.35,
    "source": "https://spacepolicyonline.com/news/nasa-is-full-steam-ahead-on-artemis-iii-iv-and-v/",
-   "drivers": "MK1-Testflug, unbemannter Test, drei MK1-Schlepper bringen MK2 in den Mondorbit.",
-   "note": "Laut Bericht kommt Blue Origin bisher langsam voran."
+   "drivers": "Gerechnet nur mit dem allgemeinen Blue-Origin-Verzugsfaktor, ohne einzelne Abhängigkeiten.",
+   "note": "Geplant: unbemannter Test, dann drei MK1-Schlepper für den Weg in den Mondorbit. Laut Bericht kommt Blue Origin bisher langsam voran.",
+   "factor_group": "blue_origin_factor"
   },
   {
    "id": "artemis4",

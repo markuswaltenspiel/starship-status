@@ -75,7 +75,11 @@ def forecast(as_of, flight_days, seed=11, tankers=None):
     def reference(key):
         if done.get(key):
             return _d(done[key]).toordinal()
-        return _reference(rng, items[key], targets[key], as_of)
+        item = items[key]
+        if item.get("factor_group"):
+            factor, sigma = a[item["factor_group"]]
+            item = {**item, "factor": factor, "sigma": sigma}
+        return _reference(rng, item, targets[key], as_of)
 
     for days in flight_days:
         tankers = math.exp(rng.uniform(*tankers_log))
