@@ -487,7 +487,7 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
                         step += local.choice(lt["stand_down_days"]) * (n / 14) ** -0.3
                 day += timedelta(days=max(1, round(step)))
                 n += 1
-                if day > horizon or len(days_list) > 250:
+                if day > horizon:
                     break
                 if incidents:
                     days_list.append(day.toordinal())
