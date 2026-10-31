@@ -392,7 +392,7 @@ function renderAccuracy(){
 function renderData(){
   table($("t-sources"),["Quelle","Letzter Lauf","Ergebnis"],D.status.map(x=>[x.url?link(x.url,x.label):x.label,statusPill(x.ok?"good":"bad",x.ok?"erreichbar":"Fehler"),x.detail]));
   const a=D.assumptions,up=D.upcoming["16"],ms=D.milestones,items=[
-    "Nächste Flüge: Jede Simulation zieht die verbleibenden Abschnitte aus früheren Fahrzeugen, V3 zählt dreifach. Maßgeblich ist das später fertige Fahrzeug. Dazu kommt das offizielle NET, korrigiert um frühere Verschiebungen bei ähnlichem Vorlauf.",
+    `Nächste Flüge: Jede Simulation zieht die verbleibenden Abschnitte aus früheren Fahrzeugen. Jüngere Flüge zählen stärker, das Gewicht halbiert sich alle ${a.recency_half_life_flights} Flüge. Solange ein Fahrzeug nicht fertig getestet ist, zählt zur Hälfte der normale Flugabstand. Maßgeblich ist das später fertige Fahrzeug. Dazu kommt das offizielle NET, korrigiert um frühere Verschiebungen bei ähnlichem Vorlauf.`,
     ...(up?[`Flug 16: ${Math.round((up.pad_probability||1)*100)} % Wahrscheinlichkeit für ${up.pad}, mit im Median ${a.pad.new_pad_median_days} zusätzlichen Tagen für den neuen Startplatz. Das ist eine Annahme.`]:[]),
     "Ab dem dritten Flug stehen meist weder Fahrzeugstand noch NET zur Verfügung, die Prognose folgt dann dem Flugabstand. Die Zuordnung dieser Flüge schreibt nur die Seriennummern fort.",
     `Jahreswerte: drei Szenarien, Risiko eines schweren Zwischenfalls anfangs ${Math.round(a.long_term.hazard_at_14*100)} % pro Flug, danach mit der Flugzahl fallend. Die Form des Rückgangs stammt aus dem Falcon-9-Verlauf.`,

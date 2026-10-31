@@ -180,12 +180,18 @@ def gaps(data):
     return out
 
 
+def recency_weight(cfg, n, before):
+    """Jüngere Flüge zählen stärker; das Gewicht halbiert sich alle paar Flüge."""
+    return 0.5 ** ((before - n) / cfg["recency_half_life_flights"])
+
+
 def weighted_pool(rows, field, cfg, before=None, ignore=()):
     pool = []
+    ref = before if before is not None else max((r["n"] for r in rows), default=0) + 1
     for r in rows:
         if r[field] is None or (before is not None and r["n"] >= before) or r["n"] in ignore:
             continue
-        pool.append((r[field], cfg["version_weight"][r["version"]]))
+        pool.append((r[field], recency_weight(cfg, r["n"], ref)))
     return pool
 
 
@@ -225,11 +231,11 @@ def net_slip_pool(data, before, lead):
         this_lead = (d(r["net"]) - d(r["seen"])).days
         slip = (d(f["date"]) - d(r["net"])).days
         if this_lead >= 0 and slip >= -1 and bucket(this_lead) == bucket(lead):
-            pool.append((max(slip, 0), data.cfg["version_weight"][f["version"]]))
+            pool.append((max(slip, 0), recency_weight(data.cfg, f["n"], before)))
     return pool
 
 
-def sample_flight(data, n, as_of, rng, table, prev_sample=None):
+def sample_flight(data, n, as_of, rng, table, prev_sample=None, gap_pool=None):
     """Ein simulierter Starttermin als Tage ab as_of (ohne schweren Zwischenfall)."""
     cfg = data.cfg
     booster, ship, pad = data.assignment(n)
@@ -251,7 +257,8 @@ def sample_flight(data, n, as_of, rng, table, prev_sample=None):
             return max(1.0, draw(rng, [(45, 1), (60, 1), (30, 1)]) + (d(prev_use["date"]) - as_of).days)
         if cryo and not prev_use:
             return max(1.0, draw(rng, pool) + (cryo - as_of).days)
-        return draw(rng, pool) + rng.uniform(25, 70)
+        # Noch kein Cryo-Test: Stacking-Ende bis Cryo dauerte zuletzt rund zwei bis fünf Wochen
+        return draw(rng, pool) + rng.uniform(*cfg["before_cryo_days"])
 
     base = max(ready(ship, ship_c), ready(booster, boost_c))
     pipeline = base + draw(rng, sfl)
@@ -261,6 +268,15 @@ def sample_flight(data, n, as_of, rng, table, prev_sample=None):
         pipeline = base + draw(rng, sfl)
     if pipeline < 1:
         pipeline = 1 + rng.expovariate(1 / 5)
+
+    # Solange ein Fahrzeug nicht fertig getestet ist, sagt der Flugabstand ähnlich viel wie die Pipeline
+    both_done = data.final_sf(ship, n, as_of) and data.final_sf(booster, n, as_of)
+    this_flight = next((f for f in data.all_flights if f["n"] == n), None)
+    same_version = not last or (this_flight["version"] if this_flight else "V3") == last[-1]["version"]
+    if not both_done and same_version and gap_pool and rng.random() < cfg["cadence_share"]:
+        cadence = (prev_sample if prev_sample is not None else prior) + draw(rng, gap_pool, 0.2)
+        if cadence >= 1:
+            pipeline = cadence
 
     entry = data.license.get(n)
     pipeline += license_wait(rng, cfg, entry, as_of)
@@ -324,12 +340,12 @@ def forecast_near(data, as_of, count=4, sims=None, seed=1):
     first = max([f["n"] for f in data.flights if d(f["date"]) <= as_of], default=0) + 1
     numbers = list(range(first, first + count))
     all_runs = []
-    gap_pool = [(g["gap"], data.cfg["version_weight"][g["version"]]) for g in gaps(data) if not g["excluded"] and not g["transition"] and g["n"] < first]
+    gap_pool = [(g["gap"], recency_weight(data.cfg, g["n"], first)) for g in gaps(data) if not g["excluded"] and not g["transition"] and g["n"] < first]
     for _ in range(sims):
         run, prev = [], None
         for i, n in enumerate(numbers):
             if i < 2 or data.final_sf(data.assignment(n)[1], n, as_of):
-                prev = sample_flight(data, n, as_of, rng, table, prev)
+                prev = sample_flight(data, n, as_of, rng, table, prev, gap_pool)
             else:
                 prev = prev + draw(rng, gap_pool, 0.2)
             run.append(prev)
