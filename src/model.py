@@ -191,6 +191,33 @@ class Data:
         return d(hits[-1]["date"]) if hits else None
 
 
+def license_days(data, n):
+    """Geschätzte Wartezeit auf die Lizenz eines Flugs in Tagen."""
+    entry = data.license.get(n) or {}
+    return ((entry.get("wait_min") or 0) + (entry.get("wait_max") or 0)) / 2
+
+
+def line_version(data, vehicle):
+    """Baureihe eines Fahrzeugs, auch für solche ohne Eintrag in der Fahrzeugliste."""
+    known = data.steps["versions"].get(vehicle)
+    if known:
+        return known
+    number = int(vehicle[1:])
+    limits = (39, 33) if vehicle[0] == "S" else (18, 14)
+    return "V3" if number >= limits[0] else "V2" if number >= limits[1] else "V1"
+
+
+def test_spacing(data, vehicle, as_of, last_test):
+    """Abstände eines Tests in der Baureihe des Fahrzeugs und die letzte bekannte Stelle.
+
+    Der Abstand ab dem ersten Fahrzeug einer Baureihe zählt nicht, er ist vom Wechsel geprägt.
+    """
+    version = line_version(data, vehicle)
+    known = sorted((int(v[1:]), c) for v in data.vehicles if v[0] == vehicle[0] and line_version(data, v) == version and (c := last_test(v)))
+    steps = [(b[1] - a[1]).days for a, b in zip(known[1:], known[2:]) if b[1] > a[1]][-4:]
+    return steps, known[-1] if known else None
+
+
 def durations(data):
     """Dauer je Abschnitt für jedes Fahrzeug, das geflogen ist."""
     rows = []
@@ -212,6 +239,7 @@ def durations(data):
             "booster_sf_launch": (launch - boost_sf).days if boost_sf else None,
             "ship_cryo_launch": (launch - ship_cryo).days if ship_cryo else None,
             "last_sf_launch": (launch - last_sf).days if last_sf else None,
+            "sf_launch_clean": (launch - last_sf).days - license_days(data, f["n"]) if last_sf else None,
             "wdr_launch": (launch - wdr).days if wdr else None,
             "limit": "Ship" if ship_sf and boost_sf and ship_sf >= boost_sf else "Booster",
         })
@@ -258,6 +286,8 @@ def draw(rng, pool, jitter=0.18):
 IGNORE_SF_LAUNCH = (1, 2, 3, 4, 5)
 # Flüge 1 und 2: Der Abstand Generalprobe→Start war vor allem Warten auf die Lizenz
 IGNORE_WDR_LAUNCH = (1, 2)
+# Erster Flug einer Baureihe: Der Wechsel selbst soll bei späteren Flügen nicht als normale Dauer zählen
+FIRST_OF_VERSION = (1, 7, 12)
 
 
 def license_wait(rng, cfg, entry, as_of):
@@ -295,6 +325,63 @@ def net_slip_pool(data, before, lead):
     # Bei langen Vorläufen gibt es wenige Fälle: dann die nächstgelegenen, damit einzelne Werte nicht alles bestimmen
     keep = max(sum(1 for x in rows if x[0] <= cfg["net_window_days"]), cfg["net_window_min_values"])
     return [(slip, weight) for _, slip, weight in rows[:keep]]
+
+
+def pad_opening(data, pad, as_of, rng):
+    """Tage bis ein neuer Startplatz fertig ist: Plan verlängert um den Verzug kurzer Ankündigungen."""
+    fleet = data.cfg["long_term"]["fleet"]
+    plan = next((p for p in fleet["pads"] if p["name"] == pad and not p.get("active")), None)
+    if not plan:
+        return 1
+    announced, target = d(plan["announced"]), d(plan["target"])
+    return max(1, (announced - as_of).days + (target - announced).days * data.cfg["pad"]["short_slip_multiplier"] * math.exp(rng.gauss(0, fleet["pad_slip_sigma"])))
+
+
+def sample_later_flight(data, n, as_of, rng, table, pad, pad_used):
+    """Ein Starttermin für Flüge nach dem nächsten: aus dem Testfortschritt, unabhängig von Startverzögerungen davor.
+
+    Maßgeblich ist der letzte Test des Ships: Static Fire, sonst Cryo-Test. Ohne Test folgt es dem Static-Fire-Takt
+    der Baureihe, sonst dem Cryo-Takt. Ein früherer Flug blockiert nur denselben Startplatz.
+    """
+    cfg = data.cfg
+    booster, ship, _ = data.assignment(n)
+    sf_pool = weighted_pool(table, "sf_launch_clean", cfg, n, IGNORE_SF_LAUNCH + FIRST_OF_VERSION) or weighted_pool(table, "sf_launch_clean", cfg, n) or [(30, 1)]
+    cryo_pool = weighted_pool(table, "ship_cryo_launch", cfg, n, tuple(range(1, 7)) + FIRST_OF_VERSION) or weighted_pool(table, "ship_cryo_launch", cfg, n, tuple(range(1, 7))) or [(80, 1)]
+
+    def after(base, pool):
+        value = base + draw(rng, pool)
+        for _ in range(30):
+            if value >= 1:
+                return value
+            value = base + draw(rng, pool)
+        return 1 + rng.expovariate(1 / 5)
+
+    def from_cadence(steps, anchor, pool):
+        count = max(1, int(ship[1:]) - anchor[0])
+        return after((anchor[1] - as_of).days + sum(rng.choice(steps) * math.exp(rng.gauss(0, .15)) for _ in range(count)), pool)
+
+    ship_sf, booster_sf = data.final_sf(ship, n, as_of), data.final_sf(booster, n, as_of)
+    wdr = data.last_wdr(booster, ship, as_of)
+    wdr_pool = weighted_pool(table, "wdr_launch", cfg, n, IGNORE_WDR_LAUNCH) if wdr else None
+    if wdr_pool:
+        result = after((wdr - as_of).days, wdr_pool)
+    elif ship_sf:
+        # Der Abstand gilt für den Flug: ein Zug ab dem späteren Static Fire, Booster warten sonst oft lange fertig
+        result = after((max(x for x in (ship_sf, booster_sf) if x) - as_of).days, sf_pool)
+    elif data.previous_flight_of(ship, n):
+        result = after(draw(rng, [(45, 1), (60, 1), (30, 1)]) + (d(data.previous_flight_of(ship, n)["date"]) - as_of).days, sf_pool)
+    elif data.cryo_first(ship, as_of):
+        result = after((data.cryo_first(ship, as_of) - as_of).days, cryo_pool)
+    else:
+        steps, anchor = test_spacing(data, ship, as_of, lambda v: data.final_sf(v, None, as_of))
+        if len(steps) >= 2 and anchor:
+            result = from_cadence(steps, anchor, sf_pool)
+        else:
+            steps, anchor = test_spacing(data, ship, as_of, lambda v: data.cryo_first(v, as_of))
+            result = from_cadence(steps or [60], anchor, cryo_pool) if anchor else after(60, cryo_pool)
+    # Ein neuer Startplatz ist eine Bedingung und keine Zusatzdauer: Es wartet nur, wer vor ihm fertig wäre
+    floor = pad_used[pad] + cfg["pad"]["same_pad_floor_days"] if pad in pad_used else pad_opening(data, pad, as_of, rng)
+    return max(result, floor, 1)
 
 
 def sample_flight(data, n, as_of, rng, table, prev_sample=None, gap_pool=None, use_net=False):
@@ -417,6 +504,13 @@ def log_curve(samples):
     return at(.5), max((at(.84) - at(.16)) / 2, .03)
 
 
+def day_curve(samples):
+    """Beschreibt simulierte Tage als Glockenkurve in Tagen: Mitte, Breite nach links und nach rechts."""
+    ordered = sorted(samples)
+    at = lambda p: ordered[int(p * len(ordered))]
+    return at(.5), max(at(.5) - at(.16), 1.0), max(at(.84) - at(.5), 1.0)
+
+
 def forecast_near(data, as_of, count=4, sims=None, seed=1):
     sims = sims or data.cfg["simulations"]
     rng = random.Random(seed)
@@ -425,32 +519,42 @@ def forecast_near(data, as_of, count=4, sims=None, seed=1):
     numbers = list(range(first, first + count))
     gap_pool = [(g["gap"], recency_weight(data.cfg, g["n"], first)) for g in gaps(data) if not g["excluded"] and not g["transition"] and g["n"] < first]
     weights = data.cfg["weights"]
+    standard = statistics.NormalDist()
+    flown_pads = {f["pad"]: (d(f["date"]) - as_of).days for f in data.flights if d(f["date"]) <= as_of}
+    pad_state = [dict(flown_pads) for _ in range(sims)]
     columns, prevs = [], [None] * sims
     for i, n in enumerate(numbers):
-        booster, ship, _ = data.assignment(n)
-        if i < 2 or data.final_sf(ship, n, as_of):
-            stand = [sample_flight(data, n, as_of, rng, table, p, gap_pool) for p in prevs]
-        else:
-            stand = [p + draw(rng, gap_pool, 0.2) for p in prevs]
-        mu, sigma = log_curve(stand)
+        booster, ship, pad = data.assignment(n)
         net = net_as_of(data, n, as_of)
         lead = (d(net["net"]) - as_of).days if net else None
-        # Sobald beide Static Fires durch sind und das NET nah ist, korrigiert es die Stand-Kurve; die schmalere Kurve zählt mehr
-        if lead is not None and 0 <= lead <= weights["near_lead_days"] and data.final_sf(ship, n, as_of) and data.final_sf(booster, n, as_of) and net_slip_pool(data, n, lead):
-            net_mu, net_sigma = log_curve([sample_flight(data, n, as_of, rng, table, p, gap_pool, use_net=True) for p in prevs])
-            a, b = 1 / sigma ** 2, weights["net_weight"] / net_sigma ** 2
-            mu, sigma = (a * mu + b * net_mu) / (a + b), (a * sigma + b * net_sigma) / (a + b)
+        pads = [pad] * sims
+        if i == 0:
+            # Nächster Flug: Stand-Kurve, kurz vor dem Start mit dem NET verrechnet
+            stand = [sample_flight(data, n, as_of, rng, table, p, gap_pool) for p in prevs]
+            mu, sigma = log_curve(stand)
+            if lead is not None and 0 <= lead <= weights["near_lead_days"] and data.final_sf(ship, n, as_of) and data.final_sf(booster, n, as_of) and net_slip_pool(data, n, lead):
+                net_mu, net_sigma = log_curve([sample_flight(data, n, as_of, rng, table, p, gap_pool, use_net=True) for p in prevs])
+                a, b = 1 / sigma ** 2, weights["net_weight"] / net_sigma ** 2
+                mu, sigma = (a * mu + b * net_mu) / (a + b), (a * sigma + b * net_sigma) / (a + b)
+            curve = lambda z, mu=mu, sigma=sigma: math.exp(mu + sigma * z)
+        else:
+            # Spätere Flüge: Testfortschritt in Tagen, damit sich Verzögerungen nicht aufaddieren
+            share = data.meta["upcoming"].get(str(n), {}).get("pad_probability", 1)
+            pads = [pad if pad in flown_pads or rng.random() < share else "Pad 2" for _ in range(sims)]
+            stand = [sample_later_flight(data, n, as_of, rng, table, pads[k], pad_state[k]) for k in range(sims)]
+            mid, left, right = day_curve(stand)
+            curve = lambda z, mid=mid, left=left, right=right: mid + z * (left if z < 0 else right)
         # Glatte Kurve statt der wenigen früheren Abstände; die Reihenfolge bleibt, damit Folgeflüge zusammenhängen
-        normal = statistics.NormalDist(mu, sigma)
         values = [0.0] * sims
         for rank, index in enumerate(sorted(range(sims), key=stand.__getitem__)):
-            value = math.exp(normal.inv_cdf((rank + .5) / sims))
+            value = curve(standard.inv_cdf((rank + .5) / sims))
             # Wer früher fertig wäre, wartet auf das NET; ein überholtes NET wirkt nicht
             if lead is not None and lead >= 1:
                 value = max(value, lead)
             if prevs[index] is not None:
                 value = max(value, prevs[index] + 1)
             values[index] = max(value, 1.0)
+            pad_state[index][pads[index]] = values[index]
         columns.append(values)
         prevs = values
     all_runs = [list(run) for run in zip(*columns)]

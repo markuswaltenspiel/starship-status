@@ -9,7 +9,8 @@
   "sigma": 0.8
  },
  "pad": {
-  "same_pad_floor_days": 30,
+  "same_pad_floor_days": 10,
+  "short_slip_multiplier": 1.45,
   "new_pad_median_days": 30,
   "new_pad_sigma": 0.5
  },
