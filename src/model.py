@@ -733,7 +733,8 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
                     r = max(rate(day) * scale, 1.0)
                     step = 365 / r * local.lognormvariate(0, lt["gap_sigma"])
                 stand_down = 0
-                if incidents:
+                # Das Falcon-Wachstum enthält die Pausen nach Zwischenfällen schon
+                if incidents and scenario != "falcon":
                     h = min(.5, lt["hazard_at_14"] * hazard_factor * (n / 14) ** lt["hazard_exponent"])
                     if local.random() < h:
                         stand_down = local.choice(lt["stand_down_days"]) * (n / 14) ** -0.3

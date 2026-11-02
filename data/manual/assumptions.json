@@ -22,9 +22,9 @@
  },
  "long_term": {
   "scenario_weights": {
-   "falcon": 0.35,
-   "fleet": 0.35,
-   "target": 0.3
+   "falcon": 0.2,
+   "fleet": 0.43,
+   "target": 0.37
   },
   "falcon_growth": 1.37,
   "slip_multiplier": 2.75,

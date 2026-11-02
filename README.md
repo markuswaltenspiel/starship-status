@@ -65,6 +65,14 @@ Geändert wurden nur die Flüge nach dem nächsten und der Mindestabstand auf de
 
 **Verworfen:** Ein Entwurf 1.9 wollte auch den nächsten Flug umstellen. Dort war der Rückblick-Test schlechter (Gipfel-Fehler 9,0 statt 6,3 Tage, 72 % statt 83 % im 80 %-Bereich). Er liegt nur lokal auf dem Branch `modell-1.9-entwurf`.
 
+## Zweite Ergänzung zu Modell 1.8 (02.11.2026, gleiche Versionsnummer)
+
+Geändert wurden nur die Jahreswerte, die Flüge der nächsten Monate rechnen unverändert. Die Änderung zeigt sich im Log am `fingerprint`.
+
+**Doppelzählung behoben:** Das Szenario „Wie Falcon 9“ wächst um 37 % pro Jahr, den Wert von Falcon 9 zwischen 2015 und 2025. Darin stecken die Pausen nach Zwischenfällen schon, deshalb zieht das Szenario sie nicht noch einmal ab. Es ist damit in beiden Ansichten (mit und ohne schwere Zwischenfälle) gleich. Es ergibt für 2032 nun rund 34 statt 24 Flüge, Falcon 9 hatte an der vergleichbaren Stelle (2020 und 2021) 25 und 31, also liegt es jetzt etwas darüber.
+
+**Gewichte:** Falcon 20 % statt 35 %, Flotte 43 % statt 35 %, SpaceX-Ziel 37 % statt 30 %. Der Rest wurde im alten Verhältnis verteilt. Das Szenario passt für die nächsten Jahre gut, danach ist es eher der Fall „die Technik bremst länger als gedacht“: Falcon 9 hing lange an externen Kunden, Starship hat mit Starlink und Artemis eigenen Bedarf. Die 20 % sind eine Einschätzung ohne Daten, wie zuvor die 35 %.
+
 ## Zur Wiedervorlage
 
 **Nach den nächsten zwei Starts (Flug 15 und 16, voraussichtlich Februar oder März 2027) prüfen:**
