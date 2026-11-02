@@ -144,6 +144,19 @@ def production_matrix(data):
     return {"steps": steps, "labels": labels, "rows": rows, "manual_filled": filled, "manual_total": len(rows) * 7}
 
 
+def track_for(data, n, log, start, end):
+    """Verlauf eines Flugs: bis zum ersten Log-Eintrag zurückgerechnet, danach die veröffentlichten Stände."""
+    by_day = {}
+    for entry in log:
+        hit = next((x for x in entry["flights"] if x["n"] == n), None)
+        if hit and model.d(entry["as_of"]) <= end:
+            by_day[entry["as_of"]] = hit  # Mehrere Stände am selben Tag: der letzte war der sichtbare
+    issued = [{"as_of": day, "p10": x["p10"], "p50": x["p50"], "p90": x["p90"], "mode": x["mode"], "issued": True,
+               "net": (model.net_as_of(data, n, model.d(day)) or {}).get("net")} for day, x in sorted(by_day.items())]
+    until = min(end, model.d(issued[0]["as_of"]) - timedelta(days=1)) if issued else end
+    return [{**p, "issued": False} for p in model.history_track(data, n, start, until)] + issued
+
+
 def build_page(payload):
     template = (ROOT / "src" / "template.html").read_text()
     blob = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
@@ -172,26 +185,34 @@ def main():
     few_tankers = artemis.forecast(today, flight_days, seed=seed + 2, tankers=(6, 8))
     moon["few_tankers"] = {x["id"]: {"p50": x.get("p50"), "p_target": x.get("p_target")} for x in few_tankers["rows"]}
     bt = model.backtest(data)
-    tracks = {}
-    for f in data.flights[-3:]:
-        launch = model.d(f["date"])
-        prev = model.d(data.flight(f["n"] - 1)["date"])
-        tracks[str(f["n"])] = {"actual": f["date"], "track": model.history_track(data, f["n"], max(prev + timedelta(days=1), launch - timedelta(days=84)), launch - timedelta(days=1))}
-    last_flight = model.d(data.flights[-1]["date"])
-    nxt = data.flights[-1]["n"] + 1
-    tracks[str(nxt)] = {"actual": None, "track": model.history_track(data, nxt, last_flight + timedelta(days=1), today)}
 
     logpath = LOG / "forecasts.jsonl"
     log = read_log(logpath)
     days_since = (today - date.fromisoformat(log[-1]["as_of"])).days if log else 999
-    if not log or log[-1]["fingerprint"] != fingerprint or days_since >= 7:
+    flights_now = [{k: x[k] for k in ("n", "mode", "p10", "p25", "p50", "p75", "p90")} for x in near]
+    # Auch ohne neue Daten kann sich die Prognose ändern, weil der Vorlauf bis zum NET schrumpft
+    if not log or log[-1]["fingerprint"] != fingerprint or log[-1]["flights"] != flights_now or days_since >= 7:
         entry = {"as_of": str(today), "model_version": cfg["model_version"], "fingerprint": fingerprint,
-                 "flights": [{k: x[k] for k in ("n", "mode", "p10", "p25", "p50", "p75", "p90")} for x in near],
+                 "flights": flights_now,
                  "years": {y: years["cases"]["mit"][y]["p50"] for y in years["cases"]["mit"]},
                  "years_no_incident": {y: years["cases"]["ohne"][y]["p50"] for y in years["cases"]["ohne"]},
                  "artemis": {x["id"]: {"p50": x["p50"], "p_target": x["p_target"], "target": x["target"]} for x in moon["rows"] if x.get("p50")}}
         append(logpath, entry)
         log.append(entry)
+
+    tracks = {}
+    for f in data.flights[-3:]:
+        launch = model.d(f["date"])
+        prev = model.d(data.flight(f["n"] - 1)["date"])
+        tracks[str(f["n"])] = {"actual": f["date"], "track": track_for(data, f["n"], log, max(prev + timedelta(days=1), launch - timedelta(days=84)), launch - timedelta(days=1))}
+    last_flight = model.d(data.flights[-1]["date"])
+    nxt = data.flights[-1]["n"] + 1
+    open_track = track_for(data, nxt, log, last_flight + timedelta(days=1), today)
+    if near[0]["n"] == nxt and open_track and open_track[-1]["as_of"] != str(today):
+        # Unveränderte Prognose steht nicht erneut im Log; die Linie soll trotzdem bis heute reichen
+        open_track.append({**open_track[-1], "as_of": str(today)})
+    tracks[str(nxt)] = {"actual": None, "track": open_track}
+
     if status:
         append(LOG / "runs.jsonl", {"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "sources": [{"id": s["id"], "label": s["label"], "url": s["url"], "ok": s["ok"], "detail": s["detail"]} for s in status]})
 

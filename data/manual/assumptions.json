@@ -1,5 +1,5 @@
 {
- "model_version": "1.6",
+ "model_version": "1.8",
  "simulations": 6000,
  "license": {
   "p_new_profile": 0.25,
@@ -14,9 +14,10 @@
   "new_pad_sigma": 0.5
  },
  "weights": {
-  "net_near": 0.45,
-  "net_far": 0.25,
-  "near_lead_days": 21
+  "net_weight": 2,
+  "near_lead_days": 21,
+  "net_window_days": 3,
+  "net_window_min_values": 10
  },
  "long_term": {
   "scenario_weights": {

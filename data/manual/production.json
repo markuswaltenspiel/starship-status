@@ -108,7 +108,7 @@
    "precision": "approx",
    "confidence": "mittel",
    "source": "https://www.nasaspaceflight.com/2026/08/starbase-lining-future-vehicles/",
-   "note": "Alle Fässer gestapelt, vordere Klappen montiert"
+   "note": "Stacking aller Fässer fertig, vordere Klappen montiert"
   },
   {
    "vehicle": "S42",
@@ -135,7 +135,7 @@
    "precision": "approx",
    "confidence": "mittel",
    "source": "https://www.nasaspaceflight.com/2026/09/flight-15-pairing-masseys/",
-   "note": "Vollständig gestapelt laut NSF"
+   "note": "Stacking abgeschlossen laut NSF"
   },
   {
    "vehicle": "B22",
@@ -153,7 +153,7 @@
    "precision": "day",
    "confidence": "hoch",
    "source": "https://www.nasaspaceflight.com/2026/10/spacex-flight-15-16-milestones/",
-   "note": "Vollständig gestapelt"
+   "note": "Stacking abgeschlossen"
   },
   {
    "vehicle": "S43",
@@ -171,7 +171,7 @@
    "precision": "day",
    "confidence": "hoch",
    "source": "https://www.nasaspaceflight.com/2026/10/spacex-flight-15-16-milestones/",
-   "note": "Vollständig gestapelt"
+   "note": "Stacking abgeschlossen"
   },
   {
    "vehicle": "B23",
@@ -198,7 +198,7 @@
    "precision": "before",
    "confidence": "mittel",
    "source": "https://nasaspaceflight.com/2025/05/starship-flight-9-infrastructure/",
-   "note": "Im Mai 2025 bereits gestapelt"
+   "note": "Stacking im Mai 2025 bereits abgeschlossen"
   },
   {
    "vehicle": "B16",
@@ -216,7 +216,7 @@
    "precision": "approx",
    "confidence": "mittel",
    "source": "https://www.nasaspaceflight.com/2025/01/following-flight-7-starship-flight-8/",
-   "note": "Gegen Ende 2024 gestapelt"
+   "note": "Stacking gegen Ende 2024 abgeschlossen"
   }
  ]
 }

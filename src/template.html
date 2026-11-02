@@ -94,7 +94,7 @@ footer{font-size:.84rem;color:var(--ink2)}
 
 <section id="fluege">
   <h2>Nächste Flüge</h2>
-  <p class="sub">Gilt, falls nichts Schwerwiegendes dazwischenkommt. Der wahrscheinlichste Tag ist die Spitze der Verteilung, der Bereich ist die ehrlichere Angabe.</p>
+  <p class="sub">Gilt, falls nichts Schwerwiegendes dazwischenkommt. Die Mitte bedeutet: Die Hälfte der Simulationen startet früher, die andere Hälfte später. Der Bereich ist die ehrlichere Angabe.</p>
   <div class="flightgrid" id="cards"></div>
   <div class="chart" id="c-intervals"></div>
   <div class="key" id="k-intervals"></div>
@@ -192,9 +192,9 @@ footer{font-size:.84rem;color:var(--ink2)}
   <div class="finding"><h3>Rückblick-Test</h3><p id="bt-finding"></p></div>
   <div class="scroll" id="t-bt"></div>
   <h3>Wie sich die Prognose über die Zeit bewegt</h3>
-  <p class="sub">Zurückgerechnet mit dem damaligen Wissen. Waagerecht das Datum der Prognose, senkrecht der vorhergesagte Starttag.</p>
+  <p class="sub">Durchgezogen und mit Punkt: die Werte, die hier tatsächlich standen, also dieselben wie oben. Gestrichelt: mit dem damaligen Wissen und dem heutigen Modell zurückgerechnet, für die Zeit vor dem Log. Waagerecht das Datum der Prognose, senkrecht der vorhergesagte Starttag.</p>
   <div class="small4" id="c-tracks"></div>
-  <div class="key"><span><i style="background:var(--band);opacity:.2"></i>80 %-Bereich</span><span><i style="background:var(--band)"></i>Mitte</span><span><i style="background:var(--s2)"></i>offizielles NET</span><span><i style="background:var(--ink)"></i>tatsächlicher Start</span></div>
+  <div class="key"><span><i style="background:var(--band);opacity:.2"></i>80 %-Bereich</span><span><i style="background:var(--band)"></i>Mitte</span><span><i style="background:var(--band);opacity:.45"></i>Wahrscheinlichster Tag</span><span><i style="background:var(--s2)"></i>offizielles NET</span><span><i style="background:var(--ink)"></i>tatsächlicher Start</span></div>
   <h3>Prognose-Log</h3>
   <p class="sub" id="log-note"></p>
   <div class="scroll" id="t-log"></div>
@@ -239,7 +239,7 @@ const endS=t=>t.replace(/\.$/,"");
 
 function renderHead(){
   const f=D.near[0],m=D.years.cases.mit;
-  $("lede").textContent=`Flug ${f.n} startet am wahrscheinlichsten um den ${fmtS(f.mode)}, mit 80 % zwischen ${fmtS(f.p10)} und ${endS(fmtS(f.p90))}. Für ${nextYear} ergibt die Rechnung etwa ${m[nextYear].p50} Flüge, für ${nextYear+1} etwa ${m[nextYear+1].p50}.`;
+  $("lede").textContent=`Flug ${f.n} startet voraussichtlich um den ${fmtS(f.p50)}, mit 80 % zwischen ${fmtS(f.p10)} und ${endS(fmtS(f.p90))}. Für ${nextYear} ergibt die Rechnung etwa ${m[nextYear].p50} Flüge, für ${nextYear+1} etwa ${m[nextYear+1].p50}.`;
   $("stamp").replaceChildren(el("span",{text:`Stand ${fmt(D.as_of)}, ${D.generated.slice(11,16)} UTC`}),el("span",{text:`Modell ${D.model_version}`}),el("span",{text:`${D.log_count} ${D.log_count===1?"Prognose":"Prognosen"} im Log`}));
   const b=$("banners");b.replaceChildren();
   const age=(Date.now()-new Date(D.generated).getTime())/36e5;
@@ -254,7 +254,7 @@ function renderHead(){
 function renderCards(){
   const host=$("cards");host.replaceChildren();
   D.near.forEach(f=>{const net=D.net_current[f.n],c=el("article",{class:"flightcard"});
-    c.append(el("div",{class:"label",text:`Flug ${f.n} · ${f.booster} / ${f.ship} · ${f.pad}`}),el("div",{class:"day",text:fmt(f.mode)}),el("div",{class:"prob",text:`wahrscheinlichster Tag, nur etwa ${Math.max(1,Math.round(f.mode_probability*100))} % auf genau diesen Tag`}));
+    c.append(el("div",{class:"label",text:`Flug ${f.n} · ${f.booster} / ${f.ship} · ${f.pad}`}),el("div",{class:"day",text:fmt(f.p50)}),el("div",{class:"prob",text:`Mitte der Prognose · wahrscheinlichster Tag ${fmtS(f.mode)}`}));
     const dl=el("dl");[["Mitte",fmt(f.p50)],["50 %",`${fmtS(f.p25)} – ${fmtS(f.p75)}`],["80 %",`${fmtS(f.p10)} – ${fmtS(f.p90)}`],["NET offiziell",net?fmtS(net.net):"keines"]].forEach(([a,b])=>dl.append(el("dt",{text:a}),el("dd",{text:b})));
     c.append(dl);host.append(c)});
 }
@@ -268,14 +268,14 @@ function renderIntervals(){
     s("text",{x:0,y:cy+4,class:"ink",text:`Flug ${f.n}`},svg);
     s("rect",{x:x(num(f.p10)),y:cy-4,width:Math.max(2,x(num(f.p90))-x(num(f.p10))),height:8,rx:2,fill:"var(--band)",opacity:.28},g);
     s("rect",{x:x(num(f.p25)),y:cy-7,width:Math.max(2,x(num(f.p75))-x(num(f.p25))),height:14,rx:2,fill:"var(--band)",opacity:.7},g);
-    s("circle",{cx:x(num(f.mode)),cy,r:5.5,fill:"var(--ink)",stroke:"var(--bg)","stroke-width":2},g);
+    s("circle",{cx:x(num(f.p50)),cy,r:5.5,fill:"var(--ink)",stroke:"var(--bg)","stroke-width":2},g);
     s("rect",{x:left,y:cy-rowH/2,width:right-left,height:rowH,fill:"transparent"},g);
     const net=D.net_current[f.n];
     if(net&&num(net.net)>=lo&&num(net.net)<=hi){const nx=x(num(net.net));s("path",{d:`M${nx} ${cy-19}l5 5-5 5-5-5z`,fill:"var(--s2)"},svg)}
     comps.filter(c=>c.flight===f.n).forEach(c=>{const nx=x(num(c.date));s("path",{d:`M${nx-5} ${cy+11}h10l-5 7z`,fill:"var(--muted)"},svg)});
-    hover(g,`Flug ${f.n}: wahrscheinlichster Tag ${fmt(f.mode)}. Mitte ${fmt(f.p50)}. 50 % ${fmtS(f.p25)} – ${fmtS(f.p75)}. 80 % ${fmtS(f.p10)} – ${fmtS(f.p90)}.`)});
+    hover(g,`Flug ${f.n}: Mitte ${fmt(f.p50)}. Wahrscheinlichster Tag ${fmt(f.mode)}. 50 % ${fmtS(f.p25)} – ${fmtS(f.p75)}. 80 % ${fmtS(f.p10)} – ${fmtS(f.p90)}.`)});
   const k=$("k-intervals");k.replaceChildren();
-  [["80 %-Bereich","background:var(--band);opacity:.28",""],["50 %-Bereich","background:var(--band);opacity:.7",""],["wahrscheinlichster Tag","background:var(--ink)","round"],["offizielles NET","background:var(--s2)","dia"]].forEach(([t,st,c])=>{const sp=el("span"),i=el("i",{style:st});if(c)i.className=c;sp.append(i,document.createTextNode(t));k.append(sp)});
+  [["80 %-Bereich","background:var(--band);opacity:.28",""],["50 %-Bereich","background:var(--band);opacity:.7",""],["Mitte","background:var(--ink)","round"],["offizielles NET","background:var(--s2)","dia"]].forEach(([t,st,c])=>{const sp=el("span"),i=el("i",{style:st});if(c)i.className=c;sp.append(i,document.createTextNode(t));k.append(sp)});
   if(comps.length)k.append(el("span",{text:`▼ ${comps.map(c=>`${c.label}: ${fmtS(c.date)}`).join(", ")}`}));
   const label=m=>{const[y,mm]=m.split("-");return `${MON[+mm-1]} ${y}`};
   table($("t-months"),["Bis Ende",...D.near.map(f=>`Flug ${f.n}`)],D.near[0].months.map((m,i)=>[label(m.month),...D.near.map(f=>Math.round(f.months[i].p*100)+" %")]),D.near.map((_,i)=>i+1));
@@ -325,7 +325,7 @@ function renderStand(){
   const found=name=>chk.find(i=>i.title===name);
   const row=(a,state,when)=>{const li=el("li");li.append(el("span",{text:a}),statusPill(state?"good":"open",state?(when?fmtS(when):"bestätigt"):"offen"));list.append(li)};
   row("Static Fire Booster",!!n.booster.sf,n.booster.sf);row("Static Fire Ship",!!n.ship.sf,n.ship.sf);
-  [["Vehicles Stacked","Fahrzeuge gestapelt"],["Wet Dress Rehearsal (WDR)","Generalprobe (WDR)"],["Regulatory Approval","Lizenz"],["Road Closure for Launch","Straßensperrung"],["Notice To Air Mission (NOTAM) for Launch","Luftraumwarnung"],["Confirmation from SpaceX","Termin von SpaceX"]].forEach(([k,lab])=>{const it=found(k);row(lab,!!(it&&it.confirmed))});
+  [["Vehicles Stacked","Stacking von Booster und Ship"],["Wet Dress Rehearsal (WDR)","Generalprobe (WDR)"],["Regulatory Approval","Lizenz"],["Road Closure for Launch","Straßensperrung"],["Notice To Air Mission (NOTAM) for Launch","Luftraumwarnung"],["Confirmation from SpaceX","Termin von SpaceX"]].forEach(([k,lab])=>{const it=found(k);row(lab,!!(it&&it.confirmed))});
   const li=el("li");li.append(el("span",{text:"Offizielles NET"}),el("span",{text:net?fmtS(net.net):"keines",class:"pill"}));list.append(li);
   $("next-note").textContent=chk.length?"Die Punkte kommen automatisch aus der NextSpaceflight-Checkliste. Das Programm notiert, wann ein Punkt umspringt. Eine offene Lizenz bremst die Prognose nur wenig, siehe Abschnitt Lizenz.":"Die Checkliste war beim letzten Lauf nicht verfügbar.";
   const done=chk.filter(i=>i.confirmed).length;$("checks-summary").textContent=`Alle Punkte der Checkliste: ${done} von ${chk.length} bestätigt`;
@@ -467,18 +467,21 @@ function renderAccuracy(){
   const drawn=Object.entries(D.tracks).filter(([,t])=>t.track.length>=2);
   drawn.forEach(([n,t])=>{const box=el("div");box.append(el("h3",{text:t.actual?`Flug ${n}, Start ${fmtS(t.actual)}`:`Flug ${n}, noch offen`}),el("div",{class:"chart",id:"tr-"+n}));host.append(box)});
   drawn.forEach(([n,t])=>{const cid="tr-"+n;
-    const H=210,{svg,w}=svgFor(cid,H),L=48,R=w-6,T=8,B2=H-24,tr=t.track,xs=tr.map(p=>num(p.as_of)),vals=[...tr.flatMap(p=>[num(p.p10),num(p.p90)]),...tr.filter(p=>p.net).map(p=>num(p.net))];if(t.actual)vals.push(num(t.actual));
+    const H=210,{svg,w}=svgFor(cid,H),L=48,R=w-6,T=8,B2=H-24,tr=t.track,xs=tr.map(p=>num(p.as_of)),vals=[...tr.flatMap(p=>[num(p.p10),num(p.p90),num(p.mode)]),...tr.filter(p=>p.net).map(p=>num(p.net))];if(t.actual)vals.push(num(t.actual));
     const x=lin(Math.min(...xs),Math.max(...xs),L,R),y=lin(Math.min(...vals),Math.max(...vals),B2,T);
     monthTicks(Math.min(...vals),Math.max(...vals),4).forEach(v=>{s("line",{x1:L,x2:R,y1:y(v),y2:y(v),stroke:"var(--line)"},svg);s("text",{x:L-5,y:y(v)+4,"text-anchor":"end",text:monthLabel(v)},svg)});
     monthTicks(Math.min(...xs),Math.max(...xs),3).forEach(v=>s("text",{x:x(v),y:H-8,"text-anchor":"middle",text:monthLabel(v)},svg));
     s("polygon",{points:[...tr.map(p=>`${x(num(p.as_of))},${y(num(p.p90))}`),...[...tr].reverse().map(p=>`${x(num(p.as_of))},${y(num(p.p10))}`)].join(" "),fill:"var(--band)",opacity:.18},svg);
-    s("polyline",{points:tr.map(p=>`${x(num(p.as_of))},${y(num(p.p50))}`).join(" "),fill:"none",stroke:"var(--band)","stroke-width":2},svg);
+    const pts=(rows,f)=>rows.map(p=>`${x(num(p.as_of))},${y(num(p[f]))}`).join(" "),firstIssued=tr.findIndex(p=>p.issued),split=firstIssued<0?tr.length:firstIssued;
+    s("polyline",{points:pts(tr,"mode"),fill:"none",stroke:"var(--band)","stroke-width":1,opacity:.45},svg);
+    s("polyline",{points:pts(tr.slice(0,split+1),"p50"),fill:"none",stroke:"var(--band)","stroke-width":2,"stroke-dasharray":"4 3"},svg);
+    if(firstIssued>=0){s("polyline",{points:pts(tr.slice(split),"p50"),fill:"none",stroke:"var(--band)","stroke-width":2},svg);tr.slice(split).forEach(p=>s("circle",{cx:x(num(p.as_of)),cy:y(num(p.p50)),r:3,fill:"var(--band)"},svg))}
     const nets=tr.filter(p=>p.net);if(nets.length){let path="";nets.forEach((p,i)=>{const px=x(num(p.as_of)),py=y(num(p.net));path+=i?`H${px}V${py}`:`M${px} ${py}`});s("path",{d:path,fill:"none",stroke:"var(--s2)","stroke-width":2},svg)}
     if(t.actual)s("line",{x1:L,x2:R,y1:y(num(t.actual)),y2:y(num(t.actual)),stroke:"var(--ink)","stroke-width":1.5},svg);
-    tr.forEach(p=>{const g=s("g",{},svg);s("rect",{x:x(num(p.as_of))-8,y:T,width:16,height:B2-T,fill:"transparent"},g);hover(g,`Am ${fmtS(p.as_of)}: Mitte ${fmtS(p.p50)}, 80 % ${fmtS(p.p10)} – ${fmtS(p.p90)}${p.net?`, NET ${fmtS(p.net)}`:""}`)})});
-  $("log-note").textContent="Jeder Stand bleibt im Log und wird nie überschrieben: neu bei geänderten Daten, sonst einmal pro Woche. Die Tabelle zeigt die letzten Einträge, die vollständige Datei liegt unter data/log/forecasts.jsonl.";
+    tr.forEach(p=>{const g=s("g",{},svg);s("rect",{x:x(num(p.as_of))-8,y:T,width:16,height:B2-T,fill:"transparent"},g);hover(g,`Am ${fmtS(p.as_of)}${p.issued?"":" (zurückgerechnet)"}: Mitte ${fmtS(p.p50)}, wahrscheinlichster Tag ${fmtS(p.mode)}, 80 % ${fmtS(p.p10)} – ${fmtS(p.p90)}${p.net?`, NET ${fmtS(p.net)}`:""}`)})});
+  $("log-note").textContent="Jeder Stand bleibt im Log und wird nie überschrieben: neu, sobald sich Daten oder Prognose ändern, sonst einmal pro Woche. Die Tabelle zeigt die Mitte der letzten Einträge, die vollständige Datei liegt unter data/log/forecasts.jsonl.";
   const ns=D.near.map(f=>f.n);
-  table($("t-log"),["Stand","Modell",...ns.map(n=>`Flug ${n}`),`Flüge ${nextYear}`],[...D.log].reverse().slice(0,12).map(e=>[fmt(e.as_of),e.model_version,...ns.map(n=>{const x=e.flights.find(f=>f.n===n);return x?fmtS(x.mode):"–"}),e.years[nextYear]??"–"]));
+  table($("t-log"),["Stand","Modell",...ns.map(n=>`Flug ${n}`),`Flüge ${nextYear}`],[...D.log].reverse().slice(0,12).map(e=>[fmt(e.as_of),e.model_version,...ns.map(n=>{const x=e.flights.find(f=>f.n===n);return x?fmtS(x.p50):"–"}),e.years[nextYear]??"–"]));
   const live=$("live-score");live.replaceChildren();
   if(D.scored.length){const b=el("div",{class:"scroll"});live.append(el("h3",{text:"Bewertung der echten Prognosen"}),b);table(b,["Prognose vom","Flug","Vorlauf","Fehler Mitte","Fehler wahrsch. Tag","Im 80 %-Bereich"],D.scored.slice(-20).reverse().map(x=>[fmt(x.as_of),x.n,x.lead+" T",x.error+" T",x.mode_error+" T",x.in80?"ja":"nein"]))}
   else live.append(el("p",{class:"sub",text:"Echte Prognosen werden bewertet, sobald der erste vorhergesagte Flug gestartet ist."}));
@@ -487,7 +490,7 @@ function renderAccuracy(){
 function renderData(){
   table($("t-sources"),["Quelle","Letzter Lauf","Ergebnis"],D.status.map(x=>[x.url?link(x.url,x.label):x.label,statusPill(x.ok?"good":"bad",x.ok?"erreichbar":"Fehler"),x.detail]));
   const a=D.assumptions,up=D.upcoming["16"],ms=D.milestones,items=[
-    `Nächste Flüge: Jede Simulation zieht die verbleibenden Abschnitte aus früheren Fahrzeugen. Jüngere Flüge zählen stärker, das Gewicht halbiert sich alle ${a.recency_half_life_flights} Flüge. Solange ein Fahrzeug nicht fertig getestet ist, zählt zur Hälfte der normale Flugabstand. Maßgeblich ist das später fertige Fahrzeug. Dazu kommt das offizielle NET, korrigiert um frühere Verschiebungen bei ähnlichem Vorlauf.`,
+    `Nächste Flüge: Jede Simulation zieht die verbleibenden Abschnitte aus früheren Fahrzeugen. Jüngere Flüge zählen stärker, das Gewicht halbiert sich alle ${a.recency_half_life_flights} Flüge. Solange ein Fahrzeug nicht fertig getestet ist, zählt zur Hälfte der normale Flugabstand. Maßgeblich ist das später fertige Fahrzeug. Nach einer Generalprobe (WDR) zählt der frühere Abstand von dort bis zum Start. Daraus entsteht eine glatte Kurve. Sind beide Static Fires durch und ist das NET höchstens ${a.weights.near_lead_days} Tage entfernt, wird sie mit einer zweiten Kurve aus NET und früherem Verzug verrechnet: Die schmalere zählt mehr, das NET ${a.weights.net_weight}-fach. Termine vor dem NET werden auf den NET-Tag gesetzt.`,
     ...(up?[`Flug 16: ${Math.round((up.pad_probability||1)*100)} % Wahrscheinlichkeit für ${up.pad}, mit im Median ${a.pad.new_pad_median_days} zusätzlichen Tagen für den neuen Startplatz. Das ist eine Annahme.`]:[]),
     "Ab dem dritten Flug stehen meist weder Fahrzeugstand noch NET zur Verfügung, die Prognose folgt dann dem Flugabstand. Die Zuordnung dieser Flüge schreibt nur die Seriennummern fort.",
     `Jahreswerte: gewichtete Mischung aus drei Wachstums-Szenarien (siehe „Flüge pro Jahr“), Risiko eines schweren Zwischenfalls anfangs ${Math.round(a.long_term.hazard_at_14*100)} % pro Flug, danach mit der Flugzahl fallend. Die Form des Rückgangs stammt aus dem Falcon-9-Verlauf.`,
