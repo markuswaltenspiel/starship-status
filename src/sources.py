@@ -133,7 +133,7 @@ def fetch_wiki_vehicles():
 def parse_status(page):
     """Checkliste des nächsten Flugs aus dem Datenblock der Starship-Seite."""
     body = page.replace('\\"', '"').replace("\\\\", "\\")
-    head = re.search(r'"title":"Starship Flight (\d+)"(?:(?!"title":"Starship Flight).){0,800}?"thisType":"Status Manager"', body, re.S)
+    head = re.search(r'"title":"Starship Flight (\d+)[^"]*"(?:(?!"title":"Starship Flight).){0,1500}?"thisType":"Status Manager"', body, re.S)
     if not head:
         raise ValueError("Checkliste nicht gefunden: Seitenformat geändert?")
     items = re.findall(r'\{"id":\d+,"title":"([^"]*)","confirmed":(true|false),"url":(?:null|"[^"]*"),"manager":\d+\}', body)
@@ -213,3 +213,145 @@ def fetch_artemis():
         time.sleep(1)
     (CACHE / "artemis_ll2.json").write_text(json.dumps(rows, indent=0, ensure_ascii=False))
     return f"{len(rows)} Artemis-Einträge"
+
+
+# --- Primärquellen für Sperrungen: FAA-TFRs und die Stadt Starbase ---
+
+TFR_LIST = "https://tfr.faa.gov/tfrapi/exportTfrList"
+TFR_DETAIL = "https://tfr.faa.gov/download/detail_{}.xml"
+TFR_NEAR = re.compile(r"STARBASE|BOCA CHICA|BROWNSVILLE", re.I)
+STARBASE_URL = "https://www.starbase.texas.gov/beach-road-access"
+WINDOW_RE = re.compile(
+    rf"(?:(Primary|Alternate|Alternative|Backup)\s*(?:Date|Day)?\s*:?\s*)?({MON_RE})\s+(\d{{1,2}}),?\s+(?:(20\d\d),?\s+)?(\d{{1,2}}:\d\d\s*[AaPp]\.?[Mm]\.?)"
+    rf"\s*(?:to|-|–|until)\s*(?:({MON_RE})\s+(\d{{1,2}}),?\s+(?:(20\d\d),?\s+)?)?(\d{{1,2}}:\d\d\s*[AaPp]\.?[Mm]\.?)")
+
+
+def tags(xml, name):
+    return [html.unescape(x).strip() for x in re.findall(rf"<{name}>(.*?)</{name}>", xml, re.S)]
+
+
+def classify_tfr(codes, text):
+    """91.143 ist der Luftraum für Raumfahrtbetrieb (Start), 91.137(a)(1) mit „High Energy Testing“ der für Bodentests."""
+    if any(c.startswith("91.143") for c in codes):
+        return "launch"
+    if any(c.startswith("91.137") for c in codes) and re.search(r"HIGH ENERGY|TESTING", text, re.I):
+        return "ground_test"
+    return "other"
+
+
+def parse_tfr_detail(nid, xml):
+    codes = tags(xml, "codeType")
+    text = (tags(xml, "txtDescrTraditional") or tags(xml, "txtDescrUSNS") or [""])[0]
+    both = " ".join(tags(xml, "txtDescrTraditional") + tags(xml, "txtDescrUSNS"))
+    start, end = tags(xml, "dateEffective"), tags(xml, "dateExpire")
+    upper = tags(xml, "valDistVerUpper")
+    unit = tags(xml, "uomDistVerUpper")
+    radius = re.search(r"(\d+(?:\.\d+)?)\s*NM RADIUS", text)
+    return {"id": nid, "kind": classify_tfr(codes, both), "rule": next((c for c in codes if c[:2] == "91"), None),
+            "start": start[0] + "Z" if start else None, "end": end[0] + "Z" if end else None,
+            "upper": f"{upper[0]} {unit[0]}" if upper and unit else None, "radius_nm": float(radius.group(1)) if radius else None,
+            "city": (tags(xml, "txtNameCity") or [None])[0], "text": re.sub(r"\s+", " ", text)[:700]}
+
+
+def fetch_tfr():
+    """Aktive TFRs der FAA rund um Starbase, mit Art (Start, Bodentest) aus der Detailmeldung."""
+    rows = json.loads(http_get(TFR_LIST))
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("TFR-Liste leer: Format geändert?")
+    hits = [r for r in rows if r.get("facility") == "ZHU" and TFR_NEAR.search(r.get("description", ""))]
+    items = []
+    for r in hits:
+        nid = r["notam_id"]
+        items.append(parse_tfr_detail(nid, http_get(TFR_DETAIL.format(nid.replace("/", "_")))))
+        time.sleep(0.5)
+    items.sort(key=lambda x: x["start"] or "")
+    (CACHE / "tfr.json").write_text(json.dumps({"items": items}, indent=0, ensure_ascii=False))
+    count = {k: sum(i["kind"] == k for i in items) for k in ("launch", "ground_test", "other")}
+    return items, f"{count['launch']} für Start, {count['ground_test']} für Bodentests, {count['other']} sonstige"
+
+
+def _year_for(month, day, today):
+    """Die Seite nennt keine Jahre; das Jahr ist das, bei dem das Datum am nächsten an heute liegt."""
+    best = None
+    for y in (today.year - 1, today.year, today.year + 1):
+        try:
+            cand = date(y, month, day)
+        except ValueError:
+            continue
+        if best is None or abs((cand - today).days) < abs((best - today).days):
+            best = cand
+    return best
+
+
+def _clock(text):
+    m = re.match(r"(\d{1,2}):(\d\d)\s*([AaPp])", text)
+    h = int(m.group(1)) % 12 + (12 if m.group(3).lower() == "p" else 0)
+    return h, int(m.group(2))
+
+
+def parse_windows(text, today):
+    """Zeitfenster wie „Primary: Nov. 13 11:00 AM to Nov. 13 11:30 PM“ in Ortszeit (CT) und UTC."""
+    from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
+    tz, out = ZoneInfo("America/Chicago"), []
+    for m in WINDOW_RE.finditer(text):
+        label, mon1, d1, y1, t1, mon2, d2, y2, t2 = m.groups()
+        first = date(int(y1), month_number(mon1), int(d1)) if y1 else _year_for(month_number(mon1), int(d1), today)
+        last = first
+        if mon2:
+            last = date(int(y2), month_number(mon2), int(d2)) if y2 else _year_for(month_number(mon2), int(d2), first)
+        a = datetime(first.year, first.month, first.day, *_clock(t1), tzinfo=tz)
+        b = datetime(last.year, last.month, last.day, *_clock(t2), tzinfo=tz)
+        if b <= a:
+            b += timedelta(days=1)
+        utc = ZoneInfo("UTC")
+        out.append({"label": (label or "").lower().replace("alternative", "alternate").replace("backup", "alternate") or None,
+                    "start_local": a.strftime("%Y-%m-%dT%H:%M"), "end_local": b.strftime("%Y-%m-%dT%H:%M"),
+                    "start": a.astimezone(utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "end": b.astimezone(utc).strftime("%Y-%m-%dT%H:%M:%SZ")})
+    return out
+
+
+def _block(page, anchor):
+    """Inhalt des Rich-Text-Felds nach einer Element-ID der Starbase-Seite."""
+    i = page.find(f'id="{anchor}"')
+    if i < 0:
+        return None
+    m = re.search(r'id="rich-notification"[^>]*>(.*?)</div>', page[i:i + 6000], re.S)
+    return clean_html(m.group(1).replace("<br>", "\n")).strip() if m else ""
+
+
+def parse_starbase(page, today):
+    beach, road = _block(page, "beach-closure"), _block(page, "road-closure")
+    if beach is None or road is None:
+        raise ValueError("Abschnitte für Strand oder Straße nicht gefunden: Seitenformat geändert?")
+    text = clean_html(page)
+    order = re.search(r"Public Notice of Mayor's Order\s*(.*?)\s*(?:Previous Orders|OTHER BEACHES)", text, re.S)
+    previous = re.findall(r'cms-big-text no-space">\s*([A-Z][a-z]+ \d{1,2}, 20\d\d)\s*<.*?href="([^"]+\.pdf)"', page, re.S)
+    return {"beach": parse_windows(beach, today), "beach_text": beach[:500], "road": parse_windows(road, today), "road_text": road[:500],
+            "order": order.group(1)[:900] if order else None,
+            "previous_orders": [{"date": f"{x.split()[2]}-{month_number(x.split()[0]):02d}-{int(x.split()[1].rstrip(',')):02d}", "url": u} for x, u in previous]}
+
+
+def fetch_starbase():
+    """Strand- und Straßensperrungen der Stadt Starbase (seit 2025 zuständig, vorher Cameron County)."""
+    data = parse_starbase(http_get(STARBASE_URL), date.today())
+    (CACHE / "starbase.json").write_text(json.dumps(data, indent=0, ensure_ascii=False))
+    return data, f"{len(data['beach'])} Strandsperrungen, {len(data['road'])} Straßenbehinderungen"
+
+
+def classify_closures(starbase, tfr, now):
+    """Ordnet die Sperrungen ein. Strandsperrung, die sich mit einem Start-TFR (91.143) überschneidet: Start.
+    Ohne Start-TFR: Bodentest (Static Fire, WDR, Cryo), sobald sie keine 3 Tage mehr entfernt ist; davor noch offen,
+    weil die FAA die Start-TFRs oft erst wenige Tage vorher veröffentlicht.
+    Eine „Road Delay“ ist eine kurze Behinderung, in der Regel für Transporte zwischen Werk und Startplatz."""
+    from datetime import timedelta
+    launch_tfr = [t for t in tfr if t["kind"] == "launch" and t["start"] and t["end"]]
+    soon = (now + timedelta(days=3)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    rows = []
+    for w in starbase.get("beach", []):
+        hit = [t["id"] for t in launch_tfr if t["start"] < w["end"] and t["end"] > w["start"]]
+        purpose = "launch" if hit else "test" if w["start"] <= soon else "open"
+        rows.append({**w, "type": "beach_closure", "purpose": purpose, "tfr": hit})
+    for w in starbase.get("road", []):
+        rows.append({**w, "type": "road_delay", "purpose": "transport", "tfr": []})
+    return sorted(rows, key=lambda r: r["start"])

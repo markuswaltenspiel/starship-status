@@ -50,13 +50,54 @@ def record_status(status, seen):
             append(path, {"flight": status["flight"], "item": item["title"], "confirmed": item["confirmed"], "seen": seen, "first_run": key not in state and not state})
 
 
+def record_closures(tfr, starbase, seen):
+    """Hält jede neue TFR und jedes neue Sperrfenster fest; die Quellen zeigen nur aktuelle Einträge."""
+    path = LOG / "closures.jsonl"
+    known = {r["key"] for r in read_log(path)}
+    rows = [{"key": f"tfr:{t['id']}:{t['start']}:{t['end']}", "source": "FAA TFR", "kind": t["kind"], "id": t["id"], "rule": t["rule"],
+             "start": t["start"], "end": t["end"]} for t in tfr or []]
+    for kind in ("beach", "road"):
+        rows += [{"key": f"{kind}:{w['start']}:{w['end']}", "source": "Starbase", "kind": kind, "label": w["label"],
+                  "start": w["start"], "end": w["end"]} for w in (starbase or {}).get(kind, [])]
+    for r in rows:
+        if r["key"] not in known:
+            append(path, {**r, "seen": seen})
+
+
+def due(name, hours, now):
+    """Teure Quellen nur alle paar Stunden abrufen, auch wenn der Lauf stündlich kommt."""
+    path = fetch.CACHE / "fetched.json"
+    stamps = json.loads(path.read_text()) if path.exists() else {}
+    last = stamps.get(name)
+    if last and now - datetime.fromisoformat(last) < timedelta(hours=hours) - timedelta(minutes=10):
+        return False, last
+    return True, last
+
+
+def mark_fetched(name, now):
+    path = fetch.CACHE / "fetched.json"
+    stamps = json.loads(path.read_text()) if path.exists() else {}
+    stamps[name] = now.isoformat(timespec="minutes")
+    path.write_text(json.dumps(stamps, indent=0, sort_keys=True))
+
+
 def update_sources(next_n, today, force_all):
     status = []
+    now = datetime.now(timezone.utc)
+    every = {"vehicles": 3, "wiki": 2, "wiki_vehicles": 6, "faa": 6, "artemis": 12}
 
     def attempt(name, label, url, fn):
+        hours = every.get(name)
+        if hours and not force_all:
+            ok, last = due(name, hours, now)
+            if not ok:
+                status.append({"id": name, "label": label, "url": url, "ok": True, "detail": f"nicht fällig (alle {hours} Std.), zuletzt {last[:16].replace('T', ' ')} UTC"})
+                return
         try:
             detail = fn()
             status.append({"id": name, "label": label, "url": url, "ok": True, "detail": detail})
+            if hours:
+                mark_fetched(name, now)
         except Exception as err:  # Eine ausgefallene Quelle darf den Lauf nicht beenden
             status.append({"id": name, "label": label, "url": url, "ok": False, "detail": f"{type(err).__name__}: {err}"[:200]})
 
@@ -88,6 +129,19 @@ def update_sources(next_n, today, force_all):
     attempt("faa", "FAA (Mitteilungen)", "https://www.faa.gov/newsroom/statements/general-statements", sources.fetch_faa)
     attempt("feed", "NASASpaceflight (Überschriften)", "https://www.nasaspaceflight.com/", sources.fetch_feed)
     attempt("artemis", "Launch Library 2 (Artemis)", "https://thespacedevs.com/llapi", sources.fetch_artemis)
+    got = {}
+
+    def tfr():
+        got["tfr"], detail = sources.fetch_tfr()
+        return detail
+
+    def starbase():
+        got["starbase"], detail = sources.fetch_starbase()
+        return detail
+
+    attempt("tfr", "FAA (Luftraumsperrungen, TFR)", "https://tfr.faa.gov/", tfr)
+    attempt("starbase", "Stadt Starbase (Strand und Highway 4)", sources.STARBASE_URL, starbase)
+    record_closures(got.get("tfr"), got.get("starbase"), now.isoformat(timespec="minutes"))
     return status
 
 
@@ -234,6 +288,9 @@ def main():
     matrix = production_matrix(data)
     feed = data._cache("feed", {"articles": []})["articles"][-8:]
     changes = read_log(LOG / "status_changes.jsonl")
+    tfr_now = data._cache("tfr", {"items": []})["items"]
+    starbase_now = data._cache("starbase", {})
+    closures = sources.classify_closures(starbase_now, tfr_now, datetime.now(timezone.utc))
     payload = {
         "generated": datetime.now(timezone.utc).isoformat(timespec="minutes"), "as_of": str(today), "offline": offline, "model_version": cfg["model_version"],
         "status": status, "flights": data.flights, "gaps": model.gaps(data), "durations": model.durations(data), "near": near, "years": years,
@@ -241,7 +298,9 @@ def main():
         "next": {"n": nxt, "pad": pad, "booster": vehicle_status(data, b, nxt), "ship": vehicle_status(data, s, nxt), "stack": stack_status(data, b, s)},
         "following": [{"n": x["n"], "booster": vehicle_status(data, x["booster"], x["n"]), "ship": vehicle_status(data, x["ship"], x["n"])} for x in near[1:3]],
         "license": model.load("license"), "matrix": matrix, "trends": model.trends(data, matrix["rows"]), "artemis": moon,
-        "checklist": data.status, "status_changes": [c for c in changes if not c.get("first_run")][-20:], "faa": data.faa[-8:], "open_mishap": data.open_mishap(), "news": feed[::-1], "license_cleared": data.license_cleared(nxt), "milestones": model.milestone_stats(), "falcon": model.load("falcon_years"),
+        "checklist": data.status, "status_changes": [c for c in changes if not c.get("first_run")][-20:],
+        "closures": closures, "tfr": [t for t in tfr_now if t["kind"] != "other"], "starbase_order": starbase_now.get("order"),
+        "starbase_previous": starbase_now.get("previous_orders", [])[:12], "faa": data.faa[-8:], "open_mishap": data.open_mishap(), "news": feed[::-1], "license_cleared": data.license_cleared(nxt), "milestones": model.milestone_stats(), "falcon": model.load("falcon_years"),
         "backtest_summary": model.backtest_summary(bt), "tracks": tracks, "log": log[-60:], "log_count": len(log), "scored": scored,
         "assumptions": cfg, "upcoming": data.meta["upcoming"],
     }

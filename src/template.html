@@ -131,6 +131,7 @@ footer{font-size:.84rem;color:var(--ink2)}
     <div><h3 id="next-title"></h3><ul class="steps" id="next-steps"></ul><p class="sub" id="next-note"></p></div>
     <div><h3>Die folgenden Fahrzeuge</h3><div class="scroll" id="t-following"></div><h3>Alle Flüge</h3><div class="chart" id="c-history"></div><div class="key" id="k-history"></div></div>
   </div>
+  <div style="display:grid;gap:8px"><h3>Sperrungen aus Primärquellen</h3><div class="scroll" id="t-closures"></div><p class="sub" id="closures-note"></p></div>
   <details id="all-checks"><summary id="checks-summary">Alle Punkte der Checkliste</summary><ul class="steps" id="checks-all"></ul></details>
   <div id="news-box" style="display:grid;gap:8px"><h3>Neueste Berichte</h3><ul class="notes" id="news"></ul></div>
 </section>
@@ -317,6 +318,17 @@ function renderYears(){
   $("fleet-note").textContent=`Im Szenario Flotte fliegt das erste wiederverwendete Ship im Mittel ${monthYear(fl.first_ship_reuse)}. Die Startplätze folgen den Plänen von SpaceX, verlängert um den Faktor ${String(lt.slip_multiplier).replace(".",",")}: ${fl.pads.filter(p=>p.opens).map(p=>`${p.name} im Mittel ${monthYear(p.opens)}`).join(", ")}. Mehr Starts begrenzt nur die Genehmigung je Standort: ${Object.entries(lt.fleet.site_limits).map(([k,v])=>`${k} ${v}`).join(", ")} pro Jahr.`;
 }
 
+const when=(iso,tz)=>new Date(iso).toLocaleString("de-DE",{timeZone:tz,weekday:"short",day:"numeric",month:"numeric",hour:"2-digit",minute:"2-digit"});
+const span=(a,b,tz)=>{const x=when(a,tz),y=when(b,tz);return x.slice(0,x.lastIndexOf(" "))===y.slice(0,y.lastIndexOf(" "))?`${x} bis ${y.slice(y.lastIndexOf(" ")+1)}`:`${x} bis ${y}`};
+function renderClosures(){
+  const nowIso=new Date().toISOString().slice(0,19)+"Z",purpose={launch:"Start",test:"Bodentest (Static Fire, WDR, Cryo)",open:"noch offen",transport:"Transport",ground_test:"Bodentests (Static Fire u. a.), Dauersperrung"};
+  const rows=[...(D.closures||[]).filter(c=>c.end>nowIso).map(c=>({start:c.start,end:c.end,what:c.type==="beach_closure"?`Strand und Highway 4${c.label==="alternate"?" (Ausweichtermin)":""}`:"Highway 4, Behinderung",why:purpose[c.purpose],src:link("https://www.starbase.texas.gov/beach-road-access","Stadt Starbase")})),
+    ...(D.tfr||[]).filter(t=>t.end&&t.end>nowIso).map(t=>({start:t.start,end:t.end,what:`Luftraum, TFR ${t.id} (${t.rule}${t.radius_nm?`, ${String(t.radius_nm).replace(".",",")} NM`:""})`,why:purpose[t.kind],src:link("https://tfr.faa.gov/","FAA")}))].sort((a,b)=>a.start<b.start?-1:1);
+  if(rows.length)table($("t-closures"),["Was","Zweck","Ortszeit Starbase","Deutsche Zeit","Quelle"],rows.map(r=>[r.what,r.why,span(r.start,r.end,"America/Chicago"),span(r.start,r.end,"Europe/Berlin"),r.src]));
+  else $("t-closures").replaceChildren(el("p",{class:"sub",text:"Zurzeit keine Sperrungen veröffentlicht."}));
+  $("closures-note").textContent="Direkt von der FAA (TFR-Liste) und der Stadt Starbase. Eine Strandsperrung gilt als Start, wenn sie sich mit einer TFR für Raumfahrtbetrieb (14 CFR 91.143) überschneidet. Ohne solche TFR gilt sie ab 3 Tagen vorher als Bodentest, davor als offen. TFRs nach 91.137(a)(1) („High Energy Testing“, kleiner Radius) decken Bodentests über mehrere Wochen ab und nennen keinen einzelnen Testtag. Behinderungen auf dem Highway 4 sind meist Transporte. Die Prognose nutzt diese Angaben bisher nicht.";
+}
+
 function renderStand(){
   const n=D.next,lic=D.license.find(x=>x.n===n.n),net=D.net_current[n.n];
   $("next-title").textContent=`Flug ${n.n}: ${n.booster.name} / ${n.ship.name}, ${n.pad}`;
@@ -325,11 +337,16 @@ function renderStand(){
   const found=name=>chk.find(i=>i.title===name);
   const row=(a,state,when)=>{const li=el("li");li.append(el("span",{text:a}),statusPill(state?"good":"open",state?(when?fmtS(when):"bestätigt"):"offen"));list.append(li)};
   row("Static Fire Booster",!!n.booster.sf,n.booster.sf);row("Static Fire Ship",!!n.ship.sf,n.ship.sf);
-  [["Vehicles Stacked","Stacking von Booster und Ship"],["Wet Dress Rehearsal (WDR)","Generalprobe (WDR)"],["Regulatory Approval","Lizenz"],["Road Closure for Launch","Straßensperrung"],["Notice To Air Mission (NOTAM) for Launch","Luftraumwarnung"],["Confirmation from SpaceX","Termin von SpaceX"]].forEach(([k,lab])=>{const it=found(k);row(lab,!!(it&&it.confirmed))});
+  [["Vehicles Stacked","Stacking von Booster und Ship"],["Wet Dress Rehearsal (WDR)","Generalprobe (WDR)"],["Regulatory Approval","Lizenz"],["Confirmation from SpaceX","Termin von SpaceX"]].forEach(([k,lab])=>{const it=found(k);row(lab,!!(it&&it.confirmed))});
+  const nowIso=new Date().toISOString().slice(0,19)+"Z",ahead=x=>x.end&&x.end>nowIso;
+  const lt=(D.tfr||[]).filter(t=>t.kind==="launch"&&ahead(t)),lc=(D.closures||[]).filter(c=>c.purpose==="launch"&&ahead(c));
+  row("Straßensperrung für Start (Starbase)",lc.length>0,lc.length?lc[0].start_local.slice(0,10):null);
+  row("Luftraumsperrung für Start (FAA-TFR)",lt.length>0,lt.length?lt[0].start.slice(0,10):null);
   const li=el("li");li.append(el("span",{text:"Offizielles NET"}),el("span",{text:net?fmtS(net.net):"keines",class:"pill"}));list.append(li);
   $("next-note").textContent=chk.length?"Die Punkte kommen automatisch aus der NextSpaceflight-Checkliste. Das Programm notiert, wann ein Punkt umspringt. Eine offene Lizenz bremst die Prognose nur wenig, siehe Abschnitt Lizenz.":"Die Checkliste war beim letzten Lauf nicht verfügbar.";
   const done=chk.filter(i=>i.confirmed).length;$("checks-summary").textContent=`Alle Punkte der Checkliste: ${done} von ${chk.length} bestätigt`;
   $("checks-all").replaceChildren(...chk.map(i=>{const x=el("li");x.append(el("span",{text:i.title}),statusPill(i.confirmed?"good":"open",i.confirmed?"bestätigt":"offen"));return x}));
+  renderClosures();
   $("news-box").hidden=!D.news.length;$("news").replaceChildren(...D.news.map(a=>{const x=el("li");x.append(link(a.url,a.title),document.createTextNode(a.date?` (${fmtS(a.date)})`:""));return x}));
   table($("t-following"),["Flug","Fahrzeug","Letzter Test"],D.following.flatMap(f=>[f.booster,f.ship].map(v=>[f.n,v.name,v.last?`${v.last.name}, ${fmtS(v.last.date)}`:"noch kein Test erfasst"])));
   const fl=D.flights,H=64,{svg,w}=svgFor("c-history",H),st=(w-4)/fl.length,col={success:"var(--good)",partial:"var(--warn)",failure:"var(--bad)"};
