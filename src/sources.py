@@ -233,7 +233,7 @@ def tags(xml, name):
 def classify_tfr(codes, text):
     """91.143 ist der Luftraum für Raumfahrtbetrieb (Start), 91.137(a)(1) mit „High Energy Testing“ der für Bodentests."""
     if any(c.startswith("91.143") for c in codes):
-        return "launch"
+        return "space_ops"  # Start oder Rückkehr; refine_tfr entscheidet mit dem FAA-Betriebsplan
     if any(c.startswith("91.137") for c in codes) and re.search(r"HIGH ENERGY|TESTING", text, re.I):
         return "ground_test"
     return "other"
@@ -266,8 +266,8 @@ def fetch_tfr():
         time.sleep(0.5)
     items.sort(key=lambda x: x["start"] or "")
     (CACHE / "tfr.json").write_text(json.dumps({"items": items}, indent=0, ensure_ascii=False))
-    count = {k: sum(i["kind"] == k for i in items) for k in ("launch", "ground_test", "other")}
-    return items, f"{count['launch']} für Start, {count['ground_test']} für Bodentests, {count['other']} sonstige"
+    count = {k: sum(i["kind"] == k for i in items) for k in ("space_ops", "ground_test", "other")}
+    return items, f"{count['space_ops']} für Raumfahrtbetrieb (Start oder Rückkehr), {count['ground_test']} für Bodentests, {count['other']} sonstige"
 
 
 def _year_for(month, day, today):
@@ -355,3 +355,103 @@ def classify_closures(starbase, tfr, now):
     for w in starbase.get("road", []):
         rows.append({**w, "type": "road_delay", "purpose": "transport", "tfr": []})
     return sorted(rows, key=lambda r: r["start"])
+
+
+# --- SpaceX-Termin und FAA-Betriebsplan ---
+
+SPACEX_TILES = "https://content.spacex.com/api/spacex-website/launches-page-tiles/upcoming"
+SPACEX_MISSION = "https://content.spacex.com/api/spacex-website/missions/{}"
+OPS_PLAN = "https://www.fly.faa.gov/adv/adv_spt"
+SITE_TZ = [("Starbase", "America/Chicago"), ("Texas", "America/Chicago"), ("Florida", "America/New_York"), ("39A", "America/New_York")]
+
+
+def _local_to_utc(day, clock, tzname):
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    if not day or not clock:
+        return None
+    a = datetime.fromisoformat(f"{day}T{clock[:5]}").replace(tzinfo=ZoneInfo(tzname))
+    return a.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def fetch_spacex():
+    """Termin, den SpaceX selbst auf spacex.com nennt (dieselben Daten wie die Startseite, aus dem CMS)."""
+    tiles = json.loads(http_get(SPACEX_TILES))
+    if not isinstance(tiles, list):
+        raise ValueError("SpaceX-Startliste: Format geändert?")
+    rows = []
+    for t in tiles:
+        m = re.search(r"Starship Flight (\d+)", t.get("title") or "")
+        if not m:
+            continue
+        o = t.get("override") or {}
+        tz = next((z for k, z in SITE_TZ if k in (t.get("launchSite") or "")), "America/Chicago")
+        open_day, open_time = o.get("windowOpenDate") or o.get("date") or t.get("launchDate"), o.get("windowOpenTime") or o.get("time") or t.get("launchTime")
+        close_day, close_time = o.get("windowCloseDate"), o.get("windowCloseTime")
+        text = None
+        try:
+            mission = json.loads(http_get(SPACEX_MISSION.format(t.get("link"))))
+            paras = [clean_html(p.get("content") or "").strip() for p in mission.get("paragraphs") or []]
+            text = next((p for p in paras if re.search(r"as soon as|targeting|launch window|preparing to launch", p, re.I)), None)
+        except Exception:  # Der Begleittext ist nur Zusatz
+            pass
+        rows.append({"flight": int(m.group(1)), "site": t.get("launchSite"), "status": t.get("missionStatus"),
+                     "date": open_day, "window_open_local": f"{open_day}T{open_time[:5]}" if open_day and open_time else None,
+                     "window_open": _local_to_utc(open_day, open_time, tz), "window_close": _local_to_utc(close_day, close_time, tz),
+                     "text": text[:400] if text else None, "url": f"https://www.spacex.com/launches/{t.get('link')}"})
+    (CACHE / "spacex.json").write_text(json.dumps(rows, indent=0, ensure_ascii=False))
+    return rows, (", ".join(f"Flug {r['flight']}: {r['date'] or 'ohne Datum'}" for r in rows) or "kein Starship-Flug angekündigt")
+
+
+def parse_ops_plan(page):
+    """Abschnitt „PLANNED LAUNCH/REENTRY“ des aktuellen Betriebsplans der FAA-Verkehrszentrale (ATCSCC)."""
+    from datetime import datetime, timedelta
+    text = clean_html(page)
+    head = re.search(r"ATCSCC ADVZY (\d+) \w+ (\d\d/\d\d/\d{4})", text)
+    sec = re.search(r"PLANNED LAUNCH/REENTRY:\s*(.*?)\s*(?:FLIGHT CHECK|VIP MOVEMENT|NEXT PLANNING|$)", text, re.S)
+    if not head or not sec:
+        raise ValueError("Betriebsplan nicht erkannt: Seitenformat geändert?")
+    rows = []
+    entry = re.compile(r"(.+?)\s+PRIMARY:\s*(\d\d/\d\d/\d\d)\s+(\d{4})Z-(\d{4})Z(?:\s+BACKUP:\s*(\d\d/\d\d/\d\d)\s+(\d{4})Z-(\d{4})Z)?\s*")
+
+    def window(day, a, b):
+        start = datetime.strptime(f"{day} {a}", "%m/%d/%y %H%M")
+        end = datetime.strptime(f"{day} {b}", "%m/%d/%y %H%M")
+        if end <= start:
+            end += timedelta(days=1)
+        return {"start": start.strftime("%Y-%m-%dT%H:%M:%SZ"), "end": end.strftime("%Y-%m-%dT%H:%M:%SZ")}
+
+    for m in entry.finditer(sec.group(1)):
+        name = m.group(1).strip(" ,")
+        if "STARSHIP" not in name.upper():
+            continue
+        flight = re.search(r"FLT-?\s*(\d+)", name)
+        windows = [{"label": "primary", **window(*m.group(2, 3, 4))}]
+        if m.group(5):
+            windows.append({"label": "backup", **window(*m.group(5, 6, 7))})
+        rows.append({"name": name, "flight": int(flight.group(1)) if flight else None,
+                     "kind": "reentry" if "REENTRY" in name.upper() else "launch", "windows": windows})
+    return {"advisory": int(head.group(1)), "issued": head.group(2), "items": rows}
+
+
+def fetch_ops_plan():
+    plan = parse_ops_plan(http_get(OPS_PLAN))
+    (CACHE / "ops_plan.json").write_text(json.dumps(plan, indent=0, ensure_ascii=False))
+    return plan, f"Advisory {plan['advisory']}: " + (", ".join(i["name"] for i in plan["items"]) or "keine Starship-Termine")
+
+
+def refine_tfr(tfr, ops):
+    """Eine 91.143-TFR ist Start oder Rückkehr; der FAA-Betriebsplan sagt, welches Fenster wofür gilt."""
+    plan = [(i["kind"], i["flight"], w) for i in (ops or {}).get("items", []) for w in i["windows"]]
+    out = []
+    for t in tfr:
+        t = dict(t)
+        if t["kind"] in ("launch", "space_ops") and t["start"] and t["end"]:
+            from datetime import datetime
+            ts = datetime.fromisoformat(t["start"].replace("Z", "+00:00"))
+            # Überschneiden sich mehrere Fenster (Ausweichtag Start = Haupttag Rückkehr), zählt der nächstgelegene Beginn
+            hits = sorted((abs((datetime.fromisoformat(w["start"].replace("Z", "+00:00")) - ts).total_seconds()), k, f)
+                          for k, f, w in plan if w["start"] < t["end"] and w["end"] > t["start"])
+            t["kind"], t["flight"] = (hits[0][1], hits[0][2]) if hits else ("space_ops", None)
+        out.append(t)
+    return out

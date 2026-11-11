@@ -8,15 +8,19 @@ Auswertung des Starship-Programms und Prognose der nächsten Starts. Läuft ohne
 
 GitHub Actions startet stündlich `src/run.py` (GitHub verschiebt oder überspringt geplante Läufe gelegentlich). Das Programm holt die Daten, rechnet die Prognose,
 ergänzt das Log und veröffentlicht die Seite. Fällt eine Quelle aus, nutzt es den letzten Stand und zeigt eine Warnung.
-Checkliste, TFRs, Starbase-Sperrungen, Launch Library und Feed kommen bei jedem Lauf; die NextSpaceflight-Fahrzeugseiten alle 3 Stunden,
+Checkliste, TFRs, FAA-Betriebsplan, SpaceX-Termin, Starbase-Sperrungen, Launch Library und Feed kommen bei jedem Lauf; die NextSpaceflight-Fahrzeugseiten alle 3 Stunden,
 die Wikipedia-Zieldaten alle 2, Wikipedia-Fahrzeuglisten und FAA-Mitteilungen alle 6, Artemis alle 12 Stunden (Zeitstempel in `data/cache/fetched.json`).
 
 **Sperrungen aus Primärquellen:** Luftraumsperrungen kommen aus der TFR-Liste der FAA (`tfr.faa.gov`, Detailmeldung als XML),
 Strand- und Highway-4-Sperrungen von der Stadt Starbase (`starbase.texas.gov/beach-road-access`, seit 2025 zuständig statt Cameron County).
-Einordnung: TFR nach 14 CFR 91.143 (Raumfahrtbetrieb, bis unbegrenzte Höhe) = Startfenster; TFR nach 91.137(a)(1) „High Energy Testing“ mit 3,5 NM Radius = Bodentests (Static Fire, Cryo, WDR), meist über Wochen ohne einzelne Testtage.
+Einordnung: TFR nach 14 CFR 91.143 (Raumfahrtbetrieb, bis unbegrenzte Höhe) = Start oder Rückkehr des Ship; welches von beiden, steht im Betriebsplan der FAA-Verkehrszentrale (`fly.faa.gov/adv/adv_spt`, Abschnitt „PLANNED LAUNCH/REENTRY“ mit Haupt- und Ausweichfenster je Flug); TFR nach 91.137(a)(1) „High Energy Testing“ mit 3,5 NM Radius = Bodentests (Static Fire, Cryo, WDR), meist über Wochen ohne einzelne Testtage.
 Eine Strandsperrung, die sich mit einer 91.143-TFR überschneidet, gilt als Start, ohne solche TFR ab 3 Tagen vorher als Bodentest, davor als offen.
 Eine „Road Delay“ der Stadt ist eine kurze Behinderung, in der Regel ein Transport zwischen Werk und Startplatz.
-Jede neue TFR und jedes neue Sperrfenster landet in `data/log/closures.jsonl`, weil beide Quellen nur aktuelle Einträge zeigen.
+Jede neue TFR und jedes neue Sperrfenster landet in `data/log/closures.jsonl`, weil die Quellen nur aktuelle Einträge zeigen; Änderungen am Betriebsplan in `data/log/ops_plan.jsonl`.
+
+**Termin von SpaceX:** Den Punkt „Confirmation from SpaceX“ hakt NextSpaceflight ab, sobald SpaceX eine Startseite mit Datum veröffentlicht (Beleglink `spacex.com/launches/starship-flight-N`).
+Das Programm liest dieselben Daten direkt aus dem CMS hinter spacex.com (`content.spacex.com/api/spacex-website/launches-page-tiles/upcoming`, Feld `override` mit Fensterbeginn und -ende in Ortszeit, dazu der Begleittext der Missionsseite)
+und schreibt jede Änderung in `data/log/spacex_targets.jsonl`. Die Prognose nutzt den SpaceX-Termin, den Betriebsplan und die Sperrungen bisher nicht.
 Nicht automatisch: Notices to Mariners (NGA blockiert automatische Abrufe, USCG nur als PDF) und NOTAMs außerhalb der TFR-Liste, etwa für den Wiedereintritt.
 
 ## So rechnet die Prognose
@@ -95,7 +99,7 @@ Geändert wurden nur die Jahreswerte, die Flüge der nächsten Monate rechnen un
 6. **Startplatz-Abstand von 10 Tagen:** Er ist eine Einschätzung ohne Daten. Bisher gibt es nur Flugabstände je Pad (Pad 1 mindestens 37 Tage, Pad 2 bisher 63 und 66), keine Dauer der Pad-Arbeiten. Er gilt auch im Flottenmodell.
 7. **LC-39A:** Die 60 % Wahrscheinlichkeit, der Plan vom 31.12.2026 und der Faktor 1,45 sind Annahmen. Sobald Flug 16 der nächste Flug ist, rechnet er mit dem alten Weg und im Median 30 Tagen Zuschlag ohne Beleg; diesen Bruch prüfen.
 8. **Lizenz:** Spätere Flüge rechnen ohne Wartezeit, der nächste Flug noch mit (bei neuem Profil 25 % mit im Median 14 Tagen). Vereinheitlichen, wenn sich zeigt, dass ein NET die Lizenz schon einpreist.
-9. **Quellen:** TFRs und Strand- und Straßensperrungen kommen seit dem 11.11.2026 direkt von FAA und Stadt Starbase (siehe oben); Notices to Mariners nur aus der NextSpaceflight-Checkliste, das NET aus Wikipedia und Launch Library. Die Prognose nutzt Sperrungen noch nicht als Signal. Mit `data/log/closures.jsonl` prüfen, wie zuverlässig eine Start-TFR den Starttag anzeigt, und dann entscheiden, ob sie in die Prognose eingeht.
+9. **Quellen:** TFRs, FAA-Betriebsplan, SpaceX-Termin und Strand- und Straßensperrungen kommen seit dem 11.11.2026 direkt aus Primärquellen (siehe oben); Notices to Mariners nur aus der NextSpaceflight-Checkliste, das NET aus Wikipedia und Launch Library. Die Prognose nutzt Sperrungen noch nicht als Signal. Mit `data/log/closures.jsonl` prüfen, wie zuverlässig eine Start-TFR den Starttag anzeigt, und dann entscheiden, ob sie in die Prognose eingeht.
 
 **Nach Flug 17 die Prognose prüfen und eventuell feinjustieren** (Stand der Vereinbarung: 31.10.2026, Modell 1.2).
 Zu prüfen: Trefferquote im Log, Fehler nach Vorlauf, Halbwertszeit der Gewichte, Anteil des Flugabstands beim nächsten Flug,
@@ -105,5 +109,5 @@ Außerdem die festen 30, 45 oder 60 Tage für wiederverwendete Fahrzeuge bei den
 ## Quellen
 
 NextSpaceflight (Testereignisse, Checkliste), Launch Library 2 (Startliste, Artemis), Wikipedia (Zieldaten, Fahrzeuglisten),
-FAA (Mitteilungen, TFR-Liste), Stadt Starbase (Strand und Highway 4), NASASpaceflight (nur Überschriften) sowie von Hand zusammengetragene Berichte. Abrufe erfolgen selten und anonym.
+SpaceX (spacex.com), FAA (Mitteilungen, TFR-Liste, Betriebsplan), Stadt Starbase (Strand und Highway 4), NASASpaceflight (nur Überschriften) sowie von Hand zusammengetragene Berichte. Abrufe erfolgen selten und anonym.
 Privates Projekt, nicht mit SpaceX verbunden.

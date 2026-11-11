@@ -64,6 +64,14 @@ def record_closures(tfr, starbase, seen):
             append(path, {**r, "seen": seen})
 
 
+def record_change(name, value, seen):
+    """Schreibt einen Stand nur, wenn er sich gegenüber dem letzten Eintrag geändert hat."""
+    path = LOG / f"{name}.jsonl"
+    rows = read_log(path)
+    if value is not None and (not rows or rows[-1]["value"] != value):
+        append(path, {"seen": seen, "value": value})
+
+
 def due(name, hours, now):
     """Teure Quellen nur alle paar Stunden abrufen, auch wenn der Lauf stündlich kommt."""
     path = fetch.CACHE / "fetched.json"
@@ -139,9 +147,22 @@ def update_sources(next_n, today, force_all):
         got["starbase"], detail = sources.fetch_starbase()
         return detail
 
+    def spacex():
+        got["spacex"], detail = sources.fetch_spacex()
+        return detail
+
+    def ops():
+        got["ops"], detail = sources.fetch_ops_plan()
+        return detail
+
     attempt("tfr", "FAA (Luftraumsperrungen, TFR)", "https://tfr.faa.gov/", tfr)
     attempt("starbase", "Stadt Starbase (Strand und Highway 4)", sources.STARBASE_URL, starbase)
-    record_closures(got.get("tfr"), got.get("starbase"), now.isoformat(timespec="minutes"))
+    attempt("spacex", "SpaceX (Termin auf spacex.com)", "https://www.spacex.com/launches/", spacex)
+    attempt("ops_plan", "FAA (Betriebsplan, geplante Starts)", sources.OPS_PLAN, ops)
+    seen = now.isoformat(timespec="minutes")
+    record_closures(got.get("tfr"), got.get("starbase"), seen)
+    record_change("spacex_targets", [{k: r[k] for k in ("flight", "date", "window_open", "window_close", "text")} for r in got["spacex"]] if "spacex" in got else None, seen)
+    record_change("ops_plan", got["ops"]["items"] if "ops" in got else None, seen)
     return status
 
 
@@ -288,7 +309,8 @@ def main():
     matrix = production_matrix(data)
     feed = data._cache("feed", {"articles": []})["articles"][-8:]
     changes = read_log(LOG / "status_changes.jsonl")
-    tfr_now = data._cache("tfr", {"items": []})["items"]
+    ops_now = data._cache("ops_plan", {"items": []})
+    tfr_now = sources.refine_tfr(data._cache("tfr", {"items": []})["items"], ops_now)
     starbase_now = data._cache("starbase", {})
     closures = sources.classify_closures(starbase_now, tfr_now, datetime.now(timezone.utc))
     payload = {
@@ -300,7 +322,8 @@ def main():
         "license": model.load("license"), "matrix": matrix, "trends": model.trends(data, matrix["rows"]), "artemis": moon,
         "checklist": data.status, "status_changes": [c for c in changes if not c.get("first_run")][-20:],
         "closures": closures, "tfr": [t for t in tfr_now if t["kind"] != "other"], "starbase_order": starbase_now.get("order"),
-        "starbase_previous": starbase_now.get("previous_orders", [])[:12], "faa": data.faa[-8:], "open_mishap": data.open_mishap(), "news": feed[::-1], "license_cleared": data.license_cleared(nxt), "milestones": model.milestone_stats(), "falcon": model.load("falcon_years"),
+        "starbase_previous": starbase_now.get("previous_orders", [])[:12],
+        "spacex": data._cache("spacex", []), "ops_plan": ops_now, "faa": data.faa[-8:], "open_mishap": data.open_mishap(), "news": feed[::-1], "license_cleared": data.license_cleared(nxt), "milestones": model.milestone_stats(), "falcon": model.load("falcon_years"),
         "backtest_summary": model.backtest_summary(bt), "tracks": tracks, "log": log[-60:], "log_count": len(log), "scored": scored,
         "assumptions": cfg, "upcoming": data.meta["upcoming"],
     }

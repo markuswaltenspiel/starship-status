@@ -321,12 +321,14 @@ function renderYears(){
 const when=(iso,tz)=>new Date(iso).toLocaleString("de-DE",{timeZone:tz,weekday:"short",day:"numeric",month:"numeric",hour:"2-digit",minute:"2-digit"});
 const span=(a,b,tz)=>{const x=when(a,tz),y=when(b,tz);return x.slice(0,x.lastIndexOf(" "))===y.slice(0,y.lastIndexOf(" "))?`${x} bis ${y.slice(y.lastIndexOf(" ")+1)}`:`${x} bis ${y}`};
 function renderClosures(){
-  const nowIso=new Date().toISOString().slice(0,19)+"Z",purpose={launch:"Start",test:"Bodentest (Static Fire, WDR, Cryo)",open:"noch offen",transport:"Transport",ground_test:"Bodentests (Static Fire u. a.), Dauersperrung"};
+  const nowIso=new Date().toISOString().slice(0,19)+"Z",purpose={launch:"Start",reentry:"Rückkehr des Ship (Catch)",space_ops:"Start oder Rückkehr",test:"Bodentest (Static Fire, WDR, Cryo)",open:"noch offen",transport:"Transport",ground_test:"Bodentests (Static Fire u. a.), Dauersperrung"};
   const rows=[...(D.closures||[]).filter(c=>c.end>nowIso).map(c=>({start:c.start,end:c.end,what:c.type==="beach_closure"?`Strand und Highway 4${c.label==="alternate"?" (Ausweichtermin)":""}`:"Highway 4, Behinderung",why:purpose[c.purpose],src:link("https://www.starbase.texas.gov/beach-road-access","Stadt Starbase")})),
+    ...((D.ops_plan||{}).items||[]).flatMap(i=>i.windows.filter(w=>w.end>nowIso).map(w=>({start:w.start,end:w.end,what:`FAA-Betriebsplan, ${w.label==="backup"?"Ausweichfenster":"Hauptfenster"}`,why:purpose[i.kind],src:link("https://www.fly.faa.gov/adv/adv_spt","FAA ATCSCC")}))),
+    ...(D.spacex||[]).filter(x=>x.window_open&&(x.window_close||x.window_open)>nowIso).map(x=>({start:x.window_open,end:x.window_close||x.window_open,what:`Startfenster laut SpaceX, Flug ${x.flight}`,why:"Start",src:link(x.url,"SpaceX")})),
     ...(D.tfr||[]).filter(t=>t.end&&t.end>nowIso).map(t=>({start:t.start,end:t.end,what:`Luftraum, TFR ${t.id} (${t.rule}${t.radius_nm?`, ${String(t.radius_nm).replace(".",",")} NM`:""})`,why:purpose[t.kind],src:link("https://tfr.faa.gov/","FAA")}))].sort((a,b)=>a.start<b.start?-1:1);
   if(rows.length)table($("t-closures"),["Was","Zweck","Ortszeit Starbase","Deutsche Zeit","Quelle"],rows.map(r=>[r.what,r.why,span(r.start,r.end,"America/Chicago"),span(r.start,r.end,"Europe/Berlin"),r.src]));
   else $("t-closures").replaceChildren(el("p",{class:"sub",text:"Zurzeit keine Sperrungen veröffentlicht."}));
-  $("closures-note").textContent="Direkt von der FAA (TFR-Liste) und der Stadt Starbase. Eine Strandsperrung gilt als Start, wenn sie sich mit einer TFR für Raumfahrtbetrieb (14 CFR 91.143) überschneidet. Ohne solche TFR gilt sie ab 3 Tagen vorher als Bodentest, davor als offen. TFRs nach 91.137(a)(1) („High Energy Testing“, kleiner Radius) decken Bodentests über mehrere Wochen ab und nennen keinen einzelnen Testtag. Behinderungen auf dem Highway 4 sind meist Transporte. Die Prognose nutzt diese Angaben bisher nicht.";
+  $("closures-note").textContent="Direkt von SpaceX, der FAA (TFR-Liste, Betriebsplan der Verkehrszentrale) und der Stadt Starbase. Ob eine TFR für Raumfahrtbetrieb (14 CFR 91.143) dem Start oder der Rückkehr des Ship dient, steht im FAA-Betriebsplan. Eine Strandsperrung gilt als Start, wenn sie sich mit einer Start-TFR überschneidet. Ohne solche TFR gilt sie ab 3 Tagen vorher als Bodentest, davor als offen. TFRs nach 91.137(a)(1) („High Energy Testing“, kleiner Radius) decken Bodentests über mehrere Wochen ab und nennen keinen einzelnen Testtag. Behinderungen auf dem Highway 4 sind meist Transporte. Die Prognose nutzt diese Angaben bisher nicht.";
 }
 
 function renderStand(){
@@ -337,7 +339,9 @@ function renderStand(){
   const found=name=>chk.find(i=>i.title===name);
   const row=(a,state,when)=>{const li=el("li");li.append(el("span",{text:a}),statusPill(state?"good":"open",state?(when?fmtS(when):"bestätigt"):"offen"));list.append(li)};
   row("Static Fire Booster",!!n.booster.sf,n.booster.sf);row("Static Fire Ship",!!n.ship.sf,n.ship.sf);
-  [["Vehicles Stacked","Stacking von Booster und Ship"],["Wet Dress Rehearsal (WDR)","Generalprobe (WDR)"],["Regulatory Approval","Lizenz"],["Confirmation from SpaceX","Termin von SpaceX"]].forEach(([k,lab])=>{const it=found(k);row(lab,!!(it&&it.confirmed))});
+  [["Vehicles Stacked","Stacking von Booster und Ship"],["Wet Dress Rehearsal (WDR)","Generalprobe (WDR)"],["Regulatory Approval","Lizenz"]].forEach(([k,lab])=>{const it=found(k);row(lab,!!(it&&it.confirmed))});
+  const sx=(D.spacex||[]).find(x=>x.flight===n.n);row("Termin von SpaceX (spacex.com)",!!(sx&&sx.date),sx&&sx.date);
+  const op=((D.ops_plan||{}).items||[]).find(x=>x.flight===n.n&&x.kind==="launch");row("Startfenster im FAA-Betriebsplan",!!op,op&&op.windows[0].start.slice(0,10));
   const nowIso=new Date().toISOString().slice(0,19)+"Z",ahead=x=>x.end&&x.end>nowIso;
   const lt=(D.tfr||[]).filter(t=>t.kind==="launch"&&ahead(t)),lc=(D.closures||[]).filter(c=>c.purpose==="launch"&&ahead(c));
   row("Straßensperrung für Start (Starbase)",lc.length>0,lc.length?lc[0].start_local.slice(0,10):null);
