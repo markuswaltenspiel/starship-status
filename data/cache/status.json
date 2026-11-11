@@ -27,7 +27,7 @@
 },
 {
 "title": "Confirmation from SpaceX",
-"confirmed": false
+"confirmed": true
 },
 {
 "title": "Payload Loaded",
@@ -35,7 +35,7 @@
 },
 {
 "title": "Booster 22 at Launch Site",
-"confirmed": false
+"confirmed": true
 },
 {
 "title": "Ship 42 at Launch Site",
@@ -47,39 +47,35 @@
 },
 {
 "title": "FAA Operations Advisory",
-"confirmed": false
-},
-{
-"title": "COMPASS Airspace Advisory",
-"confirmed": false
+"confirmed": true
 },
 {
 "title": "Notice To Air Mission (NOTAM) for Launch",
-"confirmed": false
+"confirmed": true
 },
 {
 "title": "USCG Notice to Mariners (NOTMAR) for Launch",
-"confirmed": false
+"confirmed": true
 },
 {
 "title": "NGA Notice to Mariners (NOTMAR) for Launch",
-"confirmed": false
+"confirmed": true
 },
 {
-"title": "Notice To Air Mission (NOTAM) for Ship Splashdown",
-"confirmed": false
+"title": "Notice To Air Mission (NOTAM) for Ship Reentry",
+"confirmed": true
 },
 {
-"title": "NGA Notice to Mariners (NOTMAR) for Ship Splashdown",
-"confirmed": false
+"title": "NGA Notice to Mariners (NOTMAR) for Ship Reentry",
+"confirmed": true
 },
 {
 "title": "Temporary Flight Restriction (TFR)",
-"confirmed": false
+"confirmed": true
 },
 {
 "title": "Road Closure for Launch",
-"confirmed": false
+"confirmed": true
 },
 {
 "title": "Wet Dress Rehearsal (WDR)",

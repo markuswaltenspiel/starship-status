@@ -1,0 +1,116 @@
+{
+"beach": [
+{
+"label": "primary",
+"start_local": "2026-11-13T11:00",
+"end_local": "2026-11-13T23:30",
+"start": "2026-11-13T17:00:00Z",
+"end": "2026-11-14T05:30:00Z"
+},
+{
+"label": "primary",
+"start_local": "2026-11-14T11:00",
+"end_local": "2026-11-14T23:30",
+"start": "2026-11-14T17:00:00Z",
+"end": "2026-11-15T05:30:00Z"
+}
+],
+"beach_text": "Primary: Nov. 13 11:00 AM to Nov. 13 11:30 PM Primary: Nov. 14 11:00 AM to Nov. 14 11:30 PM",
+"road": [],
+"road_text": "",
+"order": "Order No. 2026-25 Pursuant to Mayor's Order No. 2026-25, issued by Mayor Bobby Peden and attested by City Clerk Keila Tuttle, under authority granted by Texas Space Commission Order No. 2025-02, Ordinance No. 2026-2, and the City's Emergency Management Plan, the City of Starbase is temporarily closing Boca Chica Beach, Texas State Highway 4 (from FM 1419/Oklahoma Ave. to the beach entrance), and associated FAA hazard areas/Clear Zone to protect public health and safety during SpaceX spaceflight activities on Friday, November 13, 2026 and Saturday, November 14, 2026, from 11:00 a.m. to 11:30 p.m. C.T. both days. Primary Closure Period 11/13/26 from 11:00 AM to 11:30 PM and 11/14/26 from 11:00 AM to 11:30 PM Alternate Dates",
+"previous_orders": [
+{
+"date": "2026-10-27",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6adc20c303d2ea564b15a3c2_Beach_Closure_24_Executive_Order.pdf"
+},
+{
+"date": "2026-10-01",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6ab6edbec90cd041d7afd245_Beach%20Closure%2023%20Executive%20Order%20SIGNED.pdf"
+},
+{
+"date": "2026-09-26",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6ab4076f981c2cd9cf81b815_Beach-Closure-22-Executive-Order-SIGNED.pdf"
+},
+{
+"date": "2026-08-30",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a8f49794a4d6475464beca2_MAYORAL_CLOSURE_ORDER_2026-20_(2).pdf"
+},
+{
+"date": "2026-08-28",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a8d009e0e3835953756222e_MAYORAL_CLOSURE_ORDER_2026-19.docx.pdf"
+},
+{
+"date": "2026-07-26",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a621fc2687b7789388e7158_MAYORAL_CLOSURE_ORDER_2026-18.docx.pdf"
+},
+{
+"date": "2026-07-25",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a60f6578f544336feea74ee_MAYORAL_CLOSURE_ORDER_2026-17.docx.pdf"
+},
+{
+"date": "2026-07-24",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a615ea4f595ae3342bf8b3d_MAYORAL%20CLOSURE%20ORDER%202026-16.pdf"
+},
+{
+"date": "2026-07-23",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a5ec53dd37a1879dcce8526_MAYORAL_CLOSURE_ORDER_2026-15.pdf"
+},
+{
+"date": "2026-07-19",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a58f73d9d2b2218cee28756_MAYORAL_CLOSURE_ORDER_2026-14.docx.pdf"
+},
+{
+"date": "2026-07-18",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a5662fb5f6b4c06e61ebf89_Beach_Closure_Order_No_2026-13.docx.pdf"
+},
+{
+"date": "2026-07-11",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a4e5719ba5d44a03df95586_MAYORAL_CLOSURE_ORDER_2026-12.docx.pdf"
+},
+{
+"date": "2026-05-23",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a0dc172797991b86ed7ec42_MAYORAL_CLOSURE_ORDER_2026-11.docx.pdf"
+},
+{
+"date": "2026-05-22",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a0b4c8c1ef1aca6fbd0e761_MAYORAL%20CLOSURE%20ORDER%202026-10.pdf"
+},
+{
+"date": "2026-05-19",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a063d11fd70acd841f81871_MAYORAL_CLOSURE_ORDER_2026-9.docx.pdf"
+},
+{
+"date": "2026-05-14",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/6a00ed22f218568debdf334d_MAYORAL%20CLOSURE%20ORDER%202026-8.pdf"
+},
+{
+"date": "2026-05-09",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/69fe90bcc298f41718652d42_MAYORAL_CLOSURE_ORDER_2026-7.docx.pdf"
+},
+{
+"date": "2026-05-09",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/69fa3a95d6261019504dcd8b_MAYORAL_CLOSURE_ORDER_2026-6.docx.pdf"
+},
+{
+"date": "2026-04-17",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/69dfd5e06548166dc8aba850_Beach%20Closure%202026-5-1.pdf"
+},
+{
+"date": "2026-04-16",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/69d916a7f8f755441e84c7e3_2026-4%204.10.26.pdf"
+},
+{
+"date": "2026-03-19",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/69b44354752e1f41106ac265_2026.03.12%20Beach%20Closure%20Signed.Sealed.pdf"
+},
+{
+"date": "2026-03-13",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/69b043e08d3a8cdf68bc5717_2026-2%203.10.26.pdf"
+},
+{
+"date": "2026-03-11",
+"url": "https://cdn.prod.website-files.com/67fcab04e05680343de9ea4e/69b1dfdeab96f9a75860b9a9_3.11.26%20Amended%202026-1.pdf"
+}
+]
+}

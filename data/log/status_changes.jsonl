@@ -20,3 +20,13 @@
 {"flight": 15, "item": "Road Closure for Launch", "confirmed": false, "seen": "2026-10-31", "first_run": true}
 {"flight": 15, "item": "Wet Dress Rehearsal (WDR)", "confirmed": false, "seen": "2026-10-31", "first_run": true}
 {"flight": 15, "item": "Regulatory Approval", "confirmed": false, "seen": "2026-10-31", "first_run": true}
+{"flight": 15, "item": "Confirmation from SpaceX", "confirmed": true, "seen": "2026-11-11", "first_run": false}
+{"flight": 15, "item": "Booster 22 at Launch Site", "confirmed": true, "seen": "2026-11-11", "first_run": false}
+{"flight": 15, "item": "FAA Operations Advisory", "confirmed": true, "seen": "2026-11-11", "first_run": false}
+{"flight": 15, "item": "Notice To Air Mission (NOTAM) for Launch", "confirmed": true, "seen": "2026-11-11", "first_run": false}
+{"flight": 15, "item": "USCG Notice to Mariners (NOTMAR) for Launch", "confirmed": true, "seen": "2026-11-11", "first_run": false}
+{"flight": 15, "item": "NGA Notice to Mariners (NOTMAR) for Launch", "confirmed": true, "seen": "2026-11-11", "first_run": false}
+{"flight": 15, "item": "Notice To Air Mission (NOTAM) for Ship Reentry", "confirmed": true, "seen": "2026-11-11", "first_run": false}
+{"flight": 15, "item": "NGA Notice to Mariners (NOTMAR) for Ship Reentry", "confirmed": true, "seen": "2026-11-11", "first_run": false}
+{"flight": 15, "item": "Temporary Flight Restriction (TFR)", "confirmed": true, "seen": "2026-11-11", "first_run": false}
+{"flight": 15, "item": "Road Closure for Launch", "confirmed": true, "seen": "2026-11-11", "first_run": false}
