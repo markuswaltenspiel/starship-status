@@ -16,8 +16,16 @@
 }
 ],
 "beach_text": "Primary: Nov. 13 11:00 AM to Nov. 13 11:30 PM Primary: Nov. 14 11:00 AM to Nov. 14 11:30 PM",
-"road": [],
-"road_text": "",
+"road": [
+{
+"label": null,
+"start_local": "2026-11-12T12:00",
+"end_local": "2026-11-12T16:00",
+"start": "2026-11-12T18:00:00Z",
+"end": "2026-11-12T22:00:00Z"
+}
+],
+"road_text": "Description: Production to Pad Date: November 12 12:00 PM to November 12 4:00 PM",
 "order": "Order No. 2026-25 Pursuant to Mayor's Order No. 2026-25, issued by Mayor Bobby Peden and attested by City Clerk Keila Tuttle, under authority granted by Texas Space Commission Order No. 2025-02, Ordinance No. 2026-2, and the City's Emergency Management Plan, the City of Starbase is temporarily closing Boca Chica Beach, Texas State Highway 4 (from FM 1419/Oklahoma Ave. to the beach entrance), and associated FAA hazard areas/Clear Zone to protect public health and safety during SpaceX spaceflight activities on Friday, November 13, 2026 and Saturday, November 14, 2026, from 11:00 a.m. to 11:30 p.m. C.T. both days. Primary Closure Period 11/13/26 from 11:00 AM to 11:30 PM and 11/14/26 from 11:00 AM to 11:30 PM Alternate Dates",
 "previous_orders": [
 {
