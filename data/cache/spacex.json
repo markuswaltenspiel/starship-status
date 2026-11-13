@@ -3,10 +3,10 @@
 "flight": 15,
 "site": "Pad 2, Starbase",
 "status": "upcoming",
-"date": "2026-11-13",
-"window_open_local": "2026-11-13T16:45",
-"window_open": "2026-11-13T22:45:00Z",
-"window_close": "2026-11-14T00:00:00Z",
+"date": null,
+"window_open_local": null,
+"window_open": null,
+"window_close": null,
 "text": "Flight 15 of Starship is preparing to launch as soon as Friday, November 13, pending regulatory approval. The 75-minute launch window will open at 4:45 p.m. CT.",
 "url": "https://www.spacex.com/launches/starship-flight-15"
 }
