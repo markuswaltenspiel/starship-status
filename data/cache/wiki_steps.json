@@ -127,6 +127,25 @@
 "source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
 }
 },
+"S43": {
+"rollout_test": {
+"date": "2026-10-22",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+},
+"engines": {
+"date": "2026-12-15",
+"precision": "approx",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
+"S44": {
+"stack_done": {
+"date": "2026-10-20",
+"precision": "day",
+"source": "https://en.wikipedia.org/wiki/List_of_Starship_vehicles"
+}
+},
 "B8": {
 "stack_done": {
 "date": "2022-07-08",
@@ -276,6 +295,8 @@
 "S40": "V3",
 "S41": "V3",
 "S42": "V3",
+"S43": "V3",
+"S44": "V3",
 "B7": "V1",
 "B8": "V1",
 "B9": "V1",
