@@ -34,3 +34,23 @@
 {"flight": 15, "item": "Ship 42 at Launch Site", "confirmed": true, "seen": "2026-11-13", "first_run": false}
 {"flight": 15, "item": "Vehicles Stacked", "confirmed": true, "seen": "2026-11-13", "first_run": false}
 {"flight": 15, "item": "Regulatory Approval", "confirmed": true, "seen": "2026-11-13", "first_run": false}
+{"flight": 16, "item": "Booster 23 Proof Campaign", "confirmed": true, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Ship 43 Proof Campaign", "confirmed": true, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Booster 23's Raptor 3 Engines Installed", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Ship 43's Raptor 3 Engines Installed", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Booster 23 Static Fire Campaign", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Ship 43 Static Fire Campaign", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Confirmation from SpaceX", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Payload Loaded", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Booster 23 at Launch Site", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Ship 43 at Launch Site", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Vehicles Stacked", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "FAA Operations Advisory", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Notice To Air Mission (NOTAM) for Launch", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "USCG Notice to Mariners (NOTMAR) for Launch", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "NGA Notice to Mariners (NOTMAR) for Launch", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Notice To Air Mission (NOTAM) for Ship Reentry", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "NGA Notice to Mariners (NOTMAR) for Ship Reentry", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Temporary Flight Restriction (TFR)", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Road Closure for Launch", "confirmed": false, "seen": "2026-11-14", "first_run": false}
+{"flight": 16, "item": "Regulatory Approval", "confirmed": false, "seen": "2026-11-14", "first_run": false}

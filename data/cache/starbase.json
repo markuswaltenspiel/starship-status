@@ -2,30 +2,16 @@
 "beach": [
 {
 "label": "primary",
-"start_local": "2026-11-13T11:00",
-"end_local": "2026-11-13T23:30",
-"start": "2026-11-13T17:00:00Z",
-"end": "2026-11-14T05:30:00Z"
-},
-{
-"label": "primary",
 "start_local": "2026-11-14T11:00",
 "end_local": "2026-11-14T23:30",
 "start": "2026-11-14T17:00:00Z",
 "end": "2026-11-15T05:30:00Z"
-},
-{
-"label": "primary",
-"start_local": "2026-11-15T11:00",
-"end_local": "2026-11-15T23:30",
-"start": "2026-11-15T17:00:00Z",
-"end": "2026-11-16T05:30:00Z"
 }
 ],
-"beach_text": "Primary: Nov. 13 11:00 AM to Nov. 13 11:30 PM Primary: Nov. 14 11:00 AM to Nov. 14 11:30 PM Primary: Nov. 15 11:00 AM to Nov. 15 11:30 PM",
+"beach_text": "Primary: Nov. 14 11:00 AM to Nov. 14 11:30 PM",
 "road": [],
 "road_text": "",
-"order": "Order No. 2026-26 Pursuant to Mayor's Order No. 2026-26, issued by Mayor Bobby Peden and attested by City Clerk Keila Tuttle, under authority granted by Texas Space Commission Order No. 2025-02, Ordinance No. 2026-2, and the City's Emergency Management Plan, the City of Starbase is temporarily closing Boca Chica Beach, Texas State Highway 4 (from FM 1419/Oklahoma Ave. to the beach entrance), and associated FAA hazard areas/Clear Zone to protect public health and safety during SpaceX spaceflight activities on Sunday, November 15, 2026, from 11:00 a.m. to 11:30 p.m. C.T. Primary Closure Period 11/15/26 from 11:00 AM to 11:30 PM Alternate Dates Order No. 2026-25 Pursuant to Mayor's Order No. 2026-25, issued by Mayor Bobby Peden and attested by City Clerk Keila Tuttle, under authority granted by Texas Space Commission Order No. 2025-02, Ordinance No. 2026-2, and the City's Emergency Manageme",
+"order": "Order No. 2026-26 Pursuant to Mayor's Order No. 2026-26, issued by Mayor Bobby Peden and attested by City Clerk Keila Tuttle, under authority granted by Texas Space Commission Order No. 2025-02, Ordinance No. 2026-2, and the City's Emergency Management Plan, the City of Starbase is temporarily closing Boca Chica Beach, Texas State Highway 4 (from FM 1419/Oklahoma Ave. to the beach entrance), and associated FAA hazard areas/Clear Zone to protect public health and safety during SpaceX spaceflight activities on Sunday, November 15, 2026, from 11:00 a.m. to 11:30 p.m. C.T. Primary Closure Period 11/15/26 from 11:00 AM to 11:30 PM Alternate Dates Revocation of Closure Order No. 2026-26 - 11/15/26 from 11:00 AM to 11:30 PM Order No. 2026-25 Pursuant to Mayor's Order No. 2026-25, issued by Mayor Bobby Peden and attested by City Clerk Keila Tuttle, under authority granted by Texas Space Commissi",
 "previous_orders": [
 {
 "date": "2026-10-27",
