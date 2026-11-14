@@ -65,15 +65,24 @@ def fetch_vehicles(force_all=False):
     return {"vehicles": len(known), "updated": changed}
 
 
-def fetch_ll2():
-    url = "https://ll.thespacedevs.com/2.3.0/launches/upcoming/?search=starship&limit=10&mode=normal"
-    data = json.loads(http_get(url))
+# Status-IDs der Launch Library, bei denen die Rakete abgehoben hat
+LL2_LAUNCHED = {3: "success", 4: "failure", 6: "in_flight", 7: "partial"}
+
+
+def fetch_ll2(since):
+    """Starship-Starts ab dem letzten bekannten Flug: geflogene (Status) und geplante (NET) in einem Abruf."""
+    params = {"search": "starship", "net__gte": since, "ordering": "net", "limit": 15, "mode": "normal"}
+    data = json.loads(http_get("https://ll.thespacedevs.com/2.3.0/launches/?" + urllib.parse.urlencode(params)))
+    if "results" not in data:
+        raise ValueError(f"Launch Library: keine Ergebnisliste ({data.get('detail', 'Format geändert?')})")
     rows = []
-    for item in data.get("results", []):
+    for item in data["results"]:
         m = re.search(r"Flight\s+(\d+)", item.get("name", ""))
         precision = (item.get("net_precision") or {}).get("abbrev", "")
+        status = item.get("status") or {}
         rows.append({"name": item.get("name"), "flight": int(m.group(1)) if m else None, "net": (item.get("net") or "")[:10],
-                     "precision": precision, "status": (item.get("status") or {}).get("abbrev"), "updated": item.get("last_updated")})
+                     "net_time": item.get("net"), "precision": precision, "status": status.get("abbrev"),
+                     "launched": LL2_LAUNCHED.get(status.get("id")), "updated": item.get("last_updated")})
     (CACHE / "ll2.json").write_text(json.dumps(rows, indent=1, ensure_ascii=False))
     return rows
 

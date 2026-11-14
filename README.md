@@ -18,6 +18,13 @@ Eine Strandsperrung, die sich mit einer 91.143-TFR überschneidet, gilt als Star
 Eine „Road Delay“ der Stadt ist eine kurze Behinderung, in der Regel ein Transport zwischen Werk und Startplatz.
 Jede neue TFR und jedes neue Sperrfenster landet in `data/log/closures.jsonl`, weil die Quellen nur aktuelle Einträge zeigen; Änderungen am Betriebsplan in `data/log/ops_plan.jsonl`.
 
+**Erkennung geflogener Flüge:** Flüge 1 bis 14 stehen von Hand in `data/manual/flights.json` (aus der Wikipedia-Liste der Starship-Starts, Tage in UTC). Neue Flüge erkennt das Programm selbst, in dieser Reihenfolge:
+1. NextSpaceflight, Ereignis „Starship Flight N“ des Stacks mit Ergebnis (Erfolg, Teilerfolg, Fehlschlag). Das Ergebnis schließt die Landung ein, steht aber oft erst viele Stunden nach dem Start fest; bis dahin führt NextSpaceflight den Flug mit Status 10, den es auch für abgebrochene Startversuche nutzt.
+2. Launch Library 2, bei jedem Lauf: Status „In Flight“, „Success“, „Partial Failure“ oder „Failure“ mit sekundengenauer Startzeit. „Success“ heißt dort nur, dass der Aufstieg gelang; die Seite zeigt das Ergebnis deshalb als vorläufig, bis NextSpaceflight es bestätigt. Jede Meldung landet in `data/log/launches.jsonl`, damit ein erkannter Flug bei einem Ausfall der Quelle nicht verschwindet.
+3. NextSpaceflight mit Status 10, wenn die Checkliste schon einen späteren Flug zeigt (Ergebnis offen).
+
+Anlass: Flug 15 startete am 13.11.2026 um 22:47 UTC, NextSpaceflight trug bis zum nächsten Tag kein Ergebnis ein, und das Programm hatte damals nur Weg 1. Die Prognose zeigte den Flug deshalb noch fast einen Tag lang als offen. Der einzige Log-Eintrag aus dieser Zeit (14.11.2026, Flug 15 am 20.11.) wurde auf Wunsch aus `data/log/forecasts.jsonl` entfernt, als einzige Ausnahme vom Grundsatz, das Log nur anzuhängen. Prognosen nach dem Starttag zählen in der Bewertung ohnehin nicht. Schneller als der Lauf selbst ist die Erkennung nicht; GitHub startet ihn oft nur alle 4 bis 7 Stunden.
+
 **Termin von SpaceX:** Den Punkt „Confirmation from SpaceX“ hakt NextSpaceflight ab, sobald SpaceX eine Startseite mit Datum veröffentlicht (Beleglink `spacex.com/launches/starship-flight-N`).
 Das Programm liest dieselben Daten direkt aus dem CMS hinter spacex.com (`content.spacex.com/api/spacex-website/launches-page-tiles/upcoming`, Feld `override` mit Fensterbeginn und -ende in Ortszeit, dazu der Begleittext der Missionsseite)
 und schreibt jede Änderung in `data/log/spacex_targets.jsonl`. Die Prognose nutzt den SpaceX-Termin, den Betriebsplan und die Sperrungen bisher nicht.
@@ -101,6 +108,8 @@ Geändert wurden nur die Jahreswerte, die Flüge der nächsten Monate rechnen un
 8. **Lizenz:** Spätere Flüge rechnen ohne Wartezeit, der nächste Flug noch mit (bei neuem Profil 25 % mit im Median 14 Tagen). Vereinheitlichen, wenn sich zeigt, dass ein NET die Lizenz schon einpreist.
 9. **Quellen:** TFRs, FAA-Betriebsplan, SpaceX-Termin und Strand- und Straßensperrungen kommen seit dem 11.11.2026 direkt aus Primärquellen (siehe oben); Notices to Mariners nur aus der NextSpaceflight-Checkliste, das NET aus Wikipedia und Launch Library. Die Prognose nutzt Sperrungen noch nicht als Signal. Mit `data/log/closures.jsonl` prüfen, wie zuverlässig eine Start-TFR den Starttag anzeigt, und dann entscheiden, ob sie in die Prognose eingeht.
 
+**Nach dem nächsten Start (Flug 16) außerdem prüfen** (vereinbart am 15.11.2026): Gibt es eine neue Tendenz beim Abstand vom letzten Static Fire bis zum Flug, und sollte die Vorhersage deshalb korrigiert werden? Wird die Zeit zwischen Cryo-Test und Flug wirklich kürzer? Bis dahin keine weiteren Änderungen am Modell.
+
 **Nach Flug 17 die Prognose prüfen und eventuell feinjustieren** (Stand der Vereinbarung: 31.10.2026, Modell 1.2).
 Zu prüfen: Trefferquote im Log, Fehler nach Vorlauf, Halbwertszeit der Gewichte, Anteil des Flugabstands beim nächsten Flug,
 im Flotten-Szenario Fertigungswachstum gegen den gemessenen Takt, Wartungszeiten gegen echte Wiederholungsflüge und die Termine der Startplätze.
@@ -108,6 +117,6 @@ Außerdem die festen 30, 45 oder 60 Tage für wiederverwendete Fahrzeuge bei den
 
 ## Quellen
 
-NextSpaceflight (Testereignisse, Checkliste), Launch Library 2 (Startliste, Artemis), Wikipedia (Zieldaten, Fahrzeuglisten),
+NextSpaceflight (Testereignisse, Checkliste, Flugergebnis), Launch Library 2 (Startliste, gestartete Flüge, Artemis), Wikipedia (Zieldaten, Fahrzeuglisten),
 SpaceX (spacex.com), FAA (Mitteilungen, TFR-Liste, Betriebsplan), Stadt Starbase (Strand und Highway 4), NASASpaceflight (nur Überschriften) sowie von Hand zusammengetragene Berichte. Abrufe erfolgen selten und anonym.
 Privates Projekt, nicht mit SpaceX verbunden.

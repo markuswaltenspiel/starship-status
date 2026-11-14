@@ -89,7 +89,27 @@ def mark_fetched(name, now):
     path.write_text(json.dumps(stamps, indent=0, sort_keys=True))
 
 
-def update_sources(next_n, today, force_all):
+def record_launches(rows, withdrawn, seen):
+    """Hält fest, wann die Launch Library einen Start meldet und wie sich das Ergebnis ändert.
+    Das Modell liest diese Datei, damit ein erkannter Flug nicht verschwindet, wenn LL2 später ausfällt.
+    Nimmt LL2 einen Start zurück (Flug wieder geplant), steht ein Eintrag ohne Ergebnis im Log."""
+    path = LOG / "launches.jsonl"
+    latest = {}
+    for r in read_log(path):
+        latest[r["flight"]] = (r["launched"], r["result"])
+    for r in withdrawn:
+        if latest.get(r["flight"], (None, None))[1]:
+            append(path, {"flight": r["flight"], "launched": None, "result": None, "status": r["status"], "source": "Launch Library", "seen": seen})
+    new = []
+    for r in rows:
+        if latest.get(r["flight"]) != (r["net_time"], r["launched"]):
+            if r["flight"] not in latest:
+                new.append(r["flight"])
+            append(path, {"flight": r["flight"], "launched": r["net_time"], "result": r["launched"], "status": r["status"], "source": "Launch Library", "seen": seen})
+    return new
+
+
+def update_sources(next_n, since, today, force_all):
     status = []
     now = datetime.now(timezone.utc)
     every = {"vehicles": 3, "wiki": 2, "wiki_vehicles": 6, "faa": 6, "artemis": 12}
@@ -114,10 +134,17 @@ def update_sources(next_n, today, force_all):
         return f"{r['vehicles']} Fahrzeuge, {r['updated']} geändert"
 
     def ll2():
-        rows = fetch.fetch_ll2()
-        day = [{"flight": r["flight"], "net": r["net"], "precision": "day" if r["precision"] in ("SEC", "MIN", "HR", "DAY", "S", "D") else r["precision"] or "unknown", "source": "Launch Library"} for r in rows if r["flight"]]
+        rows = fetch.fetch_ll2(since)
+        flown = [r for r in rows if r["flight"] and r["launched"]]
+        planned = [r for r in rows if not r["launched"]]
+        day = [{"flight": r["flight"], "net": r["net"], "precision": "day" if r["precision"] in ("SEC", "MIN", "HR", "DAY", "S", "D") else r["precision"] or "unknown", "source": "Launch Library"} for r in planned if r["flight"]]
         record_observation(day, str(today))
-        return f"{len(rows)} geplante Starts"
+        new = record_launches(flown, [r for r in planned if r["flight"]], now.isoformat(timespec="minutes"))
+        text = f"{len(planned)} geplante Starts"
+        if flown:
+            last = flown[-1]
+            text = f"Flug {last['flight']} gestartet {last['net_time'][:16].replace('T', ' ')} UTC ({last['status']}), " + text
+        return text + (f", neu erkannt: Flug {', '.join(str(n) for n in new)}" if new else "")
 
     def wiki():
         rows = fetch.fetch_wiki_net(range(next_n, next_n + 3))
@@ -247,7 +274,7 @@ def main():
     probe = model.Data()
     status = []
     if not offline:
-        status = update_sources(probe.flights[-1]["n"] + 1, today, "--all" in sys.argv)
+        status = update_sources(probe.flights[-1]["n"] + 1, probe.flights[-1]["date"], today, "--all" in sys.argv)
     data = model.Data()
     cfg = data.cfg
     fingerprint = hashlib.sha256((json.dumps(data.vehicles, sort_keys=True) + json.dumps(data.net, sort_keys=True) + json.dumps(data.flights, sort_keys=True) + json.dumps(cfg, sort_keys=True) + json.dumps(data.status, sort_keys=True) + json.dumps(data.faa, sort_keys=True) + (ROOT / "data" / "manual" / "artemis.json").read_text()).encode()).hexdigest()[:16]
@@ -295,7 +322,8 @@ def main():
     for entry in log:
         for x in entry["flights"]:
             f = data.flight(x["n"])
-            if f:
+            # Stände nach dem Starttag zählen nicht: Sie entstehen nur, wenn ein Start zu spät erkannt wurde
+            if f and model.d(f["date"]) >= model.d(entry["as_of"]):
                 actual = model.d(f["date"])
                 scored.append({"as_of": entry["as_of"], "n": x["n"], "model_version": entry["model_version"], "lead": (actual - model.d(entry["as_of"])).days,
                                "error": (model.d(x["p50"]) - actual).days, "mode_error": (model.d(x["mode"]) - actual).days,

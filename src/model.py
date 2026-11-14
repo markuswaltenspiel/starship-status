@@ -99,17 +99,56 @@ class Data:
         return None if closed else last
 
     def _merge_new_flights(self):
-        """Neue Flüge erkennt das Programm selbst an den Ereignissen der Stacks."""
+        """Neue Flüge erkennt das Programm selbst, in dieser Reihenfolge:
+        1. NextSpaceflight, Ereignis „Starship Flight N“ des Stacks mit Ergebnis (6, 7, 8). Das Ergebnis schließt die Landung ein,
+           steht aber oft erst viele Stunden nach dem Start fest.
+        2. Launch Library (data/log/launches.jsonl): Status „In Flight“, „Success“, „Partial Failure“ oder „Failure“ mit Startzeit.
+           „Success“ heißt dort nur, dass der Aufstieg gelang; das Ergebnis gilt deshalb als vorläufig.
+        3. NextSpaceflight mit Status 10 (ohne Ergebnis), wenn die Checkliste schon einen späteren Flug zeigt.
+           Status 10 steht sonst auch für abgebrochene Startversuche, die heißen aber „Launch Attempt #N“."""
         known = {f["n"] for f in self.flights}
+        found = {}
+        nsf_pending = {}
         for (b, s), events in self.stacks.items():
             for e in events:
                 m = re.fullmatch(r"Starship Flight (\d+)", e["name"])
-                if m and int(m.group(1)) not in known and e["status"] in (6, 7, 8):
-                    outcome = {6: "success", 7: "partial", 8: "failure"}[e["status"]]
-                    upcoming = self.meta["upcoming"].get(m.group(1), {})
-                    self.flights.append({"n": int(m.group(1)), "date": e["date"][:10], "booster": b, "ship": s,
-                                         "version": self.version_of(s), "pad": upcoming.get("pad", e["location"].split(",")[0]), "outcome": outcome, "auto": True})
+                if not m or int(m.group(1)) in known:
+                    continue
+                n = int(m.group(1))
+                pad = self.meta["upcoming"].get(str(n), {}).get("pad", e["location"].split(",")[0])
+                row = {"n": n, "date": e["date"][:10], "launched": e["date"], "booster": b, "ship": s, "version": self.version_of(s), "pad": pad, "auto": True}
+                if e["status"] in (6, 7, 8):
+                    found[n] = {**row, "outcome": {6: "success", 7: "partial", 8: "failure"}[e["status"]], "outcome_source": "NextSpaceflight"}
+                elif e["status"] == 10:
+                    nsf_pending[n] = row
+        for n, r in self._ll2_launches().items():
+            if n in known or n in found or not r["result"]:
+                continue
+            up = self.meta["upcoming"].get(str(n), {})
+            stack = nsf_pending.get(n, {})
+            booster, ship = stack.get("booster") or up.get("booster"), stack.get("ship") or up.get("ship")
+            if not (booster and ship):
+                continue  # Ohne Fahrzeuge kann das Modell den Flug nicht einordnen; dann wartet es auf NextSpaceflight
+            found[n] = {"n": n, "date": r["launched"][:10], "launched": r["launched"], "booster": booster, "ship": ship, "version": self.version_of(ship),
+                        "pad": up.get("pad") or stack.get("pad", "Pad 2"), "outcome": "pending" if r["result"] == "in_flight" else r["result"],
+                        "outcome_source": "Launch Library", "provisional": r["result"] == "success", "auto": True}
+        checklist_flight = (self.status or {}).get("flight") or 0
+        for n, row in nsf_pending.items():
+            if n not in known and n not in found and checklist_flight > n:
+                found[n] = {**row, "outcome": "pending", "outcome_source": "NextSpaceflight"}
+        self.flights += found.values()
         self.flights.sort(key=lambda f: f["n"])
+
+    @staticmethod
+    def _ll2_launches():
+        """Letzter Stand je Flug aus dem Startlog der Launch Library."""
+        path = ROOT / "data" / "log" / "launches.jsonl"
+        latest = {}
+        if path.exists():
+            for line in path.read_text().splitlines():
+                r = json.loads(line)
+                latest[r["flight"]] = r
+        return latest
 
     def _net_history(self):
         rows = list(load("net_history"))
