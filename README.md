@@ -105,6 +105,11 @@ Auf Wunsch von Markus entfernt, als Ausnahme von „bis Flug 16 keine Modelländ
 
 **Wirkung** (Stand 16.11.2026, gleiche Daten): Flug 16 Mitte vom 31.01.2027 auf den 10.01.2027, 80 %-Bereich 22.12.2026 bis 10.02.2027 statt 01.01. bis 22.03.2027. Die späteren Flüge rücken um wenige Tage nach vorn. Rückblick-Test: Fehler der Mitte über alles 8,1 statt 8,8 Tage, 84 % im 80 %-Bereich wie zuvor.
 
+**Pausen nach Zwischenfällen neu (gleicher Änderungsdurchgang, noch 1.10):** Die Jahreswerte zogen bisher eine Pause aus der Liste 147, 26, 17, 178, 135 und 16 Tage. Die Liste war nicht begründet, 147 und 26 ließen sich keinem Ereignis zuordnen. Bei Flug 15 ergab das im Median 79 Tage Pause und im Mittel 16 Tage Verzug pro Flug. Falcon 9 stand seit 2024 nach Zwischenfällen nur 3 bis 15 Tage (Starlink 9-3, Starlink 8-6, Crew-9, Starlink 12-20, Starlink 17-32), Starship nach den Fehlschlägen von Flug 7 bis 9 grob 0 bis 40 Tage über dem normalen Abstand. Monate dauerte es nur 2015 und 2016 (CRS-7 177 Tage, AMOS-6 135 Tage) und nach Flug 1. Die Pause wird jetzt nach Schwere gelost (`stand_down` in `assumptions.json`, mit Belegen): 15 % 90 bis 180 Tage (Startplatz zerstört oder Umbau nötig), 55 % 7 bis 45 Tage (Fahrzeug verloren), 30 % 3 bis 10 Tage (Panne ohne Verlust), wie bisher mit steigender Flugzahl etwas kürzer. Das Risiko pro Flug bleibt bei der Starship-Bilanz (20 % bei Flug 14, Rückgang hoch −0,6), weil Starship deutlich schwieriger ist als Falcon 9.
+Die Trennung „mit“ und „ohne schwere Zwischenfälle“ entfällt, es gibt nur noch eine Jahresprognose mit Pausen. Das Prognose-Log enthält deshalb ab dem 16.11.2026 kein Feld `years_no_incident` mehr.
+**Wirkung** (Stand 16.11.2026): Flüge bis Ende 2030 im Median 112 statt 93, bis Ende 2032 292 statt 225 (ohne Zwischenfälle waren es 337). 2030 48 statt 35 Flüge, 2032 94 statt 70. Die nahen Flüge und der Rückblick-Test ändern sich nicht.
+**Später prüfen:** ob das Risiko pro Flug schneller sinkt, wie bei Falcon 9 (im Test mit −1,0 statt −0,6 bis 2032 rund 15 % mehr Flüge), und ob mehrere Startplätze eine Pause verkürzen, wenn nur einer beschädigt ist.
+
 ## Zur Wiedervorlage
 
 **Nach den nächsten zwei Starts (Flug 15 und 16, voraussichtlich Februar oder März 2027) prüfen:**

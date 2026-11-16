@@ -296,8 +296,7 @@ def main():
     if not log or log[-1]["fingerprint"] != fingerprint or log[-1]["flights"] != flights_now or days_since >= 7:
         entry = {"as_of": str(today), "model_version": cfg["model_version"], "fingerprint": fingerprint,
                  "flights": flights_now,
-                 "years": {y: years["cases"]["mit"][y]["p50"] for y in years["cases"]["mit"]},
-                 "years_no_incident": {y: years["cases"]["ohne"][y]["p50"] for y in years["cases"]["ohne"]},
+                 "years": {y: v["p50"] for y, v in years["per_year"].items()},
                  "artemis": {x["id"]: {"p50": x["p50"], "p_target": x["p_target"], "target": x["target"]} for x in moon["rows"] if x.get("p50")}}
         append(logpath, entry)
         log.append(entry)

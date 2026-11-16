@@ -63,13 +63,10 @@
   },
   "hazard_at_14": 0.2,
   "hazard_exponent": -0.6,
-  "stand_down_days": [
-   147,
-   26,
-   17,
-   178,
-   135,
-   16
+  "stand_down": [
+   {"name": "Lange Pause: Startplatz zerstört oder Umbau nötig", "share": 0.15, "days": [90, 180], "basis": "Falcon 9 CRS-7 2015 (177 Tage), AMOS-6 2016 (135 Tage, Startplatz zerstört); Starship Flug 1 2023 (Startplatz beschädigt)"},
+   {"name": "Fahrzeug verloren", "share": 0.55, "days": [7, 45], "basis": "Starship Flug 7 bis 9 (2025, grob 0 bis 40 Tage über dem normalen Abstand), Falcon 9 Starlink 9-3 2024 (15 Tage)"},
+   {"name": "Panne ohne Verlust", "share": 0.3, "days": [3, 10], "basis": "Falcon 9 Starlink 8-6 2024 (3), Crew-9 2024 (9), Starlink 12-20 2025 (etwa 7), Starlink 17-32 2026 (5)"}
   ],
   "gap_sigma": 0.35
  },

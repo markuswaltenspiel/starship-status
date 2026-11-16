@@ -705,8 +705,14 @@ class Fleet:
         return start, reused
 
 
+def stand_down(classes, rng):
+    """Pause nach einem Zwischenfall: Schwere nach Anteil losen, Tage gleichverteilt im Bereich der Klasse."""
+    c = rng.choices(classes, [x["share"] for x in classes])[0]
+    return rng.uniform(*c["days"])
+
+
 def forecast_years(data, as_of, runs, last_year=2032, seed=2):
-    """Flüge je Jahr, je einmal mit und ohne schwere Zwischenfälle."""
+    """Flüge je Jahr, mit Pausen nach Zwischenfällen."""
     lt = data.cfg["long_term"]
     rng = random.Random(seed)
     current = 365 / statistics.median([g["gap"] for g in gaps(data) if g["version"] == "V3" and not g["transition"]] or [65])
@@ -716,7 +722,7 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
     fleet_samples = []
     years = list(range(as_of.year, last_year + 1))
     names = list(lt["scenario_weights"])
-    by_case = {"mit": {y: [] for y in years}, "ohne": {y: [] for y in years}}
+    per_year = {y: [] for y in years}
     by_scenario = {s: {y: [] for y in years} for s in names}
     flown_before = {f["n"] for f in data.flights if d(f["date"]) <= as_of}
     done_year = {y: sum(1 for f in data.flights if d(f["date"]).year == y and d(f["date"]) <= as_of) for y in years}
@@ -738,55 +744,49 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
         if scenario == "fleet":
             params = sample_fleet(data, as_of, rng, {k: v * scale for k, v in produced_stages.items()})
             fleet_samples.append(params)
-        for case, incidents in (("mit", True), ("ohne", False)):
-            count = dict(done_year)
-            near = run[:2]
-            for x in near:
-                day = as_of + timedelta(days=round(x))
-                if day.year in count:
-                    count[day.year] += 1
-            day = as_of + timedelta(days=round(near[-1]))
-            n = len(flown_before) + len(near)
-            local = random.Random(rng.random())
-            days_list = sorted((as_of + timedelta(days=round(x))).toordinal() for x in near)
-            # Die beiden nahen Flüge verbrauchen die vorhandenen Fahrzeuge, danach zählt die neue Fertigung
-            fleet = Fleet(data, params, (day - as_of).days, local) if params else None
-            while True:
+        count = dict(done_year)
+        near = run[:2]
+        for x in near:
+            day = as_of + timedelta(days=round(x))
+            if day.year in count:
+                count[day.year] += 1
+        day = as_of + timedelta(days=round(near[-1]))
+        n = len(flown_before) + len(near)
+        local = random.Random(rng.random())
+        days_list = sorted((as_of + timedelta(days=round(x))).toordinal() for x in near)
+        # Die beiden nahen Flüge verbrauchen die vorhandenen Fahrzeuge, danach zählt die neue Fertigung
+        fleet = Fleet(data, params, (day - as_of).days, local) if params else None
+        while True:
+            if fleet:
+                step = fleet.pad_gap((day - as_of).days) * local.lognormvariate(0, lt["fleet"]["pad_gap_sigma"])
+            else:
+                r = max(rate(day) * scale, 1.0)
+                step = 365 / r * local.lognormvariate(0, lt["gap_sigma"])
+            # Das Falcon-Wachstum enthält die Pausen nach Zwischenfällen schon
+            if scenario != "falcon":
+                h = min(.5, lt["hazard_at_14"] * hazard_factor * (n / 14) ** lt["hazard_exponent"])
+                if local.random() < h:
+                    step += stand_down(lt["stand_down"], local) * (n / 14) ** -0.3
+            reused = None
+            if fleet:
+                start, reused = fleet.launch((day - as_of).days + max(1, round(step)))
+                day = as_of + timedelta(days=round(start))
+            else:
+                day += timedelta(days=max(1, round(step)))
+            n += 1
+            if day > horizon:
+                break
+            days_list.append(day.toordinal())
+            if day.year in count:
+                count[day.year] += 1
                 if fleet:
-                    step = fleet.pad_gap((day - as_of).days) * local.lognormvariate(0, lt["fleet"]["pad_gap_sigma"])
-                else:
-                    r = max(rate(day) * scale, 1.0)
-                    step = 365 / r * local.lognormvariate(0, lt["gap_sigma"])
-                stand_down = 0
-                # Das Falcon-Wachstum enthält die Pausen nach Zwischenfällen schon
-                if incidents and scenario != "falcon":
-                    h = min(.5, lt["hazard_at_14"] * hazard_factor * (n / 14) ** lt["hazard_exponent"])
-                    if local.random() < h:
-                        stand_down = local.choice(lt["stand_down_days"]) * (n / 14) ** -0.3
-                step += stand_down
-                reused = None
-                if fleet:
-                    start, reused = fleet.launch((day - as_of).days + max(1, round(step)))
-                    day = as_of + timedelta(days=round(start))
-                else:
-                    day += timedelta(days=max(1, round(step)))
-                n += 1
-                if day > horizon:
-                    break
-                if incidents:
-                    days_list.append(day.toordinal())
-                if day.year in count:
-                    count[day.year] += 1
-                    if fleet and incidents:
-                        row = fleet_flights[day.year]
-                        row["flights"] += 1
-                        row["reused_ship"] += reused["ship"]
-            if incidents:
-                flight_days.append(days_list)
-            for y in years:
-                by_case[case][y].append(count[y])
-                if incidents:
-                    by_scenario[scenario][y].append(count[y])
+                    row = fleet_flights[day.year]
+                    row["flights"] += 1
+                    row["reused_ship"] += reused["ship"]
+        flight_days.append(days_list)
+        for y in years:
+            per_year[y].append(count[y])
+            by_scenario[scenario][y].append(count[y])
 
     def stats(values):
         s = sorted(values)
@@ -799,15 +799,14 @@ def forecast_years(data, as_of, runs, last_year=2032, seed=2):
         "first_ship_reuse": middle_day([p["stages"]["ship"]["start"] for p in fleet_samples]),
         "pads": [{"name": pad["name"], "opens": None if pad.get("active") else middle_day([p["pads"][i]["opens"] for p in fleet_samples])} for i, pad in enumerate(lt["fleet"]["pads"])],
     }
-    out = {"flight_days": flight_days, "current_rate": round(current, 1), "production_12m": produced, "fleet": fleet_view, "cases": {}, "scenarios": {}, "cumulative": {}}
-    for case, table in by_case.items():
-        out["cases"][case] = {str(y): stats(v) for y, v in table.items()}
-        total_before = sum(1 for f in data.flights if d(f["date"]).year < as_of.year)
-        cum = [total_before] * len(runs)
-        out["cumulative"][case] = {}
-        for y in years:
-            cum = [a + b for a, b in zip(cum, table[y])]
-            out["cumulative"][case][str(y)] = stats(cum)
+    out = {"flight_days": flight_days, "current_rate": round(current, 1), "production_12m": produced, "fleet": fleet_view, "scenarios": {}}
+    out["per_year"] = {str(y): stats(v) for y, v in per_year.items()}
+    total_before = sum(1 for f in data.flights if d(f["date"]).year < as_of.year)
+    cum = [total_before] * len(runs)
+    out["cumulative"] = {}
+    for y in years:
+        cum = [a + b for a, b in zip(cum, per_year[y])]
+        out["cumulative"][str(y)] = stats(cum)
     for s, table in by_scenario.items():
         out["scenarios"][s] = {str(y): stats(v) for y, v in table.items() if v}
     return out
