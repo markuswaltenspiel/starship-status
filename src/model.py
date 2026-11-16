@@ -329,16 +329,6 @@ IGNORE_WDR_LAUNCH = (1, 2)
 FIRST_OF_VERSION = (1, 7, 12)
 
 
-def license_wait(rng, cfg, entry, as_of):
-    c = cfg["license"]
-    if entry and entry.get("license_date") and d(entry["license_date"]) <= as_of:
-        return 0.0
-    is_new = bool(entry and entry.get("new_profile"))
-    if rng.random() >= (c["p_new_profile"] if is_new else c["p_normal"]):
-        return 0.0
-    return rng.lognormvariate(math.log(c["median_days_new"] if is_new else c["median_days_normal"]), c["sigma"])
-
-
 def net_as_of(data, n, as_of):
     rows = [r for r in data.net if r["flight"] == n and d(r["seen"]) <= as_of]
     return rows[-1] if rows else None
@@ -477,18 +467,14 @@ def sample_flight(data, n, as_of, rng, table, prev_sample=None, gap_pool=None, u
         if cadence >= 1:
             pipeline = cadence
 
-    entry = data.license.get(n)
-    if not data.license_cleared(n):
-        pipeline += license_wait(rng, cfg, entry, as_of)
+    # Keine Wartezeit auf die Lizenz: Sie kam fast immer rechtzeitig (Entscheidung vom 16.11.2026)
     mishap = data.open_mishap()
     if mishap and n == (last[-1]["n"] + 1 if last else n) and d(mishap["date"]) <= as_of:
         median_days, sigma = cfg["open_mishap_days"]
         pipeline += rng.lognormvariate(math.log(median_days), sigma)
 
-    up = data.meta["upcoming"].get(str(n), {})
+    # Kein Zuschlag für einen neuen Startplatz: LC-39A gilt als rechtzeitig fertig (Entscheidung vom 16.11.2026)
     is_new_pad = pad == "LC-39A" and not any(f["pad"] == "LC-39A" for f in last)
-    if is_new_pad and rng.random() < up.get("pad_probability", 1):
-        pipeline += rng.lognormvariate(math.log(cfg["pad"]["new_pad_median_days"]), cfg["pad"]["new_pad_sigma"])
 
     floor = prior + cfg["pad"]["same_pad_floor_days"] if not is_new_pad else 1
     pipeline = max(pipeline, floor)

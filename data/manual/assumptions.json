@@ -1,18 +1,9 @@
 {
- "model_version": "1.8",
+ "model_version": "1.10",
  "simulations": 6000,
- "license": {
-  "p_new_profile": 0.25,
-  "p_normal": 0.05,
-  "median_days_new": 14,
-  "median_days_normal": 7,
-  "sigma": 0.8
- },
  "pad": {
   "same_pad_floor_days": 10,
-  "short_slip_multiplier": 1.45,
-  "new_pad_median_days": 30,
-  "new_pad_sigma": 0.5
+  "short_slip_multiplier": 1.45
  },
  "weights": {
   "net_weight": 2,

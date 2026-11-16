@@ -37,6 +37,7 @@ Sind beide Static Fires durch und ist das NET höchstens 21 Tage entfernt, wird 
 
 **Spätere Flüge:** Der letzte Test des Ships (Static Fire, sonst Cryo-Test) plus der frühere Abstand bis zum Start ergibt eine Kurve in Tagen. Ohne Test folgt das Ship dem Static-Fire-Takt seiner Baureihe, sonst dem Cryo-Takt, unabhängig von Startverzögerungen davor.
 Termine vor dem NET und vor der Fertigstellung eines neuen Startplatzes rücken auf diesen Tag, ein früherer Flug blockiert nur denselben Startplatz, mindestens 10 Tage. Wechsel der Baureihe und Lizenzwartezeiten zählen hier nicht als normale Dauer.
+Wartezeiten auf die FAA-Lizenz rechnet die Prognose nicht ein, auch nicht beim nächsten Flug; für den ersten Flug von LC-39A gibt es keinen Zuschlag.
 
 ## Selbst ändern
 
@@ -94,6 +95,16 @@ Geändert wurden nur die Jahreswerte, die Flüge der nächsten Monate rechnen un
 
 **Gewichte:** Falcon 20 % statt 35 %, Flotte 43 % statt 35 %, SpaceX-Ziel 37 % statt 30 %. Der Rest wurde im alten Verhältnis verteilt. Das Szenario passt für die nächsten Jahre gut, danach ist es eher der Fall „die Technik bremst länger als gedacht“: Falcon 9 hing lange an externen Kunden, Starship hat mit Starlink und Artemis eigenen Bedarf. Die 20 % sind eine Einschätzung ohne Daten, wie zuvor die 35 %.
 
+## Modell 1.10 (16.11.2026)
+
+Auf Wunsch von Markus entfernt, als Ausnahme von „bis Flug 16 keine Modelländerungen“. Anders als bei den Ergänzungen zu 1.8 ändern sich der nächste Flug und der Rückblick-Test, deshalb eine neue Versionsnummer. Sie heißt 1.10 und nicht 1.9, weil 1.9 der verworfene Entwurf auf dem Branch `modell-1.9-entwurf` ist.
+
+**Keine Lizenz-Wartezeit mehr:** Der nächste Flug bekam bisher mit 5 % (neues Flugprofil 25 %) einen Zuschlag von im Median 7 (14) Tagen, solange die Checkliste keine Freigabe zeigte. Die Lizenz kam bei fast allen Flügen rechtzeitig, das Warten hat keine Relevanz.
+
+**Kein Zuschlag für LC-39A:** Ist Flug 16 der nächste Flug, kamen mit 60 % im Median 30 Tage für den neuen Startplatz dazu, ohne Beleg. Der Startplatz sieht derzeit rechtzeitig fertig aus. Die 60 % für LC-39A statt Pad 2 bleiben; sie wirken beim nächsten Flug nicht mehr.
+
+**Wirkung** (Stand 16.11.2026, gleiche Daten): Flug 16 Mitte vom 31.01.2027 auf den 10.01.2027, 80 %-Bereich 22.12.2026 bis 10.02.2027 statt 01.01. bis 22.03.2027. Die späteren Flüge rücken um wenige Tage nach vorn. Rückblick-Test: Fehler der Mitte über alles 8,1 statt 8,8 Tage, 84 % im 80 %-Bereich wie zuvor.
+
 ## Zur Wiedervorlage
 
 **Nach den nächsten zwei Starts (Flug 15 und 16, voraussichtlich Februar oder März 2027) prüfen:**
@@ -104,8 +115,8 @@ Geändert wurden nur die Jahreswerte, die Flüge der nächsten Monate rechnen un
 4. **Scrubs:** Sie sind bewusst nicht im Modell, weil sie vermutlich seltener werden. Gibt es bei Flug 15 oder 16 noch Scrubs, kommen eine Wahrscheinlichkeit für einen Scrub und eine für eine Reparaturpause dazu.
 5. **Spätere Flüge:** Traf der Takt? Der Static-Fire-Takt für V3 beruht bisher auf nur zwei Abständen (51 und 67 Tage). Prüfen, ob das Ship als Taktgeber stimmt und ob die schmaleren Bereiche halten.
 6. **Startplatz-Abstand von 10 Tagen:** Er ist eine Einschätzung ohne Daten. Bisher gibt es nur Flugabstände je Pad (Pad 1 mindestens 37 Tage, Pad 2 bisher 63 und 66), keine Dauer der Pad-Arbeiten. Er gilt auch im Flottenmodell.
-7. **LC-39A:** Die 60 % Wahrscheinlichkeit, der Plan vom 31.12.2026 und der Faktor 1,45 sind Annahmen. Sobald Flug 16 der nächste Flug ist, rechnet er mit dem alten Weg und im Median 30 Tagen Zuschlag ohne Beleg; diesen Bruch prüfen.
-8. **Lizenz:** Spätere Flüge rechnen ohne Wartezeit, der nächste Flug noch mit (bei neuem Profil 25 % mit im Median 14 Tagen). Vereinheitlichen, wenn sich zeigt, dass ein NET die Lizenz schon einpreist.
+7. **LC-39A:** Die 60 % Wahrscheinlichkeit, der Plan vom 31.12.2026 und der Faktor 1,45 sind Annahmen. Der Zuschlag von im Median 30 Tagen beim nächsten Flug ist seit dem 16.11.2026 entfernt; prüfen, ob LC-39A wirklich rechtzeitig fertig war.
+8. **Lizenz:** Seit dem 16.11.2026 rechnen alle Flüge ohne Wartezeit. Prüfen, ob eine fehlende Lizenz einen Start doch verzögert hat.
 9. **Quellen:** TFRs, FAA-Betriebsplan, SpaceX-Termin und Strand- und Straßensperrungen kommen seit dem 11.11.2026 direkt aus Primärquellen (siehe oben); Notices to Mariners nur aus der NextSpaceflight-Checkliste, das NET aus Wikipedia und Launch Library. Die Prognose nutzt Sperrungen noch nicht als Signal. Mit `data/log/closures.jsonl` prüfen, wie zuverlässig eine Start-TFR den Starttag anzeigt, und dann entscheiden, ob sie in die Prognose eingeht.
 
 **Nach dem nächsten Start (Flug 16) außerdem prüfen** (vereinbart am 15.11.2026): Gibt es eine neue Tendenz beim Abstand vom letzten Static Fire bis zum Flug, und sollte die Vorhersage deshalb korrigiert werden? Wird die Zeit zwischen Cryo-Test und Flug wirklich kürzer? Bis dahin keine weiteren Änderungen am Modell.
