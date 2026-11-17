@@ -12,3 +12,4 @@
 {"key": "road:2026-11-13T05:59:00Z:2026-11-13T10:00:00Z", "source": "Starbase", "kind": "road", "label": null, "start": "2026-11-13T05:59:00Z", "end": "2026-11-13T10:00:00Z", "seen": "2026-11-13T00:22+00:00"}
 {"key": "beach:2026-11-15T17:00:00Z:2026-11-16T05:30:00Z", "source": "Starbase", "kind": "beach", "label": "primary", "start": "2026-11-15T17:00:00Z", "end": "2026-11-16T05:30:00Z", "seen": "2026-11-13T22:37+00:00"}
 {"key": "road:2026-11-15T20:00:00Z:2026-11-16T00:00:00Z", "source": "Starbase", "kind": "road", "label": null, "start": "2026-11-15T20:00:00Z", "end": "2026-11-16T00:00:00Z", "seen": "2026-11-15T21:48+00:00"}
+{"key": "road:2026-11-18T05:59:00Z:2026-11-18T10:00:00Z", "source": "Starbase", "kind": "road", "label": null, "start": "2026-11-18T05:59:00Z", "end": "2026-11-18T10:00:00Z", "seen": "2026-11-17T22:23+00:00"}
