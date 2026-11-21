@@ -3125,7 +3125,22 @@
 },
 "86": {
 "name": "Ship 44",
-"events": []
+"events": [
+{
+"name": "Cryogenic Proof Test #1",
+"date": "2026-11-20T22:29:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+},
+{
+"name": "Cryogenic Proof Test #2",
+"date": "2026-11-21T08:29:00Z",
+"location": "Cryostation, Massey Outpost, Texas, USA",
+"url": "",
+"status": 6
+}
+]
 },
 "87": {
 "name": "Booster 24",
