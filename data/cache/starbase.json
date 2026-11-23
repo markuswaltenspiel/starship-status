@@ -1,8 +1,16 @@
 {
 "beach": [],
 "beach_text": "",
-"road": [],
-"road_text": "",
+"road": [
+{
+"label": null,
+"start_local": "2026-11-23T23:59",
+"end_local": "2026-11-24T04:00",
+"start": "2026-11-24T05:59:00Z",
+"end": "2026-11-24T10:00:00Z"
+}
+],
+"road_text": "Description: Masseys to Production Date: November 23 11:59 PM to November 24 4:00 AM",
 "order": "No public notices at this time.",
 "previous_orders": [
 {
