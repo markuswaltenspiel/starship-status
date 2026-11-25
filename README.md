@@ -8,6 +8,8 @@ Auswertung des Starship-Programms und Prognose der nächsten Starts. Läuft ohne
 
 GitHub Actions startet stündlich `src/run.py` (GitHub verschiebt oder überspringt geplante Läufe gelegentlich). Das Programm holt die Daten, rechnet die Prognose,
 ergänzt das Log und veröffentlicht die Seite. Fällt eine Quelle aus, nutzt es den letzten Stand und zeigt eine Warnung.
+Das Veröffentlichen läuft als eigener Job `deploy` mit einem zweiten Versuch nach einer Minute: Im selben Job fand `deploy-pages` das eben hochgeladene Artefakt gelegentlich noch nicht (November 2026, vier Fehlschläge in einer Woche).
+Fehlgeschlagene Läufe meldet der Workflow `wochenbericht.yml` montags um 06:30 UTC gesammelt als Issue, nur wenn es in den 7 Tagen davor welche gab.
 Checkliste, TFRs, FAA-Betriebsplan, SpaceX-Termin, Starbase-Sperrungen, Launch Library und Feed kommen bei jedem Lauf; die NextSpaceflight-Fahrzeugseiten alle 3 Stunden,
 die Wikipedia-Zieldaten alle 2, Wikipedia-Fahrzeuglisten und FAA-Mitteilungen alle 6, Artemis alle 12 Stunden (Zeitstempel in `data/cache/fetched.json`).
 

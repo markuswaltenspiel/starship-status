@@ -1,0 +1,23 @@
+name: Wochenbericht fehlgeschlagene Läufe
+
+# Montags 06:30 UTC. Gab es in den letzten 7 Tagen fehlgeschlagene Läufe von
+# "Prognose aktualisieren", entsteht ein Issue mit der Übersicht; GitHub
+# schickt dafür eine Mail. Ohne Fehlschläge passiert nichts.
+on:
+  schedule:
+    - cron: "30 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  issues: write
+
+jobs:
+  bericht:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Übersicht erstellen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/wochenbericht.py
