@@ -56,7 +56,6 @@ a:hover{text-decoration-color:currentColor}
 .tabs button{all:unset;cursor:pointer;padding:5px 12px;font-size:.88rem}
 .tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .tabs button:focus-visible{outline:2px solid var(--s1)}
-.answer{font:500 1.5rem/1.25 var(--display);max-width:44ch;text-wrap:balance}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:28px}
 .two>*{min-width:0;display:grid;gap:10px;align-content:start}
 .small4{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:20px}
@@ -77,7 +76,6 @@ details[open] summary{margin-bottom:8px}
 .cell-empty{color:var(--axis)}
 .cell-weak{color:var(--ink2)}
 ul.notes{margin:0;padding-left:18px;display:grid;gap:6px;max-width:72ch}
-.finding{display:grid;gap:4px;border-left:3px solid var(--axis);padding-left:12px;max-width:74ch}
 #t-artemis td:nth-child(1){min-width:150px}#t-artemis td:nth-child(6){min-width:320px}
 footer{font-size:.84rem;color:var(--ink2)}
 </style>
@@ -94,7 +92,7 @@ footer{font-size:.84rem;color:var(--ink2)}
 
 <section id="fluege">
   <h2>Nächste Flüge</h2>
-  <p class="sub">Gilt, falls nichts Schwerwiegendes dazwischenkommt. Die Mitte bedeutet: Die Hälfte der Simulationen startet früher, die andere Hälfte später. Der Bereich ist die ehrlichere Angabe.</p>
+  <p class="sub">Gilt, falls nichts Schwerwiegendes dazwischenkommt. Die Mitte bedeutet: Die Hälfte der Simulationen startet früher, die andere Hälfte später.</p>
   <div class="flightgrid" id="cards"></div>
   <div class="chart" id="c-intervals"></div>
   <div class="key" id="k-intervals"></div>
@@ -103,22 +101,18 @@ footer{font-size:.84rem;color:var(--ink2)}
 
 <section id="jahre">
   <h2>Flüge pro Jahr</h2>
-  <p class="answer" id="year-answer"></p>
   <div class="two">
     <div><h3>Prognose je Kalenderjahr</h3><div class="chart" id="c-years"></div><div class="key"><span><i style="background:var(--band);opacity:.25"></i>80 %-Bereich</span><span><i style="background:var(--band);opacity:.6"></i>50 %-Bereich</span><span><i class="round" style="background:var(--ink)"></i>Mitte</span></div></div>
     <div><h3>Wo steht Starship gegenüber Falcon 9?</h3><div class="chart" id="c-falcon"></div><div class="key"><span><i class="round" style="background:var(--s2)"></i>Falcon 9</span><span><i class="round" style="background:var(--s1)"></i>Starship</span><span><i class="round" style="background:var(--band);opacity:.35"></i>Starship, Prognose</span></div><p class="sub" id="falcon-note"></p></div>
   </div>
   <details open><summary>Drei Szenarien für das Wachstum</summary><p class="sub">Wie schnell die Flugzahl wächst, ist unsicher. Deshalb rechnet die Prognose oben mit drei möglichen Entwicklungen: Jede Simulation lost eine davon nach ihrem Gewicht aus. Die Tabelle zeigt die Mitte je Szenario.</p><div class="scroll" id="t-scen"></div><p class="sub" id="fleet-note"></p></details>
-  <div class="finding"><h3>So ist das zu lesen</h3><p>Das ist eine Szenariorechnung und kein geprüftes Modell. Für die Jahreswerte gibt es keinen Rückblick-Test, und die Gewichte der Szenarien sind eine Annahme. Pausen nach Zwischenfällen sind eingerechnet: Das Risiko pro Flug stammt aus der Starship-Bilanz und nimmt mit der Flugzahl ab, die Länge der Pausen aus Falcon 9 seit 2024 und Starship 2025, meist Tage bis wenige Wochen, selten Monate. Im Szenario „Wie Falcon 9“ stecken die Pausen schon im Wachstum, deshalb kommt dort nichts dazu. Was bei einem künftigen Versionswechsel passiert, ist nicht eingerechnet.</p></div>
 </section>
 
 <section id="artemis">
   <h2>Artemis</h2>
-  <p class="answer" id="artemis-answer"></p>
   <div class="chart" id="c-artemis"></div>
   <div class="key"><span><i style="background:var(--band);opacity:.28"></i>80 %-Bereich</span><span><i class="round" style="background:var(--ink)"></i>Mitte der Rechnung</span><span><i class="dia" style="background:var(--s2)"></i>offizielles Ziel</span></div>
   <div class="scroll" id="t-artemis"></div>
-  <div class="finding"><h3>So ist das zu lesen</h3><p id="artemis-note"></p></div>
   <details><summary>Annahmen und Quellen</summary><ul class="notes" id="artemis-assumptions"></ul></details>
 </section>
 
@@ -135,17 +129,15 @@ footer{font-size:.84rem;color:var(--ink2)}
 
 <section id="trends">
   <h2>Trends</h2>
-  <div class="finding"><h3>Wird der Abstand zwischen den Flügen kürzer?</h3><p id="trend-gap"></p></div>
+  <h3>Tage seit dem Vorflug</h3>
   <div class="chart" id="c-gaps"></div>
   <div class="key"><span><i style="background:var(--s3)"></i>V1</span><span><i style="background:var(--s2)"></i>V2</span><span><i style="background:var(--s1)"></i>V3</span><span><i style="background:var(--muted);opacity:.45"></i>Blass: Sonderfall, zählt nicht als normaler Abstand</span><span><i style="background:var(--ink);height:2px"></i>Median der letzten drei normalen Abstände</span></div>
   <details><summary>Werte als Tabelle</summary><div class="scroll" id="t-gaps"></div></details>
-  <div class="finding"><h3>Wird der Bau schneller?</h3><p id="trend-cadence"></p></div>
   <div class="two">
     <div><h3>Abstand zwischen zwei neuen Ships</h3><div class="chart" id="c-cad-s"></div></div>
     <div><h3>Abstand zwischen zwei neuen Boostern</h3><div class="chart" id="c-cad-b"></div></div>
   </div>
   <p class="sub">Tage zwischen den ersten Cryo-Tests aufeinanderfolgender Fahrzeuge. Das misst, wie schnell fertige Fahrzeuge aus der Fabrik kommen. Blass: erstes Fahrzeug einer neuen Version.</p>
-  <div class="finding"><h3>Werden die Tests schneller?</h3><p id="trend-campaign"></p></div>
   <div class="two">
     <div><h3>Ship: erster Cryo-Test bis Start</h3><div class="chart" id="c-camp-s"></div></div>
     <div><h3>Booster: erster Cryo-Test bis Start</h3><div class="chart" id="c-camp-b"></div></div>
@@ -155,7 +147,7 @@ footer{font-size:.84rem;color:var(--ink2)}
 
 <section id="fahrzeuge">
   <h2>Fahrzeugvergleich</h2>
-  <div class="finding"><h3>Fängt V3 wieder dort an, wo V2 schon war?</h3><p id="v3-finding"></p></div>
+  <h3>Vom ersten Cryo-Test bis zum Start</h3>
   <div class="tabs" role="group" aria-label="Fahrzeug"><button id="veh-ship" aria-pressed="true">Ships</button><button id="veh-booster" aria-pressed="false">Booster</button></div>
   <div class="chart" id="c-timeline"></div>
   <div class="key"><span>Tage ab dem ersten Cryo-Test</span><span><i style="background:var(--s2)"></i>V2</span><span><i style="background:var(--s1)"></i>V3</span><span><i class="round" style="background:var(--ink)"></i>letztes Static Fire</span><span>Linienende: Start. Blass: noch nicht geflogen</span></div>
@@ -168,7 +160,6 @@ footer{font-size:.84rem;color:var(--ink2)}
 
 <section id="schaetzungen">
   <h2>SpaceX-Schätzungen</h2>
-  <div class="finding"><h3>Sind die Verzögerungen am Programmanfang größer?</h3><p id="slip-finding"></p></div>
   <div class="two">
     <div><h3>Angekündigter und tatsächlicher Vorlauf</h3><div class="chart" id="c-slip"></div><div class="key"><span><i class="round" style="background:var(--s3)"></i>Falcon</span><span><i class="round" style="background:var(--s2)"></i>Dragon</span><span><i class="round" style="background:var(--s1)"></i>Starship</span><span>Hohl: überfällig, Mindestwert</span></div></div>
     <div><h3>Faktor nach Gruppe</h3><div class="scroll" id="t-groups"></div><p class="sub">Faktor 2 heißt: Von der Ankündigung bis zum Ereignis dauerte es doppelt so lange wie angekündigt.</p></div>
@@ -178,16 +169,17 @@ footer{font-size:.84rem;color:var(--ink2)}
 
 <section id="lizenz">
   <h2>Lizenz</h2>
-  <div class="finding"><h3>Bremst die FAA die Starts?</h3><p id="lic-finding"></p></div>
+  <h3>Wartezeit auf die Lizenz je Flug</h3>
   <div class="chart" id="c-license"></div>
-  <p class="sub">Tage, in denen SpaceX bereit war und nur noch auf die Lizenz wartete. Blass: höchstens wenige Tage, nicht sicher belegt.</p>
+  <p class="sub">Tage, in denen SpaceX bereit war und nur noch auf die Lizenz wartete. Blass: höchstens wenige Tage, nicht sicher belegt. Einschätzung aus teils einseitigen Quellen. Die Prognose rechnet ohne Wartezeit auf die Lizenz.</p>
   <details><summary>Einschätzung je Flug mit Quelle</summary><div class="scroll" id="t-lic"></div></details>
   <details><summary>Letzte FAA-Mitteilungen</summary><div class="scroll" id="t-faa"></div></details>
 </section>
 
 <section id="genauigkeit">
   <h2>Genauigkeit</h2>
-  <div class="finding"><h3>Rückblick-Test</h3><p id="bt-finding"></p></div>
+  <h3>Rückblick-Test</h3>
+  <p class="sub">Die Prognose für die Flüge ab 7, nachgerechnet mit dem damaligen Wissen und dem heutigen Modell. Fehler in Tagen zwischen Mitte und tatsächlichem Start. NET: offizieller Termin zum selben Zeitpunkt. Abstand: einfacher Abstand zum Vorflug. Verzerrung: positiv heißt zu spät vorhergesagt. Treffer: Anteil der Starts im 50 %- bzw. 80 %-Bereich.</p>
   <div class="scroll" id="t-bt"></div>
   <h3>Wie sich die Prognose über die Zeit bewegt</h3>
   <p class="sub">Durchgezogen und mit Punkt: die Werte, die hier tatsächlich standen, also dieselben wie oben. Gestrichelt: mit dem damaligen Wissen und dem heutigen Modell zurückgerechnet, für die Zeit vor dem Log. Waagerecht das Datum der Prognose, senkrecht der vorhergesagte Starttag.</p>
@@ -281,7 +273,6 @@ function renderIntervals(){
 
 function renderYears(){
   const data=D.years.per_year,years=Object.keys(data),m=data,c=D.years.cumulative;
-  $("year-answer").textContent=`Vermutlich ${m[nextYear].p50} Flüge in ${nextYear}, ${m[nextYear+1].p50} in ${nextYear+1} und ${m[nextYear+2].p50} in ${nextYear+2}. Bis Ende 2030 insgesamt rund ${c["2030"].p50}. Die Spanne ist groß: ${nextYear+1} liegt mit 80 % zwischen ${m[nextYear+1].p10} und ${m[nextYear+1].p90} Flügen.`;
   const H=290,{svg,w}=svgFor("c-years",H),L=38,R=w-10,T=12,B=H-26,maxV=Math.max(...years.map(y=>data[y].p90),10);
   const yy=v=>lin(0,Math.log10(maxV*1.1),B,T)(Math.log10(Math.max(v,1)));
   [1,3,10,30,100,300].filter(v=>v<=maxV*1.1).forEach(v=>{s("line",{x1:L,x2:R,y1:yy(v),y2:yy(v),stroke:"var(--line)"},svg);s("text",{x:L-6,y:yy(v)+4,"text-anchor":"end",text:v},svg)});
@@ -299,8 +290,7 @@ function renderYears(){
   const byYear={};D.flights.forEach(x=>{const y=x.date.slice(0,4);byYear[y]=(byYear[y]||0)+1});let sc=0;
   const sp=Object.entries(byYear).filter(([y])=>+y<+D.as_of.slice(0,4)).map(([y,v])=>{sc+=v;return{y,v,cum:sc}});
   const fc=Object.keys(m).slice(1).map(y=>({y,v:m[y].p50,cum:c[y].p50}));
-  const flown=D.flights.length,near=all.reduce((a,b)=>Math.abs(b.cum-flown)<Math.abs(a.cum-flown)?b:a);
-  $("falcon-note").textContent=`Beide Achsen logarithmisch. Waagerecht die Flüge insgesamt bis Jahresende, senkrecht die Flüge im Jahr. Mit ${flown} Flügen steht Starship etwa dort, wo Falcon 9 Ende ${near.y} stand (${near.cum} Flüge).`;
+  $("falcon-note").textContent="Beide Achsen logarithmisch. Waagerecht die Flüge insgesamt bis Jahresende, senkrecht die Flüge im Jahr.";
   const xmax=Math.max(...fp.map(p=>p.cum),...fc.map(p=>p.cum)),ymax=Math.max(...fp.map(p=>p.v),...fc.map(p=>p.v)),fx=lin(0,Math.log10(xmax*1.15),l2,r2),fyy=lin(0,Math.log10(ymax*1.2),b2,t2);
   [1,3,10,30,100].filter(v=>v<=ymax*1.2).forEach(v=>{s("line",{x1:l2,x2:r2,y1:fyy(Math.log10(v)),y2:fyy(Math.log10(v)),stroke:"var(--line)"},f.svg);s("text",{x:l2-6,y:fyy(Math.log10(v))+4,"text-anchor":"end",text:v},f.svg)});
   [1,3,10,30,100,300].filter(v=>v<=xmax*1.15).forEach(v=>s("text",{x:fx(Math.log10(v)),y:H2-8,"text-anchor":"middle",text:v},f.svg));
@@ -368,10 +358,6 @@ function renderStand(){
 
 let vehKind="ship";
 function renderVehicles(){
-  const by=v=>D.durations.filter(r=>r.version===v),mv=(v,k)=>median(by(v).map(r=>r[k])),gapM=v=>median(D.gaps.filter(g=>g.version===v&&!g.transition&&!g.excluded).map(g=>g.gap));
-  const a3=mv("V3","ship_cryo_launch"),a2=mv("V2","ship_cryo_launch"),a1=mv("V1","ship_cryo_launch"),trans=n=>D.gaps.find(g=>g.n===n).gap;
-  const verdict=a3<=a2*1.15?"Beim Fahrzeug nicht bei null: V3 liegt ungefähr auf V2-Niveau und deutlich unter V1, ist aber auch nicht schneller als V2.":a3>=a1*.8?"Ja: V3 liegt näher an V1 als an V2.":"Teilweise: V3 liegt zwischen V1 und V2.";
-  $("v3-finding").textContent=`${verdict} Ein Ship braucht vom ersten Cryo-Test bis zum Start im Median: V1 ${de(a1)} Tage, V2 ${de(a2)} Tage, V3 ${de(a3)} Tage. Der normale Flugabstand beträgt bei V2 ${de(gapM("V2"))} Tage, bei V3 ${de(gapM("V3"))} Tage. Der Preis fällt beim Wechsel an: ${trans(7)} Tage von V1 auf V2, ${trans(12)} Tage von V2 auf V3. Mit ${by("V3").length} V3-Flügen ist das ein Zwischenstand.`;
   const dur=D.durations.filter(r=>r.version!=="V1"),kind=vehKind,rows=dur.map(r=>({name:r[kind],version:r.version,start:r[kind+"_cryo"],sf:r[kind+"_sf"],end:r.date})).filter(r=>r.start);
   const pend=[D.next,...D.following].map(f=>f[kind]).filter(v=>v&&v.cryo&&!v.reused).map(v=>({name:v.name,version:"V3",start:v.cryo,sf:v.sf,end:null}));
   const all=[...rows,...pend],rowH=26,T=6,bot=28,H=T+all.length*rowH+bot,{svg,w}=svgFor("c-timeline",H),L=48,R=w-40;
@@ -409,15 +395,9 @@ function versionBars(id,rows,label,value,opts={}){
     s("rect",{x:cx-st/2,y:t,width:st,height:b-t,fill:"transparent"},g);hover(g,`${x[label]}: ${x[value]} Tage`)});
 }
 function renderTrends(){
-  const T=D.trends,gm=T.gap_median,trend=p=>p==null?"zu wenig Daten":Math.abs(p)<10?"kein klarer Trend":p<0?`etwa ${-p} % kürzer je 10 Flüge`:`etwa ${p} % länger je 10 Flüge`;
-  const gapLead=T.gap_pct_per_10==null||Math.abs(T.gap_pct_per_10)<10?"Bisher nicht":T.gap_pct_per_10<0?"Ja, leicht":"Nein, eher länger";
-  $("trend-gap").textContent=`${gapLead}. Normale Abstände ohne Sonderfälle: V1 im Median ${de(gm.V1)} Tage, V2 ${de(gm.V2)} Tage, V3 ${de(gm.V3)} Tage. Über alle ${T.gap_count} normalen Abstände: ${trend(T.gap_pct_per_10)}. Die großen Unterschiede entstehen durch die Sonderfälle: Pausen nach Fehlschlägen, Lizenzen und Versionswechsel. Falcon 9 brauchte ebenfalls Jahre, bis das Tempo stark stieg.`;
+  const T=D.trends;
   const cs=T.cadence.S,cb=T.cadence.B;
-  const rate=m=>m?de(Math.round(365/m*10)/10):"–";
-  const cadLead=Math.max(cs.growth_per_year||0,cb.growth_per_year||0)<1.3?"Bisher kaum messbar":"Ja, messbar";
-  $("trend-cadence").textContent=`${cadLead}. Neue Ships kamen im Median alle ${de(cs.median.V1)} Tage bei V1, alle ${de(cs.median.V2)} Tage bei V2 und alle ${de(cs.median.V3)} Tage bei V3, das sind bei V3 rund ${rate(cs.median.V3)} pro Jahr. Bei Boostern sind es ${de(cb.median.V2)} Tage bei V2 und ${de(cb.median.V3)} Tage bei V3. Der Trend seit V2 ergibt pro Jahr etwa Faktor ${de(cs.growth_per_year)} bei Ships und ${de(cb.growth_per_year)} bei Boostern. Das Produktions-Szenario der Jahresprognose nimmt Faktor ${de(D.assumptions.long_term.production_growth)} an. Es setzt auf neue Fabrikkapazität und Wiederverwendung, die sich in diesen Daten ${(cs.growth_per_year||0)<D.assumptions.long_term.production_growth?"noch nicht zeigen":"bereits zeigen"}.`;
   const ca=T.campaign;
-  $("trend-campaign").textContent=`Vom ersten Cryo-Test bis zum Start braucht ein Ship im Median ${de(ca.ship.median.V2)} Tage bei V2 und ${de(ca.ship.median.V3)} Tage bei V3, ein neuer Booster ${de(ca.booster.median.V2)} und ${de(ca.booster.median.V3)} Tage. Bei so wenigen Fahrzeugen ist das nur eine Tendenz und wird nicht hochgerechnet.`;
   const recent=(rows,count)=>rows.slice(-count);
   versionBars("c-cad-s",recent(cs.rows,13),"name","days");versionBars("c-cad-b",recent(cb.rows,12),"name","days");
   versionBars("c-camp-s",ca.ship.rows.filter(x=>x.version!=="V1"),"name","days");versionBars("c-camp-b",ca.booster.rows.filter(x=>x.version!=="V1"),"name","days");
@@ -425,9 +405,8 @@ function renderTrends(){
   table($("t-stack"),["Fahrzeug","Stacking (Tage)","Wartezeit bis Cryo (Tage)"],T.stacking.map(x=>[x.name,x.stacking,x.wait]),[1,2]);
 }
 function renderArtemis(){
-  const A=D.artemis,rows=A.rows,get=i=>rows.find(x=>x.id===i),a3=get("artemis3"),a4=get("artemis4"),pt=get("propellant"),few=A.few_tankers||{};
+  const A=D.artemis,rows=A.rows;
   const pct=p=>p==null?"–":p<.01?"unter 1\u00a0%":Math.round(p*100)+"\u00a0%";
-  $("artemis-answer").textContent=`Artemis III liegt laut Rechnung eher um ${fmtS(a3.p50).replace(/^\d+\. /,"")} ${a3.p50.slice(0,4)} statt Mitte 2027. Die erste Landung bis Ende 2028 hat etwa ${pct(a4.p_target)} Chance, die Mitte der Rechnung liegt bei ${MON[+a4.p50.slice(5,7)-1]} ${a4.p50.slice(0,4)}.`;
   const open=rows.filter(x=>x.p50),rowH=34,T=8,H=T+open.length*rowH+26,{svg,w}=svgFor("c-artemis",H),L=w<620?8:300,R=w-14;
   const lo=num(D.as_of),hi=Math.max(...open.map(x=>num(x.p90)))+1e9,x=lin(lo,hi,L,R);
   for(let y=new Date(lo).getUTCFullYear()+1;Date.UTC(y,0,1)<=hi;y++){const t=x(Date.UTC(y,0,1));s("line",{x1:t,x2:t,y1:T,y2:T+open.length*rowH,stroke:"var(--line)"},svg);s("text",{x:t,y:T+open.length*rowH+17,"text-anchor":"middle",text:w<520?"’"+String(y).slice(2):y},svg)}
@@ -440,8 +419,6 @@ function renderArtemis(){
     hover(g,`${r.label}: Ziel ${r.official}, Rechnung Mitte ${fmt(r.p50)}, 80 % ${fmtS(r.p10)} ${r.p10.slice(0,4)} – ${fmtS(r.p90)} ${r.p90.slice(0,4)}, Chance ${pct(r.p_target)}`)});
   const tone={"realistisch":"good","knapp":"open","unwahrscheinlich":"bad","sehr unwahrscheinlich":"bad"};
   table($("t-artemis"),["Meilenstein","Offizielles Ziel","Rechnung, Mitte","Chance bis Ziel","Einschätzung","Woran es hängt",""],rows.map(r=>r.done?[r.label,r.official,fmt(r.done),"–",statusPill("good","erreicht"),r.note,link(r.source,"Quelle")]:[r.label,r.official,fmt(r.p50),pct(r.p_target),statusPill(tone[r.verdict],r.verdict),`${r.drivers||""} ${r.note||""}${r.history?` Frühere Ziele: ${r.history.join(", ")}.`:""}`,link(r.source,"Quelle")]));
-  const fa4=few.artemis4||{},fd=few.landing_demo||{};
-  $("artemis-note").textContent=`Das ist eine Abschätzung, kein Rückblick-Test: Es gibt zu wenige vergleichbare Fälle. Für den Treibstofftransfer und Artemis III rechnet sie mit typischen Verzugsfaktoren, für Landungen zusätzlich mit der Starship-Flugzahl aus der Jahresprognose. Am stärksten wirkt die Zahl der Tankerflüge: Reichen wie von Musk erwartet 6 bis 8, rückt die unbemannte Landung auf ${fd.p50?fmt(fd.p50):"–"} (Chance ${pct(fd.p_target)}) und Artemis IV auf ${fa4.p50?fmt(fa4.p50):"–"} (Chance ${pct(fa4.p_target)}).`;
   const a=A.assumptions,days=([m])=>`${m} Tage`;
   const notes=[`Tankerflüge je Landung: ${a.tankers_min} bis ${a.tankers_max}, je Simulation zufällig.`,`Vom Treibstofftransfer zur unbemannten Landung im Median ${days(a.transfer_to_demo_days)}, von dort zur Crew-Bereitschaft ${days(a.demo_to_crew_days)}. Für beide Landungen müssen zusätzlich genug Starship-Flüge stattfinden.`,`Artemis IV frühestens im Median ${days(a.a3_to_a4_days)} nach Artemis III, Artemis V im Median ${days(a.a4_to_a5_days)} nach Artemis IV.`,`Raumanzug: zu ${Math.round(a.suit_sortie_share*100)} % um ${fmt(a.suit_sortie)} dank einfacherer Anforderungen, sonst um ${fmt(a.suit_late)}. Das Generalinspektorat der NASA nannte laut Berichten 2031 als möglichen Termin; das Originaldokument habe ich nicht geprüft.`,`Blue Origin: MK1 und MK2 nutzen nur einen allgemeinen Verzugsfaktor von im Median ${de(a.blue_origin_factor[0])}. Das ist eine Setzung, keine Messung.`,"Offizielle Ziele aktualisieren sich aus der Startliste, wenn sie dort später liegen. Geflogene Artemis-Missionen werden automatisch erkannt. Die Ziele für Treibstofftransfer und Lander kommen aus Berichten vom Oktober 2026 und bleiben stehen, bis jemand sie ändert."];
   const list=$("artemis-assumptions");list.replaceChildren(...notes.map(n=>el("li",{text:n})));
@@ -449,8 +426,7 @@ function renderArtemis(){
 }
 
 function renderSlip(){
-  const M=D.milestones,g=M.groups,lang=g["Lange Vorläufe (über 12 Monate)"],kurz=g["Kurze Vorläufe (unter 3 Monaten)"],fal=g["Falcon und Dragon, alle"],st=g["Starship, alle"],overdue=M.open.filter(x=>x.overdue);
-  $("slip-finding").textContent=`Nur teilweise, und mit diesen Daten nicht sauber zu trennen. Falcon und Dragon liegen im Median bei Faktor ${de(fal.median)}, Starship bei ${de(st.median)}. Das liegt aber auch daran, dass die Starship-Liste viele kurzfristige Ankündigungen enthält: Bei unter drei Monaten Vorlauf beträgt der Faktor ${de(kurz.median)}, bei über einem Jahr ${de(lang.median)}. Der Vorlauf erklärt also mindestens so viel wie das Programmalter. Kurzfristige Starship-Termine rutschten im Median um ${de(M.short_slip_median)} Tage. ${overdue.length} überfällige Ziele fehlen im Median und würden ihn nach oben ziehen.`;
+  const M=D.milestones,g=M.groups,overdue=M.open.filter(x=>x.overdue);
   const H=330,{svg,w}=svgFor("c-slip",H),L=44,R=w-12,T=12,B=H-30,pts=M.done,lo=Math.log10(10),hi=Math.log10(Math.max(...pts.map(p=>p.actual_lead),...overdue.map(p=>p.actual_lead))*1.2),x=lin(lo,hi,L,R),y=lin(lo,hi,B,T);
   [[30,"1 Mon."],[90,"3 Mon."],[365,"1 J."],[1095,"3 J."],[3650,"10 J."]].forEach(([v,l])=>{const p=Math.log10(v);if(p>hi)return;s("line",{x1:x(p),x2:x(p),y1:T,y2:B,stroke:"var(--line)"},svg);s("line",{x1:L,x2:R,y1:y(p),y2:y(p),stroke:"var(--line)"},svg);s("text",{x:x(p),y:H-14,"text-anchor":"middle",text:l},svg);s("text",{x:L-6,y:y(p)+4,"text-anchor":"end",text:l},svg)});
   [[1,"wie angekündigt"],[3,"Faktor 3"]].forEach(([f,l])=>{const off=Math.log10(f),b=hi-off;s("line",{x1:x(lo),y1:y(lo+off),x2:x(b),y2:y(hi),stroke:"var(--axis)"},svg);const lx=lo+(hi-lo)*(f===1?.5:.16);s("text",{x:x(lx)+(f===1?10:-6),y:y(lx+off)+(f===1?14:-8),"text-anchor":f===1?"start":"end",class:"ink2",text:l},svg)});
@@ -463,8 +439,7 @@ function renderSlip(){
 }
 
 function renderLicense(){
-  const L0=D.license,known=L0.filter(x=>x.wait_max!=null),big=known.filter(x=>x.wait_min>0),zero=known.filter(x=>x.wait_min===0);
-  $("lic-finding").textContent=`Dein Eindruck stimmt für die meisten Flüge. Bei ${zero.length} von ${known.length} einschätzbaren Flügen ist höchstens eine Wartezeit von wenigen Tagen erkennbar, die Lizenz kam oft kurz vor dem Start. Es gibt aber Gegenbeispiele: ${big.map(x=>`Flug ${x.n} (${x.wait_min}–${x.wait_max} Tage)`).join(" und ")}. Die Prognose rechnet deshalb ohne Wartezeit auf die Lizenz. Die Werte sind eine Einschätzung aus teils einseitigen Quellen und keine Messung.`;
+  const L0=D.license,known=L0.filter(x=>x.wait_max!=null);
   const rowH=20,T=6,H=T+known.length*rowH+28,{svg,w}=svgFor("c-license",H),l=62,R=w-44,mx=Math.max(...known.map(x=>x.wait_max)),x=lin(0,mx,l,R);
   [0,20,40,60].filter(v=>v<=mx).forEach(v=>{s("line",{x1:x(v),x2:x(v),y1:T,y2:T+known.length*rowH,stroke:v?"var(--line)":"var(--axis)"},svg);s("text",{x:x(v),y:H-10,"text-anchor":"middle",text:v},svg)});
   known.forEach((f,i)=>{const cy=T+i*rowH+rowH/2,g=s("g",{},svg),lab=f.wait_max===0?"0":`${f.wait_min}–${f.wait_max}`;s("text",{x:0,y:cy+4,class:"ink",text:`Flug ${f.n}`},svg);
@@ -475,9 +450,7 @@ function renderLicense(){
 }
 
 function renderAccuracy(){
-  const B=D.backtest_summary,A=B["alle"],b14=B["14"],b30=B["30"],cmp=(a,b)=>a<b?"besser":a>b?"schlechter":"gleich gut";
-  const b7=B["7"],b60=B["60"];
-  $("bt-finding").textContent=`Für die Flüge ab 7 wurde die Prognose mit dem damaligen Wissen nachgerechnet, insgesamt ${A.count} Zeitpunkte. Der 80 %-Bereich traf in ${Math.round(A.in80*100)} % der Fälle, bei 60 Tagen Vorlauf aber nur in ${Math.round(b60.in80*100)} %. Verglichen dort, wo ein NET vorlag, liegt die Mitte daneben: vier Wochen vorher ${de(b30.model_mae_where_net)} Tage gegen ${de(b30.net_mae)} Tage beim NET, zwei Wochen vorher ${de(b14.model_mae_where_net)} gegen ${de(b14.net_mae)}, eine Woche vorher ${de(b7.model_mae_where_net)} gegen ${de(b7.net_mae)}. Der einfache Abstand zum Vorflug liegt bei ${de(A.cadence_mae)} Tagen. Vorsicht: Das Modell entstand mit Blick auf genau diese Flüge, die Fahrzeugzuordnung war bekannt, und für Flug 16 und später gibt es keine vergleichbare Prüfung. Aussagekräftig wird erst das Log künftiger Flüge.`;
+  const B=D.backtest_summary;
   const lab={"60":"60 Tage vorher","30":"30 Tage vorher","14":"14 Tage vorher","7":"7 Tage vorher","alle":"Alle"};
   table($("t-bt"),["Vorlauf","Zeitpunkte","Fehler Modell","Fehler NET","NET-Werte","Fehler Abstand","Verzerrung","Treffer 50 %","Treffer 80 %"],Object.entries(B).sort((a,b)=>(+b[0]||-1)-(+a[0]||-1)).map(([k,v])=>[lab[k],v.count,de(v.model_mae)+" T",v.net_mae==null?"–":de(v.net_mae)+" T",v.net_count,de(v.cadence_mae)+" T",(v.model_bias>0?"+":"")+de(v.model_bias)+" T",Math.round(v.in50*100)+" %",Math.round(v.in80*100)+" %"]),[1,2,3,4,5,6,7,8]);
   const host=$("c-tracks");host.replaceChildren();
