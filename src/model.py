@@ -370,7 +370,7 @@ def sample_later_flight(data, n, as_of, rng, table, pad, pad_used):
     """Ein Starttermin für Flüge nach dem nächsten: aus dem Testfortschritt, unabhängig von Startverzögerungen davor.
 
     Maßgeblich ist der letzte Test des Ships: Static Fire, sonst Cryo-Test. Ohne Test folgt es dem Static-Fire-Takt
-    der Baureihe, sonst dem Cryo-Takt. Ein früherer Flug blockiert nur denselben Startplatz.
+    der Baureihe, gezählt ab dem letzten Ship mit echtem oder geschätztem Static Fire, sonst dem Cryo-Takt. Ein früherer Flug blockiert nur denselben Startplatz.
     """
     cfg = data.cfg
     booster, ship, _ = data.assignment(n)
@@ -385,9 +385,26 @@ def sample_later_flight(data, n, as_of, rng, table, pad, pad_used):
             value = base + draw(rng, pool)
         return 1 + rng.expovariate(1 / 5)
 
-    def from_cadence(steps, anchor, pool):
+    def from_cadence(steps, anchor, pool, anchor_days=None):
         count = max(1, int(ship[1:]) - anchor[0])
-        return after((anchor[1] - as_of).days + sum(rng.choice(steps) * math.exp(rng.gauss(0, .15)) for _ in range(count)), pool)
+        base = (anchor[1] - as_of).days if anchor_days is None else anchor_days
+        return after(base + sum(rng.choice(steps) * math.exp(rng.gauss(0, .15)) for _ in range(count)), pool)
+
+    def projected_sf_anchor(anchor):
+        """Letztes Ship vor diesem mit echtem oder geschätztem Static Fire, in Tagen ab as_of.
+
+        Ships der Baureihe, die schon den Cryo-Test hatten, aber noch kein Static Fire, bekommen ein geschätztes
+        Static Fire aus dem Abstand Cryo bis Static Fire. Der Takt beginnt dann erst bei ihnen, nicht beim letzten
+        echten Static Fire. Die Reihenfolge der Ships bleibt erhalten.
+        """
+        cryo_sf_pool = weighted_pool(table, "ship_cryo_sf", cfg, n, tuple(range(1, 7)) + FIRST_OF_VERSION) or [(55, 1)]
+        version, number, days = line_version(data, ship), anchor[0], (anchor[1] - as_of).days
+        tested = sorted((int(v[1:]), c) for v in data.vehicles if v[0] == "S" and line_version(data, v) == version
+                        and anchor[0] < int(v[1:]) < int(ship[1:]) and (c := data.cryo_first(v, as_of)) and not data.final_sf(v, None, as_of))
+        for k, cryo in tested:
+            projected = after((cryo - as_of).days, cryo_sf_pool)
+            number, days = k, max(projected, days)
+        return (number, anchor[1]), days
 
     ship_sf, booster_sf = data.final_sf(ship, n, as_of), data.final_sf(booster, n, as_of)
     wdr = data.last_wdr(booster, ship, as_of)
@@ -404,7 +421,8 @@ def sample_later_flight(data, n, as_of, rng, table, pad, pad_used):
     else:
         steps, anchor = test_spacing(data, ship, as_of, lambda v: data.final_sf(v, None, as_of))
         if len(steps) >= 2 and anchor:
-            result = from_cadence(steps, anchor, sf_pool)
+            anchor, anchor_days = projected_sf_anchor(anchor)
+            result = from_cadence(steps, anchor, sf_pool, anchor_days)
         else:
             steps, anchor = test_spacing(data, ship, as_of, lambda v: data.cryo_first(v, as_of))
             result = from_cadence(steps or [60], anchor, cryo_pool) if anchor else after(60, cryo_pool)

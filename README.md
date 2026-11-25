@@ -37,7 +37,7 @@ Nicht automatisch: Notices to Mariners (NGA blockiert automatische Abrufe, USCG 
 **Nächster Flug:** Aus dem Fahrzeugstand entsteht eine Glockenkurve für den Starttag: der letzte erreichte Schritt (WDR, sonst Static Fire, sonst früherer Testschritt oder Flugabstand) plus die früheren Abstände bis zum Start.
 Sind beide Static Fires durch und ist das NET höchstens 21 Tage entfernt, wird sie mit einer zweiten Kurve aus NET plus früherem Verzug verrechnet; die schmalere zählt mehr, das NET doppelt. Termine vor dem NET werden auf den NET-Tag gesetzt, oben steht die Mitte der Kurve.
 
-**Spätere Flüge:** Der letzte Test des Ships (Static Fire, sonst Cryo-Test) plus der frühere Abstand bis zum Start ergibt eine Kurve in Tagen. Ohne Test folgt das Ship dem Static-Fire-Takt seiner Baureihe, sonst dem Cryo-Takt, unabhängig von Startverzögerungen davor.
+**Spätere Flüge:** Der letzte Test des Ships (Static Fire, sonst Cryo-Test) plus der frühere Abstand bis zum Start ergibt eine Kurve in Tagen. Ohne Test folgt das Ship dem Static-Fire-Takt seiner Baureihe, sonst dem Cryo-Takt, unabhängig von Startverzögerungen davor. Der Takt zählt ab dem letzten Ship davor, das ein Static Fire hatte oder für das eines geschätzt wird: Hatte ein Ship schon den Cryo-Test, aber noch kein Static Fire, bekommt es ein geschätztes Static Fire aus dem früheren Abstand Cryo-Test bis Static Fire.
 Termine vor dem NET und vor der Fertigstellung eines neuen Startplatzes rücken auf diesen Tag, ein früherer Flug blockiert nur denselben Startplatz, mindestens 10 Tage. Wechsel der Baureihe und Lizenzwartezeiten zählen hier nicht als normale Dauer.
 Wartezeiten auf die FAA-Lizenz rechnet die Prognose nicht ein, auch nicht beim nächsten Flug; für den ersten Flug von LC-39A gibt es keinen Zuschlag.
 
@@ -111,6 +111,16 @@ Auf Wunsch von Markus entfernt, als Ausnahme von „bis Flug 16 keine Modelländ
 Die Trennung „mit“ und „ohne schwere Zwischenfälle“ entfällt, es gibt nur noch eine Jahresprognose mit Pausen. Das Prognose-Log enthält deshalb ab dem 16.11.2026 kein Feld `years_no_incident` mehr.
 **Wirkung** (Stand 16.11.2026): Flüge bis Ende 2030 im Median 112 statt 93, bis Ende 2032 292 statt 225 (ohne Zwischenfälle waren es 337). 2030 48 statt 35 Flüge, 2032 94 statt 70. Die nahen Flüge und der Rückblick-Test ändern sich nicht.
 **Später prüfen:** ob das Risiko pro Flug schneller sinkt, wie bei Falcon 9 (im Test mit −1,0 statt −0,6 bis 2032 rund 15 % mehr Flüge), und ob mehrere Startplätze eine Pause verkürzen, wenn nur einer beschädigt ist.
+
+## Modell 1.11 (25.11.2026)
+
+Auf Wunsch von Markus, wieder als Ausnahme von „bis Flug 16 keine Modelländerungen“.
+
+**Static-Fire-Takt ab geschätzten Static Fires:** Ein späterer Flug, dessen Ship noch keinen Test hatte, folgte dem Static-Fire-Takt ab dem letzten echten Static Fire der Baureihe. Für S45 (Flug 18) hieß das: S42 am 27.10.2026 plus drei Abstände von 51 oder 67 Tagen. Dabei hatten S43 und S44 ihre Cryo-Tests schon (23.10. und 20.11.2026), waren also weiter, als der Takt annahm. Jetzt bekommt jedes Ship dazwischen, das den Cryo-Test schon hatte, aber noch kein Static Fire, ein geschätztes Static Fire: Cryo-Test plus früherer Abstand Cryo-Test bis Static Fire (V2 und V3 ohne die ersten Ships einer Baureihe, zuletzt 44 bis 63 Tage). Der Takt beginnt beim letzten dieser Ships, für S45 also bei S44 mit einem Abstand statt drei. Die Reihenfolge der Ships bleibt erhalten.
+
+**Wirkung** (Stand 25.11.2026, gleiche Daten): Flug 18 Mitte vom 14.05. auf den 04.04.2027, 80 %-Bereich 14.03. bis 29.04. statt 17.04. bis 12.06.2027. Flug 19 vom 13.07. auf den 03.06.2027. Flug 16 und 17 und die Jahreswerte ändern sich nicht, der Rückblick-Test auch nicht, weil er nur den nächsten Flug prüft.
+
+**Zur Wiedervorlage** gehört das zu Punkt 5 unten: Hält der Takt, wenn er an einem geschätzten statt an einem echten Static Fire hängt?
 
 ## Zur Wiedervorlage
 
